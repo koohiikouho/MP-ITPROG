@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Replace Input with Text</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="card" id="myCard">
+            <div class="card-body">
+                <h5 class="card-title">Card Title</h5>
+                <input type="text" class="form-control mb-3" id="myInput" placeholder="Enter text here">
+                <button id="replaceButton" class="btn btn-primary">Replace Input with Text</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/js/bootstrap.min.js"></script>
+    <script>
+        function replaceInputWithText() {
+            var inputValue = $('#myInput').val(); // Get the value of the input field
+            $('#myInput').replaceWith('<p class="card-text">' + inputValue + 'You are a fucking retard </p>'); // Replace input with text
+        }
+
+        $(document).ready(function(){
+            $('#replaceButton').click(function(){
+                replaceInputWithText();
+            });
+        });
+    </script>
+</body>
+</html>
