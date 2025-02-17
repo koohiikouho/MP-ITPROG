@@ -38,19 +38,27 @@
         .fade.show {
             opacity: 1;
         }
+        .faderev{
+            opacity: 1;
+            transition: opacity 0.5s ease-in-out;
+        }
+        .faderev.hide {
+            opacity: 0;
+        }
         .fh-color{
             background-color: #Ac8ce1;
         }
         body {
             background-color: #fcf7ff;
         }
-        .custom-card-background{
-        }
         h3 {
             color: #0b003a;
         }
         .custom-input{
             color: #0b003a;
+        }
+        .subtext {
+            color: #736b97;
         }
     </style>
 </head>
@@ -102,26 +110,67 @@
                                 </div>
                                 
 
-
-                                <script>
-
-                                </script>
-
                                 <div class="col-9">
-                                <!-- REMEMBER TO CHANGE ID -->
-                                <input class="form-control" list="datalistOptions" id="cpuDataList" placeholder="Type to search...">
-                                <datalist id="datalistOptions">
-                                    <!-- maybe we can use php here to query options for this -->
-                                    <!-- Placeholder for now -->
-                                <option value="San Francisco">
-                                <option value="New York">
-                                <option value="Seattle">
-                                <option value="Los Angeles">
-                                <option value="Chicago">
-                                </datalist>
+                                    
+                                        <div class ="row" id="cpuDataList">
+                                            <div class="col-3">
+                                                <p>Brand: </p>
+                                                <div class="form-group">
+                                                    <select class="form-control">
+                                                        <!-- do your back end magic here -->
+                                                        <option selected>AMD</option>
+                                                        <option>Intel</option>
+                                                    </select>
+                                                </div>
+                                             </div>
+                                             <div class="col-3">
+                                                <p>Cores: </p>
+                                                <div class="form-group">
+                                                    <select class="form-control">
+                                                        <!-- do your back end magic here -->
+                                                        <option>1</option>
+                                                        <option>2</option>
+                                                        <option>3</option>
+                                                    </select>
+                                                </div>
+                                             </div>
+                                             <div class="col-1">
+                                                <div class="d-flex form-group mt-3">
+                                                    <button type="button" class="btn btn-outline-primary w-100" id="cpuSearch">🔍</button>
+                                                </div>
+                                            </div>
+                                             <div class="col-4">
+                                                <p>Select part:</p>
+                                                <div class="form-group">
+                                                    <select class="form-control" id="cpuName" disabled>
+                                                        <!-- do your back end magic here -->
+                                                        <option>1</option>
+                                                        <option>2</option>
+                                                        <option>3</option>
+
+                                                        
+                                                    </select>
+                                                </div>
+                                             </div>
+                                        </div>
+                                    
+                                    <div class="d-flex justify-content-center">
+                                        <div class="spinner-border" role="status" id="cpuloading">
+                                            <span class="sr-only"></span>
+                                        </div>
+                                    </div>
+                                    <h3 id = "cpuname"></h3>
+                                    <div class="container">
+                                        <p class="pl-3 subtext" id = "cpudesc"></p>
+                                    </div>
+                                        
+
                                 </div>
-                                <div class="col">
-                                <button type="button" class="btn btn-outline-success w-100" id="addcpubutton" >+ Add</button>
+                                
+
+                                <div class="col-1">
+                                <button type="button" class="btn btn-outline-success w-100 mt-3" id="addcpubutton" >+</button>
+                                <button type="button" class="btn btn-outline-danger w-100 mt-3" id="removecpubutton">-</button>
 
 
                                     
@@ -145,17 +194,40 @@
                                 </div>
 
                                 <div class="col-9">
-                                <!-- REMEMBER TO CHANGE ID -->
-                                <input class="form-control" list="datalistOptions" id="mobodatalist" placeholder="Type to search...">
-                                <datalist id="datalistOptions">
-                                    <!-- maybe we can use php here to query options for this -->
-                                    <!-- Placeholder for now -->
-                                <option value="San Francisco">
-                                <option value="New York">
-                                <option value="Seattle">
-                                <option value="Los Angeles">
-                                <option value="Chicago">
-                                </datalist>
+                                    <div class ="row" id="mobDataList">
+                                        <div class="col-3">
+                                            <p>Brand: </p>
+                                            <div class="form-group">
+                                                <select class="form-control" id="mobBrand" disabled>
+                                                    <!-- do your back end magic here -->
+                                                    <option selected>AMD</option>
+                                                    <option>Intel</option>
+                                                </select>
+                                            </div>
+                                         </div>
+                                         <div class="col-3">
+                                            <p>Chipset: </p>
+                                            <div class="form-group">
+                                                <select class="form-control" id="mobChipset" disabled>
+                                                    <!-- do your back end magic here -->
+                                                    <option>1</option>
+                                                    <option>2</option>
+                                                    <option>3</option>
+                                                </select>
+                                            </div>
+                                         </div>
+                                         <div class="col-4">
+                                            <p>Select part:</p>
+                                            <div class="form-group">
+                                                <select class="form-control" id="mobPart" disabled>
+                                                    <!-- do your back end magic here -->
+                                                    <option>1</option>
+                                                    <option>2</option>
+                                                    <option>3</option>
+                                                </select>
+                                            </div>
+                                         </div>
+                                    </div>
                                 </div>
                                 <div class="col">
                                     <button type="button" class="btn btn-outline-success w-100" id="addmobobutton">+ Add</button>
@@ -177,31 +249,55 @@
                                     </div>
                                 </div>
 
-                                <div class="col-8">
-                                <!-- REMEMBER TO CHANGE ID -->
-                                <input class="form-control" list="datalistOptions" id="exampleDataList" placeholder="Type to search...">
-                                    <datalist id="datalistOptions">
-                                        <!-- maybe we can use php here to query options for this -->
-                                        <!-- Placeholder for now -->
-                                    <option value="San Francisco">
-                                    <option value="New York">
-                                    <option value="Seattle">
-                                    <option value="Los Angeles">
-                                    <option value="Chicago">
-                                    </datalist>
+
+                                <div class="col-9">
+                                    <div class ="row" id="mobDataList">
+                                        <div class="col-3">
+                                            <p>Brand: </p>
+                                            <div class="form-group">
+                                                <select class="form-control" id="ramBrand" disabled>
+                                                    <!-- do your back end magic here -->
+                                                    <option selected>AMD</option>
+                                                    <option>Intel</option>
+                                                </select>
+                                            </div>
+                                         </div>
+                                         <div class="col-3">
+                                            <p>Chipset: </p>
+                                            <div class="form-group">
+                                                <select class="form-control" id="ramSize" disabled>
+                                                    <!-- do your back end magic here -->
+                                                    <option>1</option>
+                                                    <option>2</option>
+                                                    <option>3</option>
+                                                </select>
+                                            </div>
+                                         </div>
+                                         <div class="col-4">
+                                            <p>Select part:</p>
+                                            <div class="form-group">
+                                                <select class="form-control" id="ramName" disabled>
+                                                    <!-- do your back end magic here -->
+                                                    <option>1</option>
+                                                    <option>2</option>
+                                                    <option>3</option>
+                                                </select>
+                                            </div>
+                                         </div>
+                                         <div class="col-2">
+                                            <p>Quantity</p>
+                                            <div class="form-group">
+                                                <select class="form-control" id="ramQty" disabled>
+                                                    <!-- do your back end magic here -->
+                                                    <option>1</option>
+                                                    <option>2</option>
+                                                    <option>3</option>
+                                                </select>
+                                            </div>
+                                         </div>
+                                    </div>
                                 </div>
-                                <div class="col-1">
-                                    <!-- REMEMBER TO CHANGE ID -->
-                                    <!-- REMEMBER TO CHANGE ID -->                                
-                                    <!-- maybe we can use php here to query options for this -->
-                                    <!-- Placeholder for now -->
-                                    <select class="form-select" aria-label="Default select example">
-                                        <option selected value="1">1</option>
-                                        <option value="2">2</option>
-                                        <option value="3">3</option>
-                                        <option value="4">4</option>
-                                    </select>
-                                </div>
+
                                 <div class="col">
                                     <button type="button" class="btn btn-outline-success w-100">+ Add</button>
                                 </div>

@@ -1,37 +1,92 @@
-function myFunction() {
-    alert('Button clicked!');
+
+function cpuShowQueryReturn(cpuName){
+    $('#cpuname').text(cpuName);
+    $('#cpudesc').text("5 times the mambos");
+
+    $('#cpuname').show();
+    $('#cpudesc').show();
+
 }
-
+function cpuRemoveQueryReturn(){
+    $('#cpuname').text("");
+    $('#cpuname').hide();
+    $('#cpudesc').hide();
+}
 function cpuQueryReplaceInput() {
-    var inputValue = $('#cpuDataList').val(); // Get the value of the input field
+    
+    // insert shit here
 
+    
+
+
+    $('#cpuDataList').hide(); //alter this so that it has the info
+    $('#cpuloading').show();
     //you should probably do some php here
 
 
-    $('#cpuDataList').replaceWith('<p class="card-text id="description"> You are a fucking retard </p>'); //alter this so that it has the info
-    $('#addcpubutton').replaceWith('<button type="button" class="btn btn-outline-danger" id="removecpubutton">Remove</button>')
+    
+    
+    //cpu specs should go here into this function after you're done implementing AJAX
+
+    cpuShowQueryReturn("AMD MamboX3D");
+    
+
+    
+    
+    $('#cpuloading').hide();
+    $('#addcpubutton').hide();
+    $('#removecpubutton').show();
 }
 
 function cpuQueryReplaceText() {
-    $('#description').replaceWith('<input class="form-control" list="datalistOptions" id="cpuDataList" placeholder="Type to search...">'); // Replace input with text
-    $('#removecpubutton').replaceWith('<button type="button" class="btn btn-outline-success w-100" id="addcpubutton" >+ Add</button>')
+
+    $('#cpuDataList').show();
+    $('#description').hide(); // Replace input with text
+
+    cpuRemoveQueryReturn();
+
+    $('#removecpubutton').hide();
+    $('#addcpubutton').show();
 
 }
 
+function hideAtStart(){
+    $('#removecpubutton').hide();
+    $('#cpuloading').hide();
+    $('#cpuname').hide();
+    $('#cpudesc').hide();
+}
 
 $(document).ready(function(){
-    $('#replaceButton').click(function(){
-        replaceInputWithText();
-    });
+
+    cpuSearchCount = 0;
+    hideAtStart();
+    $("#cpuSearch").click(function(){
+            document.getElementById('cpuName').disabled = false;
+            document.getElementById('cpuName').disabled = true;    
+    })
 
 
     $('#addcpubutton').click(function(){
-        myFunction();
         cpuQueryReplaceInput();
+        document.getElementById('mobBrand').disabled = false;
+        document.getElementById('mobChipset').disabled = false;
+        document.getElementById('mobPart').disabled = false;
+        document.getElementById('ramBrand').disabled = false;
+        document.getElementById('ramSize').disabled = false;
+        document.getElementById('ramName').disabled = false;
+        document.getElementById('ramQty').disabled = false;
     });
+
     $('#removecpubutton').click(function(){
-        myFunction();
         cpuQueryReplaceText();
+        document.getElementById('mobBrand').disabled = true;
+        document.getElementById('mobChipset').disabled = true;
+        document.getElementById('mobPart').disabled = true;
+        document.getElementById('ramBrand').disabled = true;
+        document.getElementById('ramSize').disabled = true;
+        document.getElementById('ramName').disabled = true;
+        document.getElementById('ramQty').disabled = true;
     });    
 
 });
