@@ -61,11 +61,6 @@ $(document).ready(function(){
 
     cpuSearchCount = 0;
     hideAtStart();
-    $("#cpuSearch").click(function(){
-            document.getElementById('cpuName').disabled = false;
-            document.getElementById('cpuName').disabled = true;    
-    })
-
 
     $('#addcpubutton').click(function(){
         cpuQueryReplaceInput();
