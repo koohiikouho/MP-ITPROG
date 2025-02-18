@@ -60,6 +60,12 @@
         .subtext {
             color: #736b97;
         }
+        .rectangle {
+            height: 10px;
+            width: 100%;
+            background-color: #000000;
+            opacity: 0.3;
+          }
     </style>
 </head>
 <body>
@@ -73,15 +79,17 @@
      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 
 
-    <div class = "container-fluid shadow-lg mb-5">
+    <div class = "container-fluid mb-5">
         <div class = "row d-flex">
             <nav class="navbar navbar-expand-lg fade fh-color" id="myNavbar">
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <a class="ml-5 navbar-brand"></a>
                 <img src="images/navbar-logo.webp" width="50" height="50" class="d-inline-block align-top" alt="">
                 <a class="navbar-brand" style="color: #ffffff">The Herta's Part Picker Thing</a>
-
               </nav>
+        </div>
+        <div class = "row d-flex">
+            <div class="rectangle"></div>
         </div>
     </div>
 
@@ -100,6 +108,19 @@
                         </div>
                     </h1>
                     <hr class="my-4">
+                    <!-- CARD FOR CPU -->
+                    <!-- IDs ARE AS FOLLOWS -->
+                    <!-- 
+                    cpuBrand
+                    cpuCores
+                    cpuSearch
+                    cpuName
+                    cpuloading //hidden at start
+                    cpudesc //hidden at start
+                    addcpubutton
+                    removecpubutton //hidden at start
+                    cpuSort
+                    -->
                     <div class ="card shadow custom-card-border custom-card-background">
                         <div class="container-fluid">
                             <div class="row mt-4 mb-4">
@@ -109,15 +130,14 @@
                                     </div>
                                 </div>
                                 
-
+                                
                                 <div class="col-9">
-                                    
                                         <div class ="row" id="cpuDataList">
                                             <div class="col-3">
                                                 <p>Brand: </p>
                                                 <div class="form-group">
-                                                    <select class="form-control">
-                                                        <!-- do your back end magic here -->
+                                                    <select class="form-control" id="cpuBrand">
+                                                        <!-- TODO: do your back end magic here PLACEHOLDER VALUES-->
                                                         <option selected>AMD</option>
                                                         <option>Intel</option>
                                                     </select>
@@ -126,8 +146,8 @@
                                              <div class="col-3">
                                                 <p>Cores: </p>
                                                 <div class="form-group">
-                                                    <select class="form-control">
-                                                        <!-- do your back end magic here -->
+                                                    <select class="form-control" id="cpuCores">
+                                                        <!-- TODO: do your back end magic here PLACEHOLDER VALUES-->
                                                         <option>1</option>
                                                         <option>2</option>
                                                         <option>3</option>
@@ -135,45 +155,44 @@
                                                 </div>
                                              </div>
                                              <div class="col-1">
-                                                <div class="d-flex form-group mt-3">
+                                                <div class="d-flex form-group mb-2">
                                                     <button type="button" class="btn btn-outline-primary w-100" id="cpuSearch">🔍</button>
                                                 </div>
+                                                Sort by:
+                                                <div class="d-flex form-group mt-1">
+                                                    <select class="form-control" id="cpuSort">
+                                                        <!-- TODO: do your back end magic here PLACEHOLDER VALUES-->
+                                                        <option>💵</option>
+                                                        <option>📈</option>
+                                                    </select>
+                                                </div>
                                             </div>
-                                             <div class="col-4">
+                                             <div class="col-5">
                                                 <p>Select part:</p>
                                                 <div class="form-group">
                                                     <select class="form-control" id="cpuName">
-                                                        <!-- do your back end magic here -->
+                                                        <!-- TODO: do your back end magic here PLACEHOLDER VALUES-->
                                                         <option>1</option>
                                                         <option>2</option>
                                                         <option>3</option>
-
-
                                                     </select>
                                                 </div>
                                              </div>
                                         </div>
                                     
                                     <div class="d-flex justify-content-center">
-                                        <div class="spinner-border" role="status" id="cpuloading">
+                                        <div class="spinner-border" role="status" id="cpuLoading">
                                             <span class="sr-only"></span>
                                         </div>
                                     </div>
-                                    <h3 id = "cpuname"></h3>
+                                    <h3 id = "cpuProdName"></h3>
                                     <div class="container">
-                                        <p class="pl-3 subtext" id = "cpudesc"></p>
+                                        <p class="pl-3 subtext" id = "cpuDesc"></p>
                                     </div>
-                                        
-
                                 </div>
-                                
-
                                 <div class="col-1">
-                                <button type="button" class="btn btn-outline-success w-100 mt-3" id="addcpubutton" >+</button>
-                                <button type="button" class="btn btn-outline-danger w-100 mt-3" id="removecpubutton">-</button>
-
-
-                                    
+                                    <button type="button" class="btn btn-outline-success w-100 h-100" id="addCpuButton">+</button>
+                                    <button type="button" class="btn btn-outline-danger w-100 h-100" id="remCpuButton">-</button>
                                 </div>
                             </div>
                         </div>
@@ -181,7 +200,20 @@
                 </div>
             </div>
 
-
+            <!-- CARD FOR Motherboard -->
+            <!-- IDs ARE AS FOLLOWS -->
+            <!-- 
+                moboBrand
+                moboChipset
+                moboSearch
+                moboSort
+                moboLoading //hidden at start
+                moboDesc //hidden at start
+                addMoboButton
+                remMoboButton //hidden at start
+                moboDatalist
+                moboWarning
+            -->
             <div class ="row justify-content-center mt-3"> 
                 <div class="col-sm-10 gx-5">
                     <div class ="card shadow custom-card-border custom-card-background">
@@ -193,34 +225,52 @@
                                     </div>
                                 </div>
 
+
                                 <div class="col-9">
-                                    <div class ="row" id="mobDataList">
+                                    <div class ="row text-center" id="moboWarning">
+                                        <h1 class="mt-2"style="color: gray;">Select CPU First</h1>
+                                    </div>
+                                    <div class ="row" id="moboDataList">
                                         <div class="col-3">
                                             <p>Brand: </p>
                                             <div class="form-group">
-                                                <select class="form-control" id="mobBrand" disabled>
-                                                    <!-- do your back end magic here -->
-                                                    <option selected>AMD</option>
-                                                    <option>Intel</option>
+                                                <select class="form-control" id="moboBrand">
+                                                    
+                                                    <!-- TODO: do your back end magic here PLACEHOLDER VALUES-->
+                                                    <option selected>Gigabyte</option>
+                                                    <option>ASUS</option>
                                                 </select>
                                             </div>
                                          </div>
                                          <div class="col-3">
                                             <p>Chipset: </p>
                                             <div class="form-group">
-                                                <select class="form-control" id="mobChipset" disabled>
-                                                    <!-- do your back end magic here -->
-                                                    <option>1</option>
-                                                    <option>2</option>
-                                                    <option>3</option>
+                                                <select class="form-control" id="moboChip">
+                                                    <!-- do your back end magic here PLACEHOLDER VALUES-->
+                                                    <option>B450</option>
+                                                    <option>A320</option>
+                                                    <option>X570</option>
                                                 </select>
                                             </div>
                                          </div>
-                                         <div class="col-4">
+                                         <div class="col-1">
+                                            <div class="d-flex form-group mb-2">
+                                                <button type="button" class="btn btn-outline-primary w-100" id="moboSearch">🔍</button>
+                                            </div>
+                                            Sort by:
+                                            <div class="d-flex form-group mt-1">
+                                                <select class="form-control" id="moboSort">
+                                                    <!-- do your back end magic here PLACEHOLDER VALUES-->
+                                                    <option>💵</option>
+                                                    <option>📈</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                         <div class="col-5">
                                             <p>Select part:</p>
                                             <div class="form-group">
-                                                <select class="form-control" id="mobPart" disabled>
-                                                    <!-- do your back end magic here -->
+                                                <select class="form-control" id="moboName">
+                                                    <!-- do your back end magic here PLACEHOLDER VALUES-->
                                                     <option>1</option>
                                                     <option>2</option>
                                                     <option>3</option>
@@ -228,9 +278,20 @@
                                             </div>
                                          </div>
                                     </div>
+                                
+                                <div class="d-flex justify-content-center">
+                                    <div class="spinner-border" role="status" id="moboLoading">
+                                        <span class="sr-only"></span>
+                                    </div>
                                 </div>
+                                <h3 id = "mobProdName"></h3>
+                                <div class="container">
+                                    <p class="pl-3 subtext" id = "moboDesc"></p>
+                                </div>
+                            </div>
                                 <div class="col">
-                                    <button type="button" class="btn btn-outline-success w-100" id="addmobobutton">+ Add</button>
+                                    <button type="button" class="btn btn-outline-success w-100 h-100 " id="addMoboButton">+</button>
+                                    <button type="button" class="btn btn-outline-danger w-100 h-100 " id="remMoboButton">-</button>
                                 </div>
                             </div>
                         </div>
@@ -251,44 +312,50 @@
 
 
                                 <div class="col-9">
-                                    <div class ="row" id="mobDataList">
+                                    <div class ="row text-center" id="moboWarning">
+                                        <h1 class="mt-2"style="color: gray;">Select CPU First</h1>
+                                    </div>
+                                    <div class ="row" id="moboDataList">
                                         <div class="col-3">
                                             <p>Brand: </p>
                                             <div class="form-group">
-                                                <select class="form-control" id="ramBrand" disabled>
-                                                    <!-- do your back end magic here -->
-                                                    <option selected>AMD</option>
-                                                    <option>Intel</option>
+                                                <select class="form-control" id="moboBrand">
+                                                    
+                                                    <!-- TODO: do your back end magic here PLACEHOLDER VALUES-->
+                                                    <option selected>Gigabyte</option>
+                                                    <option>ASUS</option>
                                                 </select>
                                             </div>
                                          </div>
                                          <div class="col-3">
                                             <p>Chipset: </p>
                                             <div class="form-group">
-                                                <select class="form-control" id="ramSize" disabled>
-                                                    <!-- do your back end magic here -->
-                                                    <option>1</option>
-                                                    <option>2</option>
-                                                    <option>3</option>
+                                                <select class="form-control" id="moboChip">
+                                                    <!-- do your back end magic here PLACEHOLDER VALUES-->
+                                                    <option>B450</option>
+                                                    <option>A320</option>
+                                                    <option>X570</option>
                                                 </select>
                                             </div>
                                          </div>
-                                         <div class="col-4">
+                                         <div class="col-1">
+                                            <div class="d-flex form-group mb-2">
+                                                <button type="button" class="btn btn-outline-primary w-100" id="moboSearch">🔍</button>
+                                            </div>
+                                            Sort by:
+                                            <div class="d-flex form-group mt-1">
+                                                <select class="form-control" id="moboSort">
+                                                    <!-- do your back end magic here PLACEHOLDER VALUES-->
+                                                    <option>💵</option>
+                                                    <option>📈</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                         <div class="col-5">
                                             <p>Select part:</p>
                                             <div class="form-group">
-                                                <select class="form-control" id="ramName" disabled>
-                                                    <!-- do your back end magic here -->
-                                                    <option>1</option>
-                                                    <option>2</option>
-                                                    <option>3</option>
-                                                </select>
-                                            </div>
-                                         </div>
-                                         <div class="col-2">
-                                            <p>Quantity</p>
-                                            <div class="form-group">
-                                                <select class="form-control" id="ramQty" disabled>
-                                                    <!-- do your back end magic here -->
+                                                <select class="form-control" id="moboName">
+                                                    <!-- do your back end magic here PLACEHOLDER VALUES-->
                                                     <option>1</option>
                                                     <option>2</option>
                                                     <option>3</option>
@@ -296,7 +363,17 @@
                                             </div>
                                          </div>
                                     </div>
+                                
+                                <div class="d-flex justify-content-center">
+                                    <div class="spinner-border" role="status" id="moboLoading">
+                                        <span class="sr-only"></span>
+                                    </div>
                                 </div>
+                                <h3 id = "mobProdName"></h3>
+                                <div class="container">
+                                    <p class="pl-3 subtext" id = "moboDesc"></p>
+                                </div>
+                            </div>
 
                                 <div class="col">
                                     <button type="button" class="btn btn-outline-success w-100">+ Add</button>
