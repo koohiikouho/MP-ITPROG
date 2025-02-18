@@ -88,8 +88,8 @@
                 <a class="navbar-brand" style="color: #ffffff">The Herta's Part Picker Thing</a>
               </nav>
         </div>
-        <div class = "row d-flex">
-            <div class="rectangle"></div>
+        <div class = "row d-flex" >
+            <div class="rectangle" id ="navbarShadow"></div>
         </div>
     </div>
 
@@ -172,9 +172,8 @@
                                                 <div class="form-group">
                                                     <select class="form-control" id="cpuName">
                                                         <!-- TODO: do your back end magic here PLACEHOLDER VALUES-->
-                                                        <option>1</option>
-                                                        <option>2</option>
-                                                        <option>3</option>
+                                                        <option disabled selected style="display:none;"> </option>
+                                                        <option > Mambo 2000x </option>
                                                     </select>
                                                 </div>
                                              </div>
@@ -271,6 +270,7 @@
                                             <div class="form-group">
                                                 <select class="form-control" id="moboName">
                                                     <!-- do your back end magic here PLACEHOLDER VALUES-->
+                                                    <option disabled selected style="display:none;"> </option>
                                                     <option>1</option>
                                                     <option>2</option>
                                                     <option>3</option>
@@ -284,7 +284,7 @@
                                         <span class="sr-only"></span>
                                     </div>
                                 </div>
-                                <h3 id = "mobProdName"></h3>
+                                <h3 id = "moboProdName"></h3>
                                 <div class="container">
                                     <p class="pl-3 subtext" id = "moboDesc"></p>
                                 </div>
@@ -299,6 +299,21 @@
                 </div>
             </div>
 
+            <!-- CARD FOR Memory -->
+            <!-- IDs ARE AS FOLLOWS -->
+            <!-- 
+                memBrand
+                memSize
+                memSearch
+                memSort
+                memLoading //hidden at start
+                memProdDesc //hidden at start
+                addMemButton
+                remMemButton //hidden at start
+                memDatalist
+                mem Warning
+            -->
+            <!-- TODO: LINK EVERY SELECTOR/BUTTON TO JQUERY -->
             <div class ="row justify-content-center mt-3"> 
                 <div class="col-sm-10 gx-5">
                     <div class ="card shadow custom-card-border custom-card-background">
@@ -310,17 +325,15 @@
                                     </div>
                                 </div>
 
-
                                 <div class="col-9">
-                                    <div class ="row text-center" id="moboWarning">
-                                        <h1 class="mt-2"style="color: gray;">Select CPU First</h1>
+                                    <div class ="row text-center" id="memWarning">
+                                        <h1 class="mt-2"style="color: gray;">Select Motherboard First</h1>
                                     </div>
-                                    <div class ="row" id="moboDataList">
+                                    <div class ="row" id="memDataList">
                                         <div class="col-3">
                                             <p>Brand: </p>
                                             <div class="form-group">
-                                                <select class="form-control" id="moboBrand">
-                                                    
+                                                <select class="form-control" id="memBrand">
                                                     <!-- TODO: do your back end magic here PLACEHOLDER VALUES-->
                                                     <option selected>Gigabyte</option>
                                                     <option>ASUS</option>
@@ -330,7 +343,7 @@
                                          <div class="col-3">
                                             <p>Chipset: </p>
                                             <div class="form-group">
-                                                <select class="form-control" id="moboChip">
+                                                <select class="form-control" id="memSize">
                                                     <!-- do your back end magic here PLACEHOLDER VALUES-->
                                                     <option>B450</option>
                                                     <option>A320</option>
@@ -340,11 +353,11 @@
                                          </div>
                                          <div class="col-1">
                                             <div class="d-flex form-group mb-2">
-                                                <button type="button" class="btn btn-outline-primary w-100" id="moboSearch">🔍</button>
+                                                <button type="button" class="btn btn-outline-primary w-100" id="memSearch">🔍</button>
                                             </div>
                                             Sort by:
                                             <div class="d-flex form-group mt-1">
-                                                <select class="form-control" id="moboSort">
+                                                <select class="form-control" id="memSort">
                                                     <!-- do your back end magic here PLACEHOLDER VALUES-->
                                                     <option>💵</option>
                                                     <option>📈</option>
@@ -354,7 +367,7 @@
                                          <div class="col-5">
                                             <p>Select part:</p>
                                             <div class="form-group">
-                                                <select class="form-control" id="moboName">
+                                                <select class="form-control" id="memName">
                                                     <!-- do your back end magic here PLACEHOLDER VALUES-->
                                                     <option>1</option>
                                                     <option>2</option>
@@ -365,18 +378,19 @@
                                     </div>
                                 
                                 <div class="d-flex justify-content-center">
-                                    <div class="spinner-border" role="status" id="moboLoading">
+                                    <div class="spinner-border" role="status" id="memLoading">
                                         <span class="sr-only"></span>
                                     </div>
                                 </div>
-                                <h3 id = "mobProdName"></h3>
+                                <h3 id = "memProdName"></h3>
                                 <div class="container">
-                                    <p class="pl-3 subtext" id = "moboDesc"></p>
+                                    <p class="pl-3 subtext" id = "memProdDesc"></p>
                                 </div>
                             </div>
 
                                 <div class="col">
-                                    <button type="button" class="btn btn-outline-success w-100">+ Add</button>
+                                    <button type="button" class="btn btn-outline-success w-100 h-100 " id="addMemButton">+</button>
+                                    <button type="button" class="btn btn-outline-danger w-100 h-100 " id="remMemButton">-</button>
                                 </div>
                             </div>
                         </div>
@@ -384,6 +398,7 @@
                 </div>
             </div>
             
+
             <div class ="row justify-content-center mt-3"> 
                 <div class="col-sm-10 gx-5">
                     <div class ="card shadow custom-card-border custom-card-background">

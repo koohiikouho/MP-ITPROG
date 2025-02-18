@@ -6,6 +6,7 @@ function removeQueryReturn(itemProdName, itemProdDesc){
     $(itemProdDesc).hide();
 }
 
+//DOn'T MIND THIS FIRST ATTEMPT
 function cpuShowQueryReturn(cpuName, cpuDesc){
     $('#cpuProdName').text(cpuName);
     $('#cpuDesc').text(cpuDesc);
@@ -46,9 +47,9 @@ function cpuQueryReplaceInput() {
 
 }
 
-function showQueryReturn(itemProdName, itemProdDesc, newProdName, newProdDesc){
-    $(itemProdName).text(newProdName);
-    $(itemProdDesc).text(newProdDesc);
+function showQueryReturn(itemProdName, itemProdDesc, newItemProdName, newItemProdDesc){
+    $(itemProdName).text(newItemProdName);
+    $(itemProdDesc).text(newItemProdDesc);
 
     $(itemProdName).show();
     $(itemProdDesc).show();
@@ -66,10 +67,11 @@ function queryReplaceInput(cardDataList, cardLoading, addButton, remButton,
     $(cardLoading).show();  //alter this so that it has the info
 
     
-
+    
     //you should probably do some php here
     //make it so that it is variable
-
+    newItemProdName = "Mamboard";
+    newItemProdDesc = "Mamthousand Speed";
     //specs should go here into this function after you're done implementing AJAX
     showQueryReturn(itemProdName, itemProdDesc, newItemProdName, newItemProdDesc);
 
@@ -120,6 +122,7 @@ function lockMoboMemory(){
     $('#moboDataList').hide();
     $('#addMoboButton').hide();
     $('#remMoboButton').hide();
+    removeQueryReturn('#moboProdName', '#moboDesc');
 }
 
 function hideAtStart(){
@@ -156,16 +159,16 @@ $(document).ready(function(){
 
     $('#addMoboButton').click(function(){
 
-        
+
         queryReplaceInput('#moboDataList', '#moboLoading', '#addMoboButton', '#remMoboButton', 
-            '#mobProdName', '#moboDesc');
+            '#moboProdName', '#moboDesc');
 
 
     });    
 
     $('#remMoboButton').click(function(){
         queryReplaceText('#moboDataList', '#moboLoading', '#addMoboButton', '#remMoboButton', 
-            '#mobProdName', '#moboDesc');
+            '#moboProdName', '#moboDesc');
     });    
 
 });

@@ -11,6 +11,10 @@ $(document).ready(function(){
         $('#myFooter').addClass('show');
     }, 500);  
 
+    setTimeout(function(){
+        $('#navbarShadow').addClass('show');
+    }, 500);  
+
 
 
 });
