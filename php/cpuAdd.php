@@ -20,9 +20,9 @@
     if ($result->num_rows > 0) {
         while ($row = $result->fetch_assoc()) {
             echo 
-            "Cores: " . $row['cores'] .
-            " Threads: " . $row['threads'] .
-            " Clock Speed: ". $row['baseClock'] . "GHz";
+             $row['cores'] ." Cores " 
+             . $row['threads'] . " Threads " .
+            "@". $row['baseClock'] . "GHz";
         }
     } else {
         echo "Error";

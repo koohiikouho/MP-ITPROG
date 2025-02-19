@@ -1,3 +1,46 @@
+/* Container styles */
+.scrolling-text-container {
+    background-color: #8166ad;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+/* Inner container styles */
+.scrolling-text-inner {
+    display: flex;
+    white-space: nowrap;
+    font-size: 16px;
+    font-weight: 600;
+    padding: 8px 0;
+}
+
+/* Text styles */
+.scrolling-text {
+    display: flex;
+}
+
+.scrolling-text-item {
+    padding: 0 30px;
+}
+
+.scrolling-text-inner>div {
+    animation: var(--direction) var(--marquee-speed) linear infinite;
+}
+
+.scrolling-text-container:hover .scrolling-text-inner>div {
+    animation-play-state: paused;
+}
+
+@keyframes scroll-left {
+    0% {
+        transform: translateX(80%);
+    }
+
+    100% {
+        transform: translateX(-100%);
+    }
+}
+
 .fixed {
     position: fixed;
     top: 20%;
@@ -57,18 +100,31 @@
 .fade.show {
     opacity: 1;
 }
-.faderev{
-    opacity: 1;
+
+.fadenav {
+    opacity: 0;
     transition: opacity 0.5s ease-in-out;
 }
-.faderev.hide {
-    opacity: 0;
+.fadenav.show {
+    opacity: 0.9;
 }
+.faderec {
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+}
+.faderec.show {
+    opacity: 0.3;
+}
+
+
 .fh-color{
     background-color: #Ac8ce1;
 }
 body {
     background-color: #fcf7ff;
+    background-image: url("./images/HertaBackground2.png");
+    background-size: cover;
+
 }
 h3 {
     color: #0b003a;
@@ -83,13 +139,12 @@ h3 {
     height: 10px;
     width: 100%;
     background-color: #000000;
-    opacity: 0.3;
   }
 
 footer {
     background-image: url("./images/Sticker_PPG_20_The_Herta_02.webp");
     background-repeat: no-repeat;
     background-size: 20%;
-    background-position: 0% 200%;
+    background-position: 0% 150%;
     opacity: 0.8;
 }
