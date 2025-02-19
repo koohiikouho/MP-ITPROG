@@ -1,14 +1,16 @@
+var cpuPrice = 0;
+var moboPrice = 0;
+var totalPrice = 0;
 
-function removeQueryReturn(itemProdName, itemProdDesc){
-    $(itemProdName).text("");
-    $(itemProdDesc).text("");
-    $(itemProdName).hide();
-    $(itemProdDesc).hide();
-}
+let peso = new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'PHP',
+});
+
+
 
 //DOn'T MIND THIS FIRST ATTEMPT
 function cpuShowQueryReturn(cpuName, cpuDesc){
-    
     $('#cpuProdName').text(cpuName);
     $('#cpuDesc').text(cpuDesc);
 
@@ -22,10 +24,7 @@ function cpuRemoveQueryReturn(){
     $('#cpuDesc').hide();
 }
 
-
-
 function cpuQueryReplaceInput() {
-
     $('#cpuDataList').hide(); //alter this so that it has the info
     $('#cpuLoading').show();
     //you should probably do some php here
@@ -34,8 +33,24 @@ function cpuQueryReplaceInput() {
 
     //cpu specs should go here into this function after you're done implementing AJAX
 
-    var name = document.getElementById("cpuBrand");
-    cpuShowQueryReturn( name.options[name.selectedIndex].text, "Hello");
+    var brand = document.getElementById("cpuBrand");
+    var name = document.getElementById("cpuName");
+
+    var xmlhttp = new XMLHttpRequest();
+    var description = "";
+    xmlhttp.onreadystatechange = function(){
+        if (this.readyState == 4 && this.status == 200) {
+            
+            description = this.responseText;
+        }
+    };
+
+    xmlhttp.open("GET", "./php/cpuAdd.php?name=" + name.options[name.selectedIndex].text, false);
+    xmlhttp.send();
+
+
+    cpuShowQueryReturn( brand.options[brand.selectedIndex].text + " "+ name.options[name.selectedIndex].text + " - " + peso.format(cpuPrice), //top text
+        description); //bottom text
     
 
     
@@ -45,6 +60,109 @@ function cpuQueryReplaceInput() {
     $('#remCpuButton').show();
     //SHOULD IMPLEMENT FUNCTION HERE THAT DISPLAYS IT AT THE SIDEBAR
 
+
+}
+
+function cpuQueryReplaceText() {
+
+    $('#cpuDataList').show();
+    $('#cpuDesc').hide(); // Replace input with text
+
+    cpuRemoveQueryReturn();
+
+    $('#remCpuButton').hide();
+    $('#addCpuButton').show();
+
+}
+
+function unlockMoboMemory(){
+    $('#moboWarning').hide();
+    $('#moboDataList').show();
+    $('#addMoboButton').show();
+}
+
+function lockMoboMemory(){
+    $('#moboWarning').show();
+    $('#moboDataList').hide();
+    $('#addMoboButton').hide();
+    $('#remMoboButton').hide();
+    removeQueryReturn('#moboProdName', '#moboDesc');
+}
+
+function unlockMemory(){
+    $('#memWarning').hide();
+    $('#memDataList').show();
+    $('#addMemButton').show();
+}
+
+function lockMemory(){
+    $('#memWarning').show();
+    $('#memDataList').hide();
+    $('#addMemButton').hide();
+    $('#remMemButton').hide();
+    removeQueryReturn('#memProdName', '#memDesc');
+}
+
+
+//Try to copy this for everything
+function populateCPU(){
+
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function(){
+
+            if (this.readyState == 4 && this.status == 200) {
+                
+                document.getElementById("cpuBrand").innerHTML = this.responseText;
+            }
+        };
+
+        xmlhttp.open("GET", "./php/cpuInitBrand.php", true);
+        xmlhttp.send();
+        var xmlhttp2 = new XMLHttpRequest();
+        xmlhttp2.onreadystatechange = function(){
+    
+            if (this.readyState == 4 && this.status == 200) {
+                document.getElementById("cpuCores").innerHTML = this.responseText;
+            }
+        };
+        xmlhttp2.open("GET", "./php/cpuInitCores.php", true);
+        xmlhttp2.send();
+}
+
+function cpuPriceGet(){
+
+    var name = document.getElementById("cpuName");
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function(){
+        if (this.readyState == 4 && this.status == 200) {
+            cpuPrice =  this.responseText;
+        }
+    };
+
+    xmlhttp.open("GET", "./php/cpuPrice.php?name=" + name.options[name.selectedIndex].text, false);
+    xmlhttp.send();
+
+    cpuPrice = parseFloat(cpuPrice);
+
+
+}
+
+function hideAtStart(){
+    //cpu card hide
+    $('#remCpuButton').hide();
+    $('#cpuLoading').hide();
+    $('#cpuProdName').hide();
+    $('#cpuDesc').hide();
+    //mobo card hide
+    $('#remMoboButton').hide();
+    $('#moboLoading').hide();
+    $('#moboDataList').hide();
+    $('#addMoboButton').hide();
+    //memory card hide
+    $('#remMemButton').hide();
+    $('#memLoading').hide();
+    $('#memDataList').hide();
+    $('#addMemButton').hide();
 
 }
 
@@ -85,8 +203,6 @@ function queryReplaceInput(cardDataList, cardLoading, addButton, remButton,
 
 }
 
-
-
 function queryReplaceText(cardDataList, cardLoading, addButton, remButton, itemProdName, itemProdDesc) {
     
     $(cardDataList).show();
@@ -100,108 +216,51 @@ function queryReplaceText(cardDataList, cardLoading, addButton, remButton, itemP
 
 }
 
-function cpuQueryReplaceText() {
-
-    $('#cpuDataList').show();
-    $('#cpuDesc').hide(); // Replace input with text
-
-    cpuRemoveQueryReturn();
-
-    $('#remCpuButton').hide();
-    $('#addCpuButton').show();
-
-}
-
-function unlockMoboMemory(){
-    $('#moboWarning').hide();
-    $('#moboDataList').show();
-    $('#addMoboButton').show();
-}
-
-function lockMoboMemory(){
-    $('#moboWarning').show();
-    $('#moboDataList').hide();
-    $('#addMoboButton').hide();
-    $('#remMoboButton').hide();
-    removeQueryReturn('#moboProdName', '#moboDesc');
-}
-
-function hideAtStart(){
-    //cpu card hide
-    $('#remCpuButton').hide();
-    $('#cpuLoading').hide();
-    $('#cpuProdName').hide();
-    $('#cpuDesc').hide();
-    //mobo card hide
-    $('#remMoboButton').hide();
-    $('#moboLoading').hide();
-    $('#moboDataList').hide();
-    $('#addMoboButton').hide();
-    //memory card hide
-
-}
-
-function populateCPUBrands(){
-
-        var xmlhttp = new XMLHttpRequest();
-        xmlhttp.onreadystatechange = function(){
-
-            if (this.readyState == 4 && this.status == 200) {
-                
-                document.getElementById("cpuBrand").innerHTML = this.responseText;
-            }
-        };
-
-        xmlhttp.open("GET", "./php/cpuInitBrand.php", true);
-        xmlhttp.send();
-        var xmlhttp2 = new XMLHttpRequest();
-        xmlhttp2.onreadystatechange = function(){
-    
-            if (this.readyState == 4 && this.status == 200) {
-                document.getElementById("cpuCores").innerHTML = this.responseText;
-            }
-        };
-        xmlhttp2.open("GET", "./php/cpuInitCores.php", true);
-        xmlhttp2.send();
-
-
-}
-function populateCPUCores(){
-
+function removeQueryReturn(itemProdName, itemProdDesc){
+    $(itemProdName).text("");
+    $(itemProdDesc).text("");
+    $(itemProdName).hide();
+    $(itemProdDesc).hide();
 }
 
 $(document).ready(function(){
     
     hideAtStart();
-    populateCPUBrands();
-    populateCPUCores();
+    populateCPU();
 
     //don't use these or try to replicate it, this shit suckss
     $('#addCpuButton').click(function(){
+        cpuPriceGet();
         cpuQueryReplaceInput();
         unlockMoboMemory();
-        
+        totalPrice += cpuPrice;
+
+        document.getElementById("cpuPriceList").innerText = "CPU: " +  peso.format(cpuPrice);
+        document.getElementById("totalPriceList").innerText = "Total: " + peso.format(totalPrice);
     });
 
     $('#remCpuButton').click(function(){
         cpuQueryReplaceText();
         lockMoboMemory();
+        lockMemory();
+        totalPrice -= cpuPrice;
+        cpuPrice = 0;
+        document.getElementById("cpuPriceList").innerText = "";
+        document.getElementById("totalPriceList").innerText = "Total: " + peso.format(totalPrice);
     });    
-
-
-        
 
     $('#cpuSearch').click(function(){
         
         var cpuBrand = document.getElementById("cpuBrand");
         
-        var cpuBrandText = cpuBrand.options[cpuBrand.selectedIndex].text;
-        
+        var cpuBrandText = cpuBrand.options[cpuBrand.selectedIndex].value;
         var cpuCores = document.getElementById("cpuCores");
-        var cpuCoresText = cpuCores.options[cpuCores.selectedIndex].text;
+
+        var cpuCoresText = cpuCores.options[cpuCores.selectedIndex].value;
+        document.getElementById("cpuName").removeAttribute("disabled");
+
 
         var xmlhttp = new XMLHttpRequest();
-        
         xmlhttp.onreadystatechange = function(){
             if (this.readyState == 4&& this.status == 200) {
                 document.getElementById("cpuName").innerHTML = this.responseText;                
@@ -210,22 +269,22 @@ $(document).ready(function(){
         
         xmlhttp.open("GET", "./php/cpuSearch.php?brand=" + cpuBrandText + "&cores=" + cpuCoresText , true);
         xmlhttp.send();
+
+
     })
 
-
-
     $('#addMoboButton').click(function(){
-
-
+        unlockMemory();
         queryReplaceInput('#moboDataList', '#moboLoading', '#addMoboButton', '#remMoboButton', 
-            '#moboProdName', '#moboDesc');
-
-
+            '#moboProdName', '#moboDesc'); //REPLACE WITH MOBOREPLACEINPUT INSTEAD OF THIS BULLSHIT
+        
+        
     });    
 
     $('#remMoboButton').click(function(){
+        lockMemory();
         queryReplaceText('#moboDataList', '#moboLoading', '#addMoboButton', '#remMoboButton', 
-            '#moboProdName', '#moboDesc');
+            '#moboProdName', '#moboDesc'); //REPLACE WITH MOBOREPLACEINPUT INSTEAD OF THIS BULLSHIT
     });    
 
 });

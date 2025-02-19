@@ -1,4 +1,6 @@
 <?php
+    $cpuname = $_GET['name'];
+    
     $servername = "localhost";
     $username = "root";
     $password = "";
@@ -9,21 +11,22 @@
     if ($conn->connect_error) {
         die("Connection failed: " . $conn->connect_error);
     }
-    $sql = "SELECT DISTINCT p.cores
+    $sql = "SELECT p.cores, p.threads, p.baseClock, p.price
             FROM processors p
-            ";
+            WHERE name='$cpuname' ";
     $result = $conn->query($sql);
 
     // Check if there are results
     if ($result->num_rows > 0) {
-        echo "<option value='' disabled selected>Select core count </option>";
         while ($row = $result->fetch_assoc()) {
-            echo "<option value='" . $row['cores'] . "'>" . $row['cores']  . "</option>";
+            echo 
+            "Cores: " . $row['cores'] .
+            " Threads: " . $row['threads'] .
+            " Clock Speed: ". $row['baseClock'] . "GHz";
         }
     } else {
-        echo "<option disabled>No core count available</option>";
+        echo "Error";
     }
 
     $conn->close();
-    
 ?>

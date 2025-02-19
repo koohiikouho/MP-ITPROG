@@ -12,8 +12,7 @@
     if ($conn->connect_error) {
         die("Connection failed: " . $conn->connect_error);
     }
-    echo "Connected successfully";
-    $sql = "SELECT p.name
+    $sql = "SELECT p.name, p.cpu_id
             FROM processors p
             WHERE vendorCode='$brand' && cores='$cores' ";
     $result = $conn->query($sql);
@@ -22,10 +21,10 @@
     if ($result->num_rows > 0) {
         echo "<option value='' disabled selected>Select a CPU</option>";
         while ($row = $result->fetch_assoc()) {
-            echo "<option value='" . $row['name'] . "'>" . $row['name']  . "</option>";
+            echo "<option value='" . $row['cpu_id'] . "'>" . $row['name']  . "</option>";
         }
     } else {
-        echo "<option disabled>No CPUs available</option>";
+        echo "<option disabled selected>No CPUs match filter</option>";
     }
 
     $conn->close();

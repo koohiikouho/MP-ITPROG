@@ -9,8 +9,8 @@
     if ($conn->connect_error) {
         die("Connection failed: " . $conn->connect_error);
     }
-    echo "Connected successfully";
-    $sql = "SELECT DISTINCT rv.mbid 
+
+    $sql = "SELECT DISTINCT rv.mbid, rv.vendorName
             FROM processors p
             JOIN ref_vendors rv ON p.vendorCode = rv.mbid;";
     $result = $conn->query($sql);
@@ -19,7 +19,7 @@
     if ($result->num_rows > 0) {
         echo "<option value='' disabled selected>Select a brand</option>";
         while ($row = $result->fetch_assoc()) {
-            echo "<option value='" . $row['mbid'] . "'>" . $row['mbid']  . "</option>";
+            echo "<option value='" . $row['mbid'] . "'>" . $row['vendorName']  . "</option>";
         }
     } else {
         echo "<option disabled>No brands available</option>";

@@ -170,10 +170,9 @@
                                              <div class="col-5">
                                                 <p>Select part:</p>
                                                 <div class="form-group">
-                                                    <select class="form-control" id="cpuName">
+                                                    <select class="form-control" id="cpuName" disabled>
                                                         <!-- TODO: do your back end magic here PLACEHOLDER VALUES-->
                                                         <option disabled selected style="display:none;"> </option>
-                                                        <option > Mambo 2000x </option>
                                                     </select>
                                                 </div>
                                              </div>
@@ -234,8 +233,6 @@
                                             <p>Brand: </p>
                                             <div class="form-group">
                                                 <select class="form-control" id="moboBrand">
-                                                    
-
                                                     <option selected>Gigabyte</option>
                                                     <option>ASUS</option>
                                                 </select>
@@ -582,6 +579,11 @@
                 <br>
                 <br>
                 <h5>Generated List Goes Here</h5>
+                <h4 id="cpuPriceList"></h4>
+                <h4 id="moboPriceList"></h4>
+
+                <hr>
+                <h4 id="totalPriceList">Total: ₱0.00</h4>
             </div>
     </div>
 
