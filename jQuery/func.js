@@ -8,6 +8,7 @@ function removeQueryReturn(itemProdName, itemProdDesc){
 
 //DOn'T MIND THIS FIRST ATTEMPT
 function cpuShowQueryReturn(cpuName, cpuDesc){
+    
     $('#cpuProdName').text(cpuName);
     $('#cpuDesc').text(cpuDesc);
 
@@ -30,11 +31,11 @@ function cpuQueryReplaceInput() {
     //you should probably do some php here
 
 
-    
-    
+
     //cpu specs should go here into this function after you're done implementing AJAX
 
-    cpuShowQueryReturn("AMD MamboX3D", "16 times the mambos - Todd Howard");
+    var name = document.getElementById("cpuBrand");
+    cpuShowQueryReturn( name.options[name.selectedIndex].text, "Hello");
     
 
     
@@ -140,14 +141,46 @@ function hideAtStart(){
 
 }
 
+function populateCPUBrands(){
+
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function(){
+
+            if (this.readyState == 4 && this.status == 200) {
+                
+                document.getElementById("cpuBrand").innerHTML = this.responseText;
+            }
+        };
+
+        xmlhttp.open("GET", "./php/cpuInitBrand.php", true);
+        xmlhttp.send();
+        var xmlhttp2 = new XMLHttpRequest();
+        xmlhttp2.onreadystatechange = function(){
+    
+            if (this.readyState == 4 && this.status == 200) {
+                document.getElementById("cpuCores").innerHTML = this.responseText;
+            }
+        };
+        xmlhttp2.open("GET", "./php/cpuInitCores.php", true);
+        xmlhttp2.send();
+
+
+}
+function populateCPUCores(){
+
+}
+
 $(document).ready(function(){
     
     hideAtStart();
+    populateCPUBrands();
+    populateCPUCores();
 
     //don't use these or try to replicate it, this shit suckss
     $('#addCpuButton').click(function(){
         cpuQueryReplaceInput();
         unlockMoboMemory();
+        
     });
 
     $('#remCpuButton').click(function(){
@@ -155,7 +188,31 @@ $(document).ready(function(){
         lockMoboMemory();
     });    
 
-    //
+
+        
+
+    $('#cpuSearch').click(function(){
+        
+        var cpuBrand = document.getElementById("cpuBrand");
+        
+        var cpuBrandText = cpuBrand.options[cpuBrand.selectedIndex].text;
+        
+        var cpuCores = document.getElementById("cpuCores");
+        var cpuCoresText = cpuCores.options[cpuCores.selectedIndex].text;
+
+        var xmlhttp = new XMLHttpRequest();
+        
+        xmlhttp.onreadystatechange = function(){
+            if (this.readyState == 4&& this.status == 200) {
+                document.getElementById("cpuName").innerHTML = this.responseText;                
+            }
+        };
+        
+        xmlhttp.open("GET", "./php/cpuSearch.php?brand=" + cpuBrandText + "&cores=" + cpuCoresText , true);
+        xmlhttp.send();
+    })
+
+
 
     $('#addMoboButton').click(function(){
 
