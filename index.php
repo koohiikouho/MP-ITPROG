@@ -155,8 +155,22 @@
                                                 <div class="form-group">
                                                     <select class="form-control" id="cpuBrand">
                                                         <!-- TODO: do your back end magic here PLACEHOLDER VALUES-->
-                                                        <option selected>AMD</option>
-                                                        <option>Intel</option>
+                                                        <?php
+                                                            $sql = "SELECT DISTINCT rv.mbid 
+                                                                    FROM processors p
+                                                                    JOIN ref_vendors rv ON p.vendorCode = rv.mbid;";
+                                                            $result = $conn->query($sql);
+
+                                                            // Check if there are results
+                                                            if ($result->num_rows > 0) {
+                                                                echo "<option value='' disabled selected>Select a brand</option>";
+                                                                while ($row = $result->fetch_assoc()) {
+                                                                    echo "<option value='" . $row['mbid'] . "'>" . $row['mbid']  . "</option>";
+                                                                }
+                                                            } else {
+                                                                echo "<option disabled>No brands available</option>";
+                                                            }
+                                                        ?>
                                                     </select>
                                                 </div>
                                              </div>
@@ -252,7 +266,22 @@
                                             <div class="form-group">
                                                 <select class="form-control" id="moboBrand">
                                                     
-                                                    <!-- TODO: do your back end magic here PLACEHOLDER VALUES-->
+                                                        <?php
+                                                            $sql = "SELECT DISTINCT rv.mbid 
+                                                                    FROM processors p
+                                                                    JOIN ref_vendors rv ON p.vendorCode = rv.mbid;";
+                                                            $result = $conn->query($sql);
+
+                                                            // Check if there are results
+                                                            if ($result->num_rows > 0) {
+                                                                echo "<option value='' disabled selected>Select a brand</option>";
+                                                                while ($row = $result->fetch_assoc()) {
+                                                                    echo "<option value='" . $row['mbid'] . "'>" . $row['mbid']  . "</option>";
+                                                                }
+                                                            } else {
+                                                                echo "<option disabled>No brands available</option>";
+                                                            }
+                                                        ?>
                                                     <option selected>Gigabyte</option>
                                                     <option>ASUS</option>
                                                 </select>
@@ -633,6 +662,7 @@
         <!-- Copyright -->
       </footer>
 
+<?php $conn->close();?>
 
 </body>
 </html>
