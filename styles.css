@@ -1,0 +1,95 @@
+.fixed {
+    position: fixed;
+    top: 20%;
+}
+
+.bouncer {
+    animation-duration: 0.3s;
+    animation-iteration-count: 1;
+    transform-origin: center;
+    transition: 0.2s;
+}
+.bounce:hover {
+    animation-name: bounce;
+    animation-timing-function: ease;
+    transform: scale(0.75, 0.75);
+}
+
+@keyframes bounce {
+  0%   { transform: scale(1, 1); }
+
+  50%  {
+        transform: scale(0.75, 0.75);
+       }
+  75%  {
+    transform: scale(0.8, 0.8);
+  }
+  
+  100% { 
+         transform: scale(0.75, 0.75); }
+}
+
+.input-no-box {
+    border: none;
+    background-color: transparent;
+    box-shadow: none;
+}
+.form-control::placeholder {
+    font-style: italic;
+}
+.bold-input .form-control{
+    font-weight: bold;
+}
+.bold-input .form-control::placeholder {
+    font-weight: normal;
+}
+.custom-input {
+    height: 40px;
+    font-size: 2rem;
+}
+.dont-pad-me {
+    padding-right: 0;
+}
+.fade {
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+}
+.fade.show {
+    opacity: 1;
+}
+.faderev{
+    opacity: 1;
+    transition: opacity 0.5s ease-in-out;
+}
+.faderev.hide {
+    opacity: 0;
+}
+.fh-color{
+    background-color: #Ac8ce1;
+}
+body {
+    background-color: #fcf7ff;
+}
+h3 {
+    color: #0b003a;
+}
+.custom-input{
+    color: #0b003a;
+}
+.subtext {
+    color: #736b97;
+}
+.rectangle {
+    height: 10px;
+    width: 100%;
+    background-color: #000000;
+    opacity: 0.3;
+  }
+
+footer {
+    background-image: url("./images/Sticker_PPG_20_The_Herta_02.webp");
+    background-repeat: no-repeat;
+    background-size: 20%;
+    background-position: 0% 200%;
+    opacity: 0.8;
+}

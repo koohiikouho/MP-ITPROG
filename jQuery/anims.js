@@ -15,7 +15,5 @@ $(document).ready(function(){
         $('#navbarShadow').addClass('show');
     }, 500);  
 
-
-
 });
 
