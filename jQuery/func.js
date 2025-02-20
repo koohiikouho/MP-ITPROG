@@ -129,6 +129,31 @@ function populateCPU(){
         xmlhttp2.send();
 }
 
+function populateMobo() {
+    // Populate motherboard brands
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function(){
+
+        if (this.readyState == 4 && this.status == 200) {
+                
+            document.getElementById("moboBrand").innerHTML = this.responseText;
+        }
+    };
+    xmlhttp.open("GET", "./php/moboInitBrand.php", true);
+    xmlhttp.send();
+
+    // Populate motherboard chipsets
+    var xmlhttp2 = new XMLHttpRequest();
+    xmlhttp2.onreadystatechange = function(){
+    
+        if (this.readyState == 4 && this.status == 200) {
+            document.getElementById("moboChip").innerHTML = this.responseText;
+        }
+    };
+    xmlhttp2.open("GET", "./php/moboInitChip.php", true);
+    xmlhttp2.send();
+}
+
 function cpuPriceGet(){
 
     var name = document.getElementById("cpuName");
@@ -227,6 +252,7 @@ $(document).ready(function(){
     
     hideAtStart();
     populateCPU();
+    populateMobo();
 
     //don't use these or try to replicate it, this shit suckss
     $('#addCpuButton').click(function(){
