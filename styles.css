@@ -44,12 +44,12 @@ html, body {
 
 @keyframes herta-eidolon-2-anim{
     0%, 100%{
-        top: 200px;
+        top: -50px;
         left: 58%;
         transform: scale(0.3) rotate(-10deg);
     }
     50% {
-        top: 220px;
+        top: -20px;
         left: 60%;
         transform: scale(0.38) rotate(-6deg);
     }
@@ -68,12 +68,12 @@ html, body {
 
 @keyframes herta-eidolon-3-anim{
     0%, 100%{
-        top: 430px;
+        top: 260px;
         left: 65%;
         transform: scale(0.3) rotate(9deg);
     }
     50% {
-        top: 450px;
+        top: 280px;
         left: 62%;
         transform: scale(0.33) rotate(3deg);
     }
@@ -92,12 +92,12 @@ html, body {
 
 @keyframes herta-eidolon-4-anim{
     0%, 100%{
-        top: 650px;
+        top: 590px;
         left: 57%;
         transform: scale(0.3) rotate(9deg);
     }
     50% {
-        top: 670px;
+        top: 630px;
         left: 60%;
         transform: scale(0.33) rotate(3deg);
     }
