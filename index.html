@@ -116,6 +116,7 @@
                                                     <select class="form-control" id="cpuBrand">
                                                         <!-- TODO: do your back end magic here PLACEHOLDER VALUES-->
                                                         
+                                                        
                                                     </select>
                                                 </div>
                                              </div>
@@ -365,7 +366,7 @@
                 </div>
             </div>
             
-
+            <!-- CARD FOR Storage -->
             <div class ="row justify-content-center mt-3"> 
                 <div class="col-sm-10 gx-5">
                     <div class ="card shadow custom-card-border custom-card-background">
@@ -377,45 +378,67 @@
                                     </div>
                                 </div>
 
-                                <div class="col-5">
-                                <p>Main OS Drive: </p>
-                                <!-- REMEMBER TO CHANGE ID -->
-                                <input class="form-control" list="datalistOptions" id="exampleDataList" placeholder="Type to search...">
-                                <datalist id="datalistOptions">
-                                    <!-- maybe we can use php here to query options for this -->
+                                <div class="col-9">
+                                    <div class ="row text-center" id="storWarning">
+                                        <h1 class="mt-2"style="color: gray;">Select Memory First</h1>
+                                    </div>
+                                    <div class ="row" id="storDataList">
+                                        <div class="col-3">
+                                            <p>Main OS Drive: </p>
+                                            <div class="form-group">
+                                                <select class="form-control" id="mainDrive">
+                                                    <!-- TODO: do your back end magic here PLACEHOLDER VALUES-->
+                                                    <option selected>Option1</option>
+                                                    <option>Option2</option>
+                                                </select>
+                                            </div>
+                                         </div>
+                                        <div class="col-3">
+                                            <p>Storage Drive:</p>
+                                            <div class="form-group">
+                                                <select class="form-control" id="storDrive">
+                                                    <!-- TODO: do your back end magic here PLACEHOLDER VALUES-->
+                                                    <option selected>Option1</option>
+                                                    <option>Option2</option>
+                                                </select>
+                                            </div>
+                                            </div>
 
-                                    <!-- Placeholder for now -->
-                                <option value="San Francisco">
-                                <option value="New York">
-                                <option value="Seattle">
-                                <option value="Los Angeles">
-                                <option value="Chicago">
-                                </datalist>
+                                        <div class="col-1">
+                                            <div class="d-flex form-group mb-2">
+                                                <button type="button" class="btn btn-outline-primary bouncer bounce w-100 button two searchbtn" id="storSearch">🔍</button>
+                                            </div>
+                                            Sort by:
+                                            <div class="d-flex form-group mt-1">
+                                                <select class="form-control" id="storSort">
+                                                    <!-- TODO: do your back end magic here PLACEHOLDER VALUES-->
+                                                    <option>💵</option>
+                                                    <option>📈</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-5">
+                                            <p>Select part:</p>
+                                            <div class="form-group">
+                                                <select class="form-control" id="storName" disabled>
+                                                    <!-- TODO: do your back end magic here PLACEHOLDER VALUES-->
+                                                    <option disabled selected style="display:none;"> </option>
+                                                </select>
+                                            </div>
+                                         </div>      
                                 </div>
-                                <div class="col-4">
-                                <p>Storage Drive:</p>
-                                <!-- REMEMBER TO CHANGE ID -->
-                                <input class="form-control" list="datalistOptions" id="exampleDataList" placeholder="Type to search...">
-                                <datalist id="datalistOptions">
-                                    <!-- maybe we can use php here to query options for this -->
-
-                                    <!-- Placeholder for now -->
-                                <option value="San Francisco">
-                                <option value="New York">
-                                <option value="Seattle">
-                                <option value="Los Angeles">
-                                <option value="Chicago">
-                                </datalist>
-                                </div>
-                                <div class="d-flex col justify-content-center mx-auto my-auto">
-                                    <button type="button" class="btn btn-outline-success w-100 h-50 ">+ Add</button>
-                                </div>
-                            </div>
+                               
+                        </div>
+                        <div class="col-1">
+                            <button type="button" class="btn btn-outline-success bouncer bounce w-100 h-100 button two" id="addStorButton">+</button>
+        
+                        </div>
                         </div>
                     </div>
                 </div>
             </div> 
-
+            </div>
+            <!-- CARD FOR Case-->
             <div class ="row justify-content-center mt-3"> 
                 <div class="col-sm-10 gx-5">
                     <div class ="card shadow custom-card-border custom-card-background">
@@ -426,31 +449,56 @@
                                         <h3>Case</h3>
                                     </div>
                                 </div>
-
                                 <div class="col-9">
-                                <!-- REMEMBER TO CHANGE ID -->
-                                <input class="form-control" list="datalistOptions" id="exampleDataList" placeholder="Type to search...">
-                                <datalist id="datalistOptions">
-                                    <!-- maybe we can use php here to query options for this -->
-
-                                    <!-- Placeholder for now -->
-                                <option value="San Francisco">
-                                <option value="New York">
-                                <option value="Seattle">
-                                <option value="Los Angeles">
-                                <option value="Chicago">
-                                </datalist>
-
-                                </div>
-                                <div class="col">
-                                    <button type="button" class="btn btn-outline-success w-100">+ Add</button>
-                                </div>
+                                    <div class ="row text-center" id="caseWarning">
+                                        <h1 class="mt-2"style="color: gray;">Select Storage First</h1>
+                                    </div>
+                                    <div class ="row" id="caseDataList">
+                                        <div class="col-5">
+                                            <p>Brand: </p>
+                                            <div class="form-group">
+                                                <select class="form-control" id="caseBrand">
+                                                    <!-- TODO: do your back end magic here PLACEHOLDER VALUES-->
+                                                    <option selected>Option1</option>
+                                                    <option>Option2</option>
+                                                </select>
+                                            </div>
+                                         </div>
+                                         <div class="col-1">
+                                            <div class="d-flex form-group mb-2">
+                                                <button type="button" class="btn btn-outline-primary bouncer bounce w-100 button two searchbtn" id="caseSearch">🔍</button>
+                                            </div>
+                                            Sort by:
+                                            <div class="d-flex form-group mt-1">
+                                                <select class="form-control" id="caseSort">
+                                                    <!-- TODO: do your back end magic here PLACEHOLDER VALUES-->
+                                                    <option>💵</option>
+                                                    <option>📈</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <p>Select part:</p>
+                                            <div class="form-group">
+                                                <select class="form-control" id="caseName" disabled>
+                                                    <!-- TODO: do your back end magic here PLACEHOLDER VALUES-->
+                                                    <option disabled selected style="display:none;"> </option>
+                                                </select>
+                                            </div>
+                                         </div>      
                             </div>
+                            
+                        </div>
+                        <div class="col">
+                            <button type="button" class="btn btn-outline-success bouncer bounce w-100 h-100 button two" id="addCaseButton">+</button>
                         </div>
                     </div>
                 </div>
+            </div>
+            </div>
             </div> 
 
+            <!-- CARD FOR PSU-->
             <div class ="row justify-content-center mt-3"> 
                 <div class="col-sm-10 gx-5">
                     <div class ="card shadow custom-card-border custom-card-background">
@@ -467,28 +515,59 @@
                                 </div>                           
 
                                 <div class="col-9">
-                                <!-- REMEMBER TO CHANGE ID -->
-                                <input class="form-control" list="datalistOptions" id="exampleDataList" placeholder="Type to search...">
-                                <datalist id="datalistOptions">
-                                    <!-- maybe we can use php here to query options for this -->
-                                    <!-- Placeholder for now -->
-                                <option value="San Francisco">
-                                <option value="New York">
-                                <option value="Seattle">
-                                <option value="Los Angeles">
-                                <option value="Chicago">
-                                </datalist>
+                                    <div class ="row text-center" id="psuWarning">
+                                        <h1 class="mt-2"style="color: gray;">Select Case First</h1>
+                                    </div>
+                                    <div class ="row" id="psuDataList">
+                                        <div class="col-5">
+                                            <p>Brand: </p>
+                                            <div class="form-group">
+                                                <select class="form-control" id="psuBrand">
+                                                    <!-- TODO: do your back end magic here PLACEHOLDER VALUES-->
+                                                    <option selected>Option1</option>
+                                                    <option>Option2</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-1">
+                                            <div class="d-flex form-group mb-2">
+                                                <button type="button" class="btn btn-outline-primary bouncer bounce w-100 button two searchbtn" id="gpuSearch">🔍</button>
+                                            </div>
+                                            Sort by:
+                                            <div class="d-flex form-group mt-1">
+                                                <select class="form-control" id="psuSort">
+                                                    <!-- TODO: do your back end magic here PLACEHOLDER VALUES-->
+                                                    <option>💵</option>
+                                                    <option>📈</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-6">
+                                            <p>Select part:</p>
+                                            <div class="form-group">
+                                                <select class="form-control" id="psuName" disabled>
+                                                    <!-- TODO: do your back end magic here PLACEHOLDER VALUES-->
+                                                    <option disabled selected style="display:none;"> </option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+
 
                                 </div>
-                                <div class="col">
-                                    <button type="button" class="btn btn-outline-success w-100">+ Add</button>
-                                </div>
+                            </div>
+                            <div class="col">
+                                <button type="button" class="btn btn-outline-success bouncer bounce w-100 h-100 button two" id="addPSUButton">+</button>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+            </div>
 
+             <!-- CARD FOR GPU-->
             <div class ="row justify-content-center mt-3"> 
                 <div class="col-sm-10 gx-5">
                     <div class ="card shadow custom-card-border custom-card-background">
@@ -505,31 +584,62 @@
                                 </div>                           
 
                                 <div class="col-9">
-                                <!-- REMEMBER TO CHANGE ID -->
-                                <input class="form-control" list="datalistOptions" id="exampleDataList" placeholder="Type to search...">
-                                <datalist id="datalistOptions">
-                                    <!-- maybe we can use php here to query options for this -->
-                                    <!-- Placeholder for now -->
-                                <option value="San Francisco">
-                                <option value="New York">
-                                <option value="Seattle">
-                                <option value="Los Angeles">
-                                <option value="Chicago">
-                                </datalist>
+                                    <div class ="row text-center" id="gpuWarning">
+                                        <h1 class="mt-2"style="color: gray;">Select PSU First</h1>
+                                    </div>
+                                    <div class ="row" id="gpuDataList">
+                                        <div class="col-5">
+                                            <p>Brand: </p>
+                                            <div class="form-group">
+                                                <select class="form-control" id="gpuBrand">
+                                                    <!-- TODO: do your back end magic here PLACEHOLDER VALUES-->
+                                                    <option selected>Option1</option>
+                                                    <option>Option2</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                         
+                                         
+                                         <div class="col-1">
+                                            <div class="d-flex form-group mb-2">
+                                                <button type="button" class="btn btn-outline-primary bouncer bounce w-100 button two searchbtn" id="gpuSearch">🔍</button>
+                                            </div>
+                                            Sort by:
+                                            <div class="d-flex form-group mt-1">
+                                                <select class="form-control" id="gpuSort">
+                                                    <!-- TODO: do your back end magic here PLACEHOLDER VALUES-->
+                                                    <option>💵</option>
+                                                    <option>📈</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-6">
+                                            <p>Select part:</p>
+                                            <div class="form-group">
+                                                <select class="form-control" id="gpuName" disabled>
+                                                    <!-- TODO: do your back end magic here PLACEHOLDER VALUES-->
+                                                    <option disabled selected style="display:none;"> </option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        
 
                                 </div>
-                                <div class="col">
-                                    <button type="button" class="btn btn-outline-success w-100">+ Add</button>
-                                </div>
+                                
+                            </div>
+                            <div class="col">
+                                <button type="button" class="btn btn-outline-success bouncer bounce w-100 h-100 button two" id="addGpuButton">+</button>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+            </div>
 
             
 
-        </div>
+            </div>
 
         <div class="col-auto mt-5">
             <div class ="mt-4">
