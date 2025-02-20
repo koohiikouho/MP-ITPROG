@@ -15,4 +15,8 @@ $(document).ready(function(){
         $('#navbarShadow').addClass('show');
     }, 500);  
 
+    $('#sidediv').scroll(function() { 
+        $('#sidecard').animate({top:$(this).scrollTop()},100,"linear");
+    })
+
 });

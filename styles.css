@@ -1,4 +1,193 @@
-/* Container styles */
+/* import stuff */
+@import url('https://fonts.googleapis.com/css2?family=Doto:wght@100..900&family=Gamja+Flower&family=Jua&family=Mochiy+Pop+P+One&family=ZCOOL+KuaiLe&display=swap');
+
+html, body {
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+
+.herta-eidolon-1{
+    animation: herta-eidolon-1-anim 15s linear infinite;
+    animation-timing-function: ease;
+    position: absolute;
+    z-index: -1;
+    /* top: 10%; */
+    left: 60%;
+    transform: scale(0.4);
+    opacity: 1;
+}
+
+@keyframes herta-eidolon-1-anim{
+    0%, 100%{
+        top: -50px;
+        left: 60%;
+        transform: scale(0.38) rotate(0deg);
+    }
+    50% {
+        top: -20px;
+        left: 62%;
+        transform: scale(0.34) rotate(3deg);
+    }
+
+}
+
+.herta-eidolon-2{
+    animation: herta-eidolon-2-anim 10s linear infinite;
+    animation-timing-function: ease;
+    position: absolute;
+    z-index: -1;
+    /* top: 10%; */
+    left: 60%;
+    opacity: 1;
+}
+
+@keyframes herta-eidolon-2-anim{
+    0%, 100%{
+        top: 200px;
+        left: 58%;
+        transform: scale(0.3) rotate(-10deg);
+    }
+    50% {
+        top: 220px;
+        left: 60%;
+        transform: scale(0.38) rotate(-6deg);
+    }
+
+}
+
+.herta-eidolon-3{
+    animation: herta-eidolon-3-anim 20s linear infinite;
+    animation-timing-function: ease;
+    position: absolute;
+    z-index: -1;
+    /* top: 10%; */
+    left: 60%;
+    opacity: 1;
+}
+
+@keyframes herta-eidolon-3-anim{
+    0%, 100%{
+        top: 430px;
+        left: 65%;
+        transform: scale(0.3) rotate(9deg);
+    }
+    50% {
+        top: 450px;
+        left: 62%;
+        transform: scale(0.33) rotate(3deg);
+    }
+
+}
+
+.herta-eidolon-4{
+    animation: herta-eidolon-4-anim 25s linear infinite;
+    animation-timing-function: ease;
+    position: absolute;
+    z-index: -1;
+    /* top: 10%; */
+    left: 60%;
+    opacity: 1;
+}
+
+@keyframes herta-eidolon-4-anim{
+    0%, 100%{
+        top: 650px;
+        left: 57%;
+        transform: scale(0.3) rotate(9deg);
+    }
+    50% {
+        top: 670px;
+        left: 60%;
+        transform: scale(0.33) rotate(3deg);
+    }
+
+}
+
+
+.bobbing-top-herta {
+    animation: top-herta-bob-anim 3s linear infinite;
+    animation-timing-function: ease;
+    position: absolute;
+    z-index: 2;
+    right: 0;
+    top: -200px;
+    }
+
+ @keyframes top-herta-bob-anim {
+      0%, 80% {
+        top: -230px;
+        transform: scale(0.5) rotate(180deg);
+      }
+      
+      60% {
+        top: -185px;
+        transform: scale(0.53) rotate(184deg);
+      }
+
+      100% {
+        top: -230px;
+        transform: scale(0.5) rotate(180deg);
+      }
+
+ }
+
+ .bobbing-side-herta {
+    animation: side-herta-bob-anim 5s linear infinite, side-herta-shuffle-anim 10s linear infinite;
+    animation-timing-function: ease;
+    position: absolute;
+    z-index: -1;
+    left: -200px;
+    transform: scale(0.3) rotate(95deg);
+ }
+
+ @keyframes side-herta-shuffle-anim{
+
+    0%, 100%{
+        top: 0;
+    }
+
+    20%{
+        top: 10%;
+    }
+
+    50%{
+        top: 95%;
+    }
+
+    70%{
+        top: 85%;
+    }
+
+
+ }
+
+ @keyframes side-herta-bob-anim {
+    0%, 80% {
+      left: -240px;
+      transform: scale(0.3) rotate(95deg);
+    }
+    
+    60% {
+      left: -190px;
+      transform: scale(0.34) rotate(90deg);
+    }
+    90% {
+      left: -240px;
+      transform: scale(0.3) rotate(85deg);
+    }
+    95% {
+      left: -240px;
+      transform: scale(0.3) rotate(100deg);
+    }
+    100% {
+        left: -240px;
+      transform: scale(0.3) rotate(95deg);
+    }
+
+}
+
+
 .scrolling-text-container {
     background-color: #8166ad;
     border-radius: 4px;
@@ -15,6 +204,7 @@
 }
 
 /* Text styles */
+
 .scrolling-text {
     display: flex;
 }
@@ -27,9 +217,6 @@
     animation: var(--direction) var(--marquee-speed) linear infinite;
 }
 
-.scrolling-text-container:hover .scrolling-text-inner>div {
-    animation-play-state: paused;
-}
 
 @keyframes scroll-left {
     0% {
@@ -98,6 +285,39 @@
             transition-duration: 0.5s;
   }
 
+  /* google fonts */
+
+.zcool-kuaile-regular {
+  font-family: "ZCOOL KuaiLe", serif;
+  font-weight: 400;
+  font-style: normal;
+}
+.jua-regular {
+    font-family: "Jua", serif;
+    font-weight: 400;
+    font-style: normal;
+  }
+.darumadrop-one-regular {
+    font-family: "Darumadrop One", serif;
+    font-weight: 400;
+    font-style: normal;
+  }
+  .mochiy-pop-p-one-regular {
+    font-family: "Mochiy Pop P One", serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 0.85em;
+  }
+
+.doto-brand {
+  font-family: "Doto", serif;
+  font-optical-sizing: auto;
+  font-weight: 700;
+  font-style: normal;
+  font-variation-settings:
+    "ROND" 0;
+}
+
 /* JIGGLE */
 .bouncer {
     animation-duration: 0.3s;
@@ -144,6 +364,8 @@
     100% { 
            transform: scale(0.75, 0.75); }
   }
+
+  /* Intro animation */
 
 .input-no-box {
     border: none;
@@ -213,6 +435,10 @@ h3 {
     width: 100%;
     background-color: #000000;
   }
+.custom-card-border{
+    border-color:#8166ad;
+    border-width: 3px;
+}
 
 footer {
     background-image: url("./images/Sticker_PPG_20_The_Herta_02.webp");
