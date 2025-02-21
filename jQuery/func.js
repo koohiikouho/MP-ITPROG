@@ -1,6 +1,7 @@
 var cpuPrice = 0;
 var moboPrice = 0;
 var totalPrice = 0;
+var socketID = "1";
 
 let peso = new Intl.NumberFormat('en-US', {
     style: 'currency',
@@ -150,7 +151,7 @@ function populateMobo() {
             document.getElementById("moboChip").innerHTML = this.responseText;
         }
     };
-    xmlhttp2.open("GET", "./php/moboInitChip.php", true);
+    xmlhttp2.open("GET", "./php/moboInitChip.php?socketID=" + socketID, true);
     xmlhttp2.send();
 }
 
@@ -168,6 +169,24 @@ function cpuPriceGet(){
     xmlhttp.send();
 
     cpuPrice = parseFloat(cpuPrice);
+
+
+}
+
+function moboPriceGet(){
+
+    var name = document.getElementById("moboChipset");
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function(){
+        if (this.readyState == 4 && this.status == 200) {
+            moboPrice =  this.responseText;
+        }
+    };
+
+    xmlhttp.open("GET", "./php/moboPrice.php?name=" + name.options[name.selectedIndex].text, false);
+    xmlhttp.send();
+
+    moboPrice = parseFloat(moboPrice);
 
 
 }
@@ -314,6 +333,30 @@ $(document).ready(function(){
         lockMemory();
         queryReplaceText('#moboDataList', '#moboLoading', '#addMoboButton', '#remMoboButton', 
             '#moboProdName', '#moboDesc'); //REPLACE WITH MOBOREPLACEINPUT INSTEAD OF THIS BULLSHIT
-    });    
+    });
+
+    $('#moboSearch').click(function(){
+        
+        var moboBrand = document.getElementById("moboBrand");
+        
+        var moboBrandText = moboBrand.options[moboBrand.selectedIndex].value;
+        var moboChipset = document.getElementById("moboChipset");
+
+        var moboChipsetText = moboChipset.options[moboChipset.selectedIndex].value;
+        document.getElementById("moboID").removeAttribute("disabled");
+
+
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function(){
+            if (this.readyState == 4&& this.status == 200) {
+                document.getElementById("moboID").innerHTML = this.responseText;                
+            }
+        };
+        
+        xmlhttp.open("GET", "./php/moboSearch.php?brand=" + moboBrandText + "&chipset=" + moboChipsetText , true);
+        xmlhttp.send();
+
+
+    })
 
 });

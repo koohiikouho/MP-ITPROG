@@ -1,31 +1,31 @@
 <?php
+    $brand = $_GET['brand'];
+    $cores = $_GET['chipset'];
+    
     $servername = "localhost";
     $username = "root";
     $password = "";
     $dbname = "dbpcpartspicker";
-
 
     $conn = new mysqli($servername, $username, $password, $dbname);
 
     if ($conn->connect_error) {
         die("Connection failed: " . $conn->connect_error);
     }
-
-    $sql = "SELECT DISTINCT rv.mbid, rv.vendorName
+    $sql = "SELECT m.brand, m.chipset
             FROM motherboards m
-            JOIN ref_vendors rv ON m.vendorCode = rv.mbid;";
+            WHERE m.vendorCode='$brand' && m.chipset='$chipset' ";
     $result = $conn->query($sql);
 
     // Check if there are results
     if ($result->num_rows > 0) {
-        echo "<option value='' disabled selected>Select a brand</option>";
+        echo "<option value='' disabled selected>Select a Motherboard</option>";
         while ($row = $result->fetch_assoc()) {
-            echo "<option value='" . $row['mbid'] . "'>" . $row['vendorName']  . "</option>";
+            echo "<option value='" . $row['brand'] . "'>" . $row['chipset']  . "</option>";
         }
     } else {
-        echo "<option disabled>No brands available</option>";
+        echo "<option disabled selected>No Motherboards match filter</option>";
     }
 
     $conn->close();
-
 ?>
