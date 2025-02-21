@@ -6,6 +6,14 @@ html, body {
     overflow-x: hidden;
 }
 
+@keyframes opacity-rampup{
+    0% {
+        opacity: 0;
+    }
+    100%{
+        opacity: 1;
+    }
+}
 
 .herta-eidolon-1{
     animation: herta-eidolon-1-anim 15s linear infinite;
@@ -33,7 +41,7 @@ html, body {
 }
 
 .herta-eidolon-2{
-    animation: herta-eidolon-2-anim 10s linear infinite;
+    animation: herta-eidolon-2-anim 10s linear infinite, opacity-rampup 1s;
     animation-timing-function: ease;
     position: absolute;
     z-index: -1;
@@ -57,7 +65,7 @@ html, body {
 }
 
 .herta-eidolon-3{
-    animation: herta-eidolon-3-anim 20s linear infinite;
+    animation: herta-eidolon-3-anim 20s linear infinite, opacity-rampup 1s;
     animation-timing-function: ease;
     position: absolute;
     z-index: -1;
@@ -81,7 +89,7 @@ html, body {
 }
 
 .herta-eidolon-4{
-    animation: herta-eidolon-4-anim 25s linear infinite;
+    animation: herta-eidolon-4-anim 25s linear infinite, opacity-rampup 1s;
     animation-timing-function: ease;
     position: absolute;
     z-index: -1;
@@ -106,7 +114,7 @@ html, body {
 
 
 .bobbing-top-herta {
-    animation: top-herta-bob-anim 3s linear infinite;
+    animation: top-herta-bob-anim 3s linear infinite, opacity-rampup 1s;
     animation-timing-function: ease;
     position: absolute;
     z-index: 2;
@@ -133,7 +141,7 @@ html, body {
  }
 
  .bobbing-side-herta {
-    animation: side-herta-bob-anim 5s linear infinite, side-herta-shuffle-anim 10s linear infinite;
+    animation: side-herta-bob-anim 5s linear infinite, side-herta-shuffle-anim 10s linear infinite, opacity-rampup 1s;
     animation-timing-function: ease;
     position: absolute;
     z-index: -1;
@@ -152,11 +160,11 @@ html, body {
     }
 
     50%{
-        top: 95%;
+        top: 120%;
     }
 
     70%{
-        top: 85%;
+        top: 110%;
     }
 
 

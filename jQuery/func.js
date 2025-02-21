@@ -188,6 +188,9 @@ function hideAtStart(){
     $('#memLoading').hide();
     $('#memDataList').hide();
     $('#addMemButton').hide();
+    //storage card hide
+    $('#storDataList').hide();
+    
 
 }
 

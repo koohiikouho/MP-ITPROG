@@ -10,7 +10,7 @@
         die("Connection failed: " . $conn->connect_error);
     }
     $sql = "SELECT DISTINCT chipset
-            FROM motherboards;";
+            FROM motherboards";
 
     $result = $conn->query($sql);
 
