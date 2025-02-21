@@ -1,7 +1,7 @@
 var cpuPrice = 0;
 var moboPrice = 0;
 var totalPrice = 0;
-var socketID = "1";
+var socketID;
 
 let peso = new Intl.NumberFormat('en-US', {
     style: 'currency',
@@ -26,43 +26,33 @@ function cpuRemoveQueryReturn(){
 }
 
 function cpuQueryReplaceInput() {
-    $('#cpuDataList').hide(); //alter this so that it has the info
+    $('#cpuDataList').hide();
     $('#cpuLoading').show();
-    //you should probably do some php here
-
-
-
-    //cpu specs should go here into this function after you're done implementing AJAX
 
     var brand = document.getElementById("cpuBrand");
     var name = document.getElementById("cpuName");
 
     var xmlhttp = new XMLHttpRequest();
-    var description = "";
-    xmlhttp.onreadystatechange = function(){
+    xmlhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
-            
-            description = this.responseText;
+            var response = JSON.parse(this.responseText); // Expecting JSON { "description": "...", "socketID": "..." }
+            cpuShowQueryReturn(
+                brand.options[brand.selectedIndex].text + " " + name.options[name.selectedIndex].text + " - " + peso.format(cpuPrice),
+                response.description
+            );
+            socketID = response.socketID;  // Store the CPU's socketID
+            populateMobo(); // Refresh motherboard selection based on new socketID
         }
     };
 
     xmlhttp.open("GET", "./php/cpuAdd.php?name=" + name.options[name.selectedIndex].text, false);
     xmlhttp.send();
 
-
-    cpuShowQueryReturn( brand.options[brand.selectedIndex].text + " "+ name.options[name.selectedIndex].text + " - " + peso.format(cpuPrice), //top text
-        description); //bottom text
-    
-
-    
-    
     $('#cpuLoading').hide();
     $('#addCpuButton').hide();
     $('#remCpuButton').show();
-    //SHOULD IMPLEMENT FUNCTION HERE THAT DISPLAYS IT AT THE SIDEBAR
-
-
 }
+
 
 function cpuQueryReplaceText() {
 
@@ -175,7 +165,7 @@ function cpuPriceGet(){
 
 function moboPriceGet(){
 
-    var name = document.getElementById("moboChipset");
+    var name = document.getElementById("moboChip");
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function(){
         if (this.readyState == 4 && this.status == 200) {
@@ -226,29 +216,33 @@ function showQueryReturn(itemProdName, itemProdDesc, newItemProdName, newItemPro
 // as well as the description
 // TODO: IMPLEMENT QUERY HERE
 
-function queryReplaceInput(cardDataList, cardLoading, addButton, remButton,
-    itemProdName, itemProdDesc) {
-
+function moboQueryReplaceInput(cardDataList, cardLoading, addButton, remButton, itemProdName, itemProdDesc) {
     $(cardDataList).hide(); 
-    $(cardLoading).show();  //alter this so that it has the info
+    $(cardLoading).show();  
 
-    
-    
-    //you should probably do some php here
-    //make it so that it is variable
-    newItemProdName = "Mamboard";
-    newItemProdDesc = "Mamthousand Speed";
-    //specs should go here into this function after you're done implementing AJAX
-    showQueryReturn(itemProdName, itemProdDesc, newItemProdName, newItemProdDesc);
+    var moboName = document.getElementById("moboName");
+
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            var response = JSON.parse(this.responseText); // Expecting JSON { "moboname": "...", "description": "..." }
+            
+            newItemProdName = response.moboname;
+            newItemProdDesc = response.description;
+
+            // Update UI with motherboard details
+            showQueryReturn(itemProdName, itemProdDesc, newItemProdName, newItemProdDesc);
+        }
+    };
+
+    xmlhttp.open("GET", "./php/moboAdd.php?name=" + moboName.options[moboName.selectedIndex].text, true);
+    xmlhttp.send();
 
     $(cardLoading).hide();
-
     $(addButton).hide();
     $(remButton).show();
-    //SHOULD IMPLEMENT FUNCTION HERE THAT DISPLAYS IT AT THE SIDEBAR
-
-
 }
+
 
 function queryReplaceText(cardDataList, cardLoading, addButton, remButton, itemProdName, itemProdDesc) {
     
@@ -321,41 +315,49 @@ $(document).ready(function(){
 
     })
 
-    $('#addMoboButton').click(function(){
+    $('#addMoboButton').click(function() {
+        moboPriceGet(); // Fetch motherboard price
+        moboQueryReplaceInput('#moboDataList', '#moboLoading', '#addMoboButton', '#remMoboButton', 
+            '#moboProdName', '#moboDesc');
         unlockMemory();
-        queryReplaceInput('#moboDataList', '#moboLoading', '#addMoboButton', '#remMoboButton', 
-            '#moboProdName', '#moboDesc'); //REPLACE WITH MOBOREPLACEINPUT INSTEAD OF THIS BULLSHIT
-        
-        
-    });    
-
-    $('#remMoboButton').click(function(){
-        lockMemory();
-        queryReplaceText('#moboDataList', '#moboLoading', '#addMoboButton', '#remMoboButton', 
-            '#moboProdName', '#moboDesc'); //REPLACE WITH MOBOREPLACEINPUT INSTEAD OF THIS BULLSHIT
+    
+        totalPrice += moboPrice;
+        document.getElementById("moboPriceList").innerText = "Motherboard: " + peso.format(moboPrice);
+        document.getElementById("totalPriceList").innerText = "Total: " + peso.format(totalPrice);
     });
+    
+    $('#remMoboButton').click(function() {
+        queryReplaceText('#moboDataList', '#moboLoading', '#addMoboButton', '#remMoboButton', 
+            '#moboProdName', '#moboDesc'); 
+        lockMemory();
+    
+        totalPrice -= moboPrice;
+        moboPrice = 0;
+        document.getElementById("moboPriceList").innerText = "";
+        document.getElementById("totalPriceList").innerText = "Total: " + peso.format(totalPrice);
+    });
+    
 
     $('#moboSearch').click(function(){
         
         var moboBrand = document.getElementById("moboBrand");
         
         var moboBrandText = moboBrand.options[moboBrand.selectedIndex].value;
-        var moboChipset = document.getElementById("moboChipset");
+        var moboChip = document.getElementById("moboChip");
 
-        var moboChipsetText = moboChipset.options[moboChipset.selectedIndex].value;
-        document.getElementById("moboID").removeAttribute("disabled");
+        var moboChipText = moboChip.options[moboChipset.selectedIndex].value;
+        document.getElementById("moboName").removeAttribute("disabled");
 
 
         var xmlhttp = new XMLHttpRequest();
         xmlhttp.onreadystatechange = function(){
             if (this.readyState == 4&& this.status == 200) {
-                document.getElementById("moboID").innerHTML = this.responseText;                
+                document.getElementById("moboName").innerHTML = this.responseText;                
             }
         };
         
-        xmlhttp.open("GET", "./php/moboSearch.php?brand=" + moboBrandText + "&chipset=" + moboChipsetText , true);
+        xmlhttp.open("GET", "./php/moboSearch.php?brand=" + moboBrandText + "&chipset=" + moboChipText , true);
         xmlhttp.send();
-
 
     })
 

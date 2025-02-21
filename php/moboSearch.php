@@ -1,6 +1,6 @@
 <?php
     $brand = $_GET['brand'];
-    $cores = $_GET['chipset'];
+    $chipset = $_GET['chipset'];
     
     $servername = "localhost";
     $username = "root";
@@ -12,16 +12,17 @@
     if ($conn->connect_error) {
         die("Connection failed: " . $conn->connect_error);
     }
-    $sql = "SELECT m.brand, m.chipset
+
+    $sql = "SELECT m.mob_id, m.moboname
             FROM motherboards m
-            WHERE m.vendorCode='$brand' && m.chipset='$chipset' ";
+            WHERE m.vendorCode='$brand' AND m.chipset='$chipset'";
     $result = $conn->query($sql);
 
     // Check if there are results
     if ($result->num_rows > 0) {
         echo "<option value='' disabled selected>Select a Motherboard</option>";
         while ($row = $result->fetch_assoc()) {
-            echo "<option value='" . $row['brand'] . "'>" . $row['chipset']  . "</option>";
+            echo "<option value='" . $row['mob_id'] . "'>" . $row['moboname'] . "</option>";
         }
     } else {
         echo "<option disabled selected>No Motherboards match filter</option>";

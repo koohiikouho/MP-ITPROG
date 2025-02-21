@@ -1,34 +1,32 @@
 <?php
-    $moboID = $_GET['ID'];
-    
-    $servername = "localhost";
-    $username = "root";
-    $password = "";
-    $dbname = "dbpcpartspicker";
+$moboID = $_GET['moboID'];
 
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "dbpcpartspicker";
 
-    // TO FIX THIS IS ASS
-    $conn = new mysqli($servername, $username, $password, $dbname);
+$conn = new mysqli($servername, $username, $password, $dbname);
 
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
-    }
-    $sql = "SELECT m.chipset, m.m2Slots, m.price
-            FROM motherboards m
-            WHERE ID='$moboID' ";
-    $result = $conn->query($sql);
+if ($conn->connect_error) {
+    die(json_encode(["error" => "Connection failed: " . $conn->connect_error]));
+}
 
-    // Check if there are results
-    if ($result->num_rows > 0) {
-        while ($row = $result->fetch_assoc()) {
-            echo 
-             $row['chipset'] ." Chipset " 
-             . $row['m2Slots'] . " M.2 Slots " .
-             $row['Price'] . "Price";
-        }
-    } else {
-        echo "Error";
-    }
+$sql = "SELECT chipset, m2Slots, price FROM motherboards WHERE MOB_ID = ?";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("i", $moboID);
+$stmt->execute();
+$result = $stmt->get_result();
 
-    $conn->close();
+if ($row = $result->fetch_assoc()) {
+    echo json_encode([
+        "description" => "{$row['chipset']} Chipset, {$row['m2Slots']} M.2 Slots",
+        "price" => number_format($row['price'], 2)
+    ]);
+} else {
+    echo json_encode(["error" => "Motherboard not found"]);
+}
+
+$stmt->close();
+$conn->close();
 ?>

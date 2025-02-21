@@ -14,7 +14,7 @@
     }
     $sql = "SELECT p.name, p.cpu_id
             FROM processors p
-            WHERE vendorCode='$brand' && cores='$cores' ";
+            WHERE vendorCode='$brand' AND cores='$cores' ";
     $result = $conn->query($sql);
 
     // Check if there are results
