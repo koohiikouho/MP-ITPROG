@@ -95,7 +95,7 @@ function lockMemory(){
     $('#memDataList').hide();
     $('#addMemButton').hide();
     $('#remMemButton').hide();
-    removeQueryReturn('#memProdName', '#memDesc');
+    removeQueryReturn('#memProdName', '#memProdDesc');
 }
 
 
@@ -380,22 +380,22 @@ function memQueryReplaceInput() {
 
 function memShowQueryReturn(memName, memDesc){
     $('#memProdName').text(memName);
-    $('#memDesc').text(memDesc);
+    $('#memProdDesc').text(memDesc);
 
     $('#memProdName').show();
-    $('#memDesc').show();
+    $('#memProdDesc').show();
 }
 
 function memRemoveQueryReturn(){
     $('#memProdName').text("");
     $('#memProdName').hide();
-    $('#memDesc').hide();
+    $('#memProdDesc').hide();
 }
 
 function memQueryReplaceText() {
 
     $('#memDataList').show();
-    $('#memDesc').hide(); // Replace input with text
+    $('#memProdDesc').hide(); // Replace input with text
 
     memRemoveQueryReturn();
 
