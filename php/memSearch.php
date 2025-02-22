@@ -1,6 +1,7 @@
 <?php
     $brand = $_GET['brand'];
     $size = $_GET['size'];
+    $ddrversion = $_GET['ddrversion'];
     
     $servername = "localhost";
     $username = "root";
@@ -15,7 +16,7 @@
     $sql = "SELECT m.mem_id, rf.vendorname, m.size
             FROM ref_vendors rf
             JOIN memorysticks m ON m.vendorcode=rf.mbid
-            WHERE m.vendorcode='$brand' AND m.size='$size'";
+            WHERE m.vendorcode='$brand' AND m.size='$size' AND m.ddrversion='$ddrversion'";
     $result = $conn->query($sql);
 
     // Check if there are results

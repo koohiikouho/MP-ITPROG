@@ -553,8 +553,10 @@ $(document).ready(function(){
                 document.getElementById("memName").innerHTML = this.responseText;                
             }
         };
- 
-        xmlhttp.open("GET", "./php/memSearch.php?brand=" + memBrandText + "&size=" + memSizeText , true);
+        
+        xmlhttp.open("GET", "./php/memSearch.php?brand=" + memBrandText + 
+                            "&size=" + memSizeText +
+                            "&ddrversion=" + ddrVersion, true);
         xmlhttp.send();
 
     })
