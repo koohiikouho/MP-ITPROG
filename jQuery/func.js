@@ -227,7 +227,7 @@ function moboQueryReplaceInput(cardDataList, cardLoading, addButton, remButton, 
         if (this.readyState == 4 && this.status == 200) {
             var response = JSON.parse(this.responseText); // Expecting JSON { "moboname": "...", "description": "..." }
             
-            newItemProdName = response.moboname;
+            newItemProdName = response.moboName;
             newItemProdDesc = response.description;
 
             // Update UI with motherboard details
@@ -304,7 +304,7 @@ $(document).ready(function(){
 
         var xmlhttp = new XMLHttpRequest();
         xmlhttp.onreadystatechange = function(){
-            if (this.readyState == 4&& this.status == 200) {
+            if (this.readyState == 4 && this.status == 200) {
                 document.getElementById("cpuName").innerHTML = this.responseText;                
             }
         };
@@ -339,19 +339,21 @@ $(document).ready(function(){
     
 
     $('#moboSearch').click(function(){
-        
+
+
+        alert ("This is working");
         var moboBrand = document.getElementById("moboBrand");
         
         var moboBrandText = moboBrand.options[moboBrand.selectedIndex].value;
         var moboChip = document.getElementById("moboChip");
 
-        var moboChipText = moboChip.options[moboChipset.selectedIndex].value;
+        var moboChipText = moboChip.options[moboChip.selectedIndex].value;
         document.getElementById("moboName").removeAttribute("disabled");
 
-
+        alert ("This is working 2");
         var xmlhttp = new XMLHttpRequest();
         xmlhttp.onreadystatechange = function(){
-            if (this.readyState == 4&& this.status == 200) {
+            if (this.readyState == 4 && this.status == 200) {
                 document.getElementById("moboName").innerHTML = this.responseText;                
             }
         };

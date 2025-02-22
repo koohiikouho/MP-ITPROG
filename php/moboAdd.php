@@ -1,5 +1,5 @@
 <?php
-$moboID = $_GET['moboID'];
+$moboName = $_GET['moboName'];
 
 $servername = "localhost";
 $username = "root";
@@ -12,9 +12,9 @@ if ($conn->connect_error) {
     die(json_encode(["error" => "Connection failed: " . $conn->connect_error]));
 }
 
-$sql = "SELECT chipset, m2Slots, price FROM motherboards WHERE MOB_ID = ?";
+$sql = "SELECT chipset, m2Slots, price FROM motherboards WHERE m.name = ?";
 $stmt = $conn->prepare($sql);
-$stmt->bind_param("i", $moboID);
+$stmt->bind_param("i", $moboName);
 $stmt->execute();
 $result = $stmt->get_result();
 
