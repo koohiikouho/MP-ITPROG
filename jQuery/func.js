@@ -178,7 +178,7 @@ function moboPriceGet(){
 
     xmlhttp.open("GET", "./php/moboPrice.php?brand=" + moboBrand.options[moboBrand.selectedIndex].text + 
                                             "&chipset=" + moboChip.options[moboChip.selectedIndex].text +
-                                            "&name=" + moboName.options[moboName.selectedIndex].text, true);
+                                            "&name=" + moboName.options[moboName.selectedIndex].text, false);
     xmlhttp.send();
 
     moboPrice = parseFloat(moboPrice);
@@ -231,43 +231,59 @@ function showQueryReturn(itemProdName, itemProdDesc, newItemProdName, newItemPro
 
 function moboQueryReplaceInput() {
     
-    $(moboDataList).hide(); 
-    $(moboLoading).show();  
+    $('#moboDataList').hide(); 
+    $('#moboLoading').show();  
     
     var moboBrand = document.getElementById("moboBrand");
     var moboChip = document.getElementById("moboChip");
     var moboName = document.getElementById("moboName");
-    var moboFullName = moboBrand.options[moboBrand.selectedIndex].text + 
-                       moboChip.options[moboChip.selectedIndex].text + 
+    var moboFullName = moboBrand.options[moboBrand.selectedIndex].text + " " +
+                       moboChip.options[moboChip.selectedIndex].text + " " +
                        moboName.options[moboName.selectedIndex].text;
-
     var xmlhttp = new XMLHttpRequest();
+
+    // Handle response
     xmlhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
             var response = JSON.parse(this.responseText); // Expecting JSON { "moboname": "...", "description": "..." }
             
             // Update UI with motherboard details
-            moboshowQueryReturn(
+            moboShowQueryReturn(
                 
                 moboFullName + " - " + peso.format(moboPrice),
                 response.description
 
             );
-            
-            // INSERT RAM COMPATIBILITY AND POPULATEMEMORY
-
-            
-            
         }
     };
 
-    xmlhttp.open("GET", "./php/moboAdd.php?name=" +  moboBrand.options[moboBrand.selectedIndex].text + 
+
+    xmlhttp.open("GET", "./php/moboAdd.php?brand=" +  moboBrand.options[moboBrand.selectedIndex].text + 
                                         "&chipset=" + moboChip.options[moboChip.selectedIndex].text +
-                                        "&name=" + moboName.options[moboName.selectedIndex].text, true);
+                                        "&name=" + moboName.options[moboName.selectedIndex].text, false);
     xmlhttp.send();
-    $(moboLoading).hide();
-    $(addButton).hide();
-    $(remButton).show();
+    $('#moboLoading').hide();
+    $('#addMoboButton').hide();
+    $('#remMoboButton').show();
+}
+
+
+function moboRemoveQueryReturn(){
+    $('#moboProdName').text("");
+    $('#moboProdName').hide();
+    $('#moboDesc').hide();
+}
+
+function moboQueryReplaceText() {
+
+    $('#moboDataList').show();
+    $('#moboDesc').hide(); // Replace input with text
+
+    moboRemoveQueryReturn();
+
+    $('#remMoboButton').hide();
+    $('#addMoboButton').show();
+
 }
 
 
@@ -346,7 +362,6 @@ $(document).ready(function(){
 
         moboPriceGet(); // Fetch motherboard price
         moboQueryReplaceInput();
-        alert("query is working");
         unlockMemory();
     
         totalPrice += moboPrice;
