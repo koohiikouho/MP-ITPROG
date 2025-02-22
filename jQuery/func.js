@@ -606,9 +606,7 @@ $(document).ready(function(){
 
     $('#caseSearch').click(function(){
         var caseBrand = document.getElementById("caseBrand");
-        alert(caseBrand.value);
         var caseBrandText = caseBrand.options[caseBrand.selectedIndex].value;
-        alert(caseBrandText);
         
         var xmlhttp = new XMLHttpRequest();
         xmlhttp.onreadystatechange = function(){
@@ -617,6 +615,8 @@ $(document).ready(function(){
             }
         };
         
+        alert(caseBrandText);
+
         xmlhttp.open("GET", "./php/caseSearch.php?brand=" + caseBrandText, true);
         xmlhttp.send();
 
