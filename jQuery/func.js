@@ -145,6 +145,30 @@ function populateMobo() {
     xmlhttp2.send();
 }
 
+function populateMem(){
+
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function(){
+
+        if (this.readyState == 4 && this.status == 200) {
+            document.getElementById("memBrand").innerHTML = this.responseText;
+        }
+    };
+
+    xmlhttp.open("GET", "./php/memInitBrand.php", true);
+    xmlhttp.send();
+    
+    var xmlhttp2 = new XMLHttpRequest();
+    xmlhttp2.onreadystatechange = function(){
+
+        if (this.readyState == 4 && this.status == 200) {
+            document.getElementById("memSize").innerHTML = this.responseText;
+        }
+    };
+    xmlhttp2.open("GET", "./php/memInitSize.php", true);
+    xmlhttp2.send();
+}
+
 function cpuPriceGet(){
 
     var name = document.getElementById("cpuName");
@@ -248,14 +272,12 @@ function moboQueryReplaceInput() {
             
             // Update UI with motherboard details
             moboShowQueryReturn(
-                
                 moboFullName + " - " + peso.format(moboPrice),
                 response.description
-
             );
+            populateMem();
         }
     };
-
 
     xmlhttp.open("GET", "./php/moboAdd.php?brand=" +  moboBrand.options[moboBrand.selectedIndex].text + 
                                         "&chipset=" + moboChip.options[moboChip.selectedIndex].text +
@@ -311,6 +333,7 @@ $(document).ready(function(){
     hideAtStart();
     populateCPU();
     populateMobo();
+    populateMem();
 
     //don't use these or try to replicate it, this shit suckss
     $('#addCpuButton').click(function(){
