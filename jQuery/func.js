@@ -2,6 +2,7 @@ var cpuPrice = 0;
 var moboPrice = 0;
 var totalPrice = 0;
 var socketID;
+var memSlots;
 
 let peso = new Intl.NumberFormat('en-US', {
     style: 'currency',
@@ -167,6 +168,18 @@ function populateMem(){
     };
     xmlhttp2.open("GET", "./php/memInitSize.php", true);
     xmlhttp2.send();
+
+    var xmlhttp3 = new XMLHttpRequest();
+    xmlhttp3.onreadystatechange = function(){
+
+        if (this.readyState == 4 && this.status == 200) {
+            document.getElementById("memQty").innerHTML = this.responseText;
+        }
+    };
+
+    xmlhttp3.open("GET", "./php/memInitQty.php?memSlots=" + memSlots, true);
+    xmlhttp3.send();
+    
 }
 
 function cpuPriceGet(){
@@ -275,6 +288,7 @@ function moboQueryReplaceInput() {
                 moboFullName + " - " + peso.format(moboPrice),
                 response.description
             );
+            memSlots = response.memSlots;
             populateMem();
         }
     };
@@ -423,5 +437,15 @@ $(document).ready(function(){
         xmlhttp.send();
 
     })
+
+    $('#addMemButton').click(function() {
+
+        memPriceGet(); // Fetch motherboard price
+        memQueryReplaceInput();
+    
+        totalPrice += memPrice;
+        document.getElementById("memPriceList").innerText = "Memory: " + peso.format(moboPrice);
+        document.getElementById("totalPriceList").innerText = "Total: " + peso.format(totalPrice);
+    });
 
 });
