@@ -185,6 +185,19 @@ function populateMem(){
     
 }
 
+function populateCase() {
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function(){
+
+        if (this.readyState == 4 && this.status == 200) {
+                
+            document.getElementById("caseBrand").innerHTML = this.responseText;
+        }
+    };
+    xmlhttp.open("GET", "./php/caseInitBrand.php", true);
+    xmlhttp.send();
+}
+
 function cpuPriceGet(){
 
     var name = document.getElementById("cpuName");
@@ -199,8 +212,6 @@ function cpuPriceGet(){
     xmlhttp.send();
 
     cpuPrice = parseFloat(cpuPrice);
-
-
 }
 
 function moboPriceGet(){
@@ -237,6 +248,27 @@ function memPriceGet(){
     };
 
     xmlhttp.open("GET", "./php/memPrice.php?brand=" + memBrand.options[memBrand.selectedIndex].text + 
+                                            "&size=" + memSize.options[memSize.selectedIndex].text, false);
+    xmlhttp.send();
+    
+    var memQtyElement = document.getElementById("memQty");
+    memQty = parseInt(memQtyElement.options[memQtyElement.selectedIndex].value, 10);
+    memPrice = parseFloat(memPrice) * memQty;
+}
+
+function casePriceGet(){
+
+    var caseBrand = document.getElementById("caseBrand");
+    var caseName = document.getElementById("caseName");
+
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function(){
+        if (this.readyState == 4 && this.status == 200) {
+            memPrice =  this.responseText;
+        }
+    };
+
+    xmlhttp.open("GET", "./php/casePrice.php?brand=" + memBrand.options[memBrand.selectedIndex].text + 
                                             "&size=" + memSize.options[memSize.selectedIndex].text, false);
     xmlhttp.send();
     
@@ -430,6 +462,7 @@ $(document).ready(function(){
     populateCPU();
     populateMobo();
     populateMem();
+    populateCase();
 
     //don't use these or try to replicate it, this shit suckss
     $('#addCpuButton').click(function(){
@@ -557,6 +590,33 @@ $(document).ready(function(){
         xmlhttp.open("GET", "./php/memSearch.php?brand=" + memBrandText + 
                             "&size=" + memSizeText +
                             "&ddrversion=" + ddrVersion, true);
+        xmlhttp.send();
+
+    })
+
+    $('#addMemButton').click(function() {
+
+        casePriceGet();
+        caseQueryReplaceInput();
+
+        totalPrice += casePrice;
+        document.getElementById("casePriceList").innerText = "Case: " + peso.format(memPrice);
+        document.getElementById("totalPriceList").innerText = "Total: " + peso.format(totalPrice);
+    });
+
+    $('#caseSearch').click(function(){
+        var caseBrand = document.getElementById("caseBrand");
+        alert(caseBrand.value);
+        var caseBrandText = caseBrand.options[caseBrand.selectedIndex].value;
+        
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function(){
+            if (this.readyState == 4 && this.status == 200) {
+                document.getElementById("caseName").innerHTML = this.responseText;                
+            }
+        };
+        
+        xmlhttp.open("GET", "./php/caseSearch.php?brand=" + caseBrandText, true);
         xmlhttp.send();
 
     })
