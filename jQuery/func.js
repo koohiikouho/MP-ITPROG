@@ -203,7 +203,6 @@ function hideAtStart(){
     $('#memDataList').hide();
     $('#addMemButton').hide();
     //storage card hide
-    $('#storDataList').hide();
     
 
 }
