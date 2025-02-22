@@ -165,7 +165,10 @@ function cpuPriceGet(){
 
 function moboPriceGet(){
 
-    var name = document.getElementById("moboChip");
+    var moboChip = document.getElementById("moboChip");
+    var moboBrand = document.getElementById("moboBrand");
+    var moboName = document.getElementById("moboName");
+    
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function(){
         if (this.readyState == 4 && this.status == 200) {
@@ -173,7 +176,9 @@ function moboPriceGet(){
         }
     };
 
-    xmlhttp.open("GET", "./php/moboPrice.php?name=" + name.options[name.selectedIndex].text, false);
+    xmlhttp.open("GET", "./php/moboPrice.php?brand=" + moboBrand.options[moboBrand.selectedIndex].text + 
+                                            "&chipset=" + moboChip.options[moboChip.selectedIndex].text +
+                                            "&name=" + moboName.options[moboName.selectedIndex].text, true);
     xmlhttp.send();
 
     moboPrice = parseFloat(moboPrice);
@@ -203,6 +208,14 @@ function hideAtStart(){
 
 }
 
+function moboShowQueryReturn(moboName, moboDesc){
+    $('#moboProdName').text(moboName);
+    $('#moboDesc').text(moboDesc);
+
+    $('#moboProdName').show();
+    $('#moboDesc').show();
+}
+
 function showQueryReturn(itemProdName, itemProdDesc, newItemProdName, newItemProdDesc){
     $(itemProdName).text(newItemProdName);
     $(itemProdDesc).text(newItemProdDesc);
@@ -216,29 +229,43 @@ function showQueryReturn(itemProdName, itemProdDesc, newItemProdName, newItemPro
 // as well as the description
 // TODO: IMPLEMENT QUERY HERE
 
-function moboQueryReplaceInput(cardDataList, cardLoading, addButton, remButton, itemProdName, itemProdDesc) {
-    $(cardDataList).hide(); 
-    $(cardLoading).show();  
-
+function moboQueryReplaceInput() {
+    
+    $(moboDataList).hide(); 
+    $(moboLoading).show();  
+    
+    var moboBrand = document.getElementById("moboBrand");
+    var moboChip = document.getElementById("moboChip");
     var moboName = document.getElementById("moboName");
+    var moboFullName = moboBrand.options[moboBrand.selectedIndex].text + 
+                       moboChip.options[moboChip.selectedIndex].text + 
+                       moboName.options[moboName.selectedIndex].text;
 
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
             var response = JSON.parse(this.responseText); // Expecting JSON { "moboname": "...", "description": "..." }
             
-            newItemProdName = response.moboName;
-            newItemProdDesc = response.description;
-
             // Update UI with motherboard details
-            showQueryReturn(itemProdName, itemProdDesc, newItemProdName, newItemProdDesc);
+            moboshowQueryReturn(
+                
+                moboFullName + " - " + peso.format(moboPrice),
+                response.description
+
+            );
+            
+            // INSERT RAM COMPATIBILITY AND POPULATEMEMORY
+
+            
+            
         }
     };
 
-    xmlhttp.open("GET", "./php/moboAdd.php?name=" + moboName.options[moboName.selectedIndex].text, true);
+    xmlhttp.open("GET", "./php/moboAdd.php?name=" +  moboBrand.options[moboBrand.selectedIndex].text + 
+                                        "&chipset=" + moboChip.options[moboChip.selectedIndex].text +
+                                        "&name=" + moboName.options[moboName.selectedIndex].text, true);
     xmlhttp.send();
-
-    $(cardLoading).hide();
+    $(moboLoading).hide();
     $(addButton).hide();
     $(remButton).show();
 }
@@ -316,9 +343,10 @@ $(document).ready(function(){
     })
 
     $('#addMoboButton').click(function() {
+
         moboPriceGet(); // Fetch motherboard price
-        moboQueryReplaceInput('#moboDataList', '#moboLoading', '#addMoboButton', '#remMoboButton', 
-            '#moboProdName', '#moboDesc');
+        moboQueryReplaceInput();
+        alert("query is working");
         unlockMemory();
     
         totalPrice += moboPrice;
@@ -327,8 +355,7 @@ $(document).ready(function(){
     });
     
     $('#remMoboButton').click(function() {
-        queryReplaceText('#moboDataList', '#moboLoading', '#addMoboButton', '#remMoboButton', 
-            '#moboProdName', '#moboDesc'); 
+        moboQueryReplaceText(); 
         lockMemory();
     
         totalPrice -= moboPrice;
@@ -336,12 +363,10 @@ $(document).ready(function(){
         document.getElementById("moboPriceList").innerText = "";
         document.getElementById("totalPriceList").innerText = "Total: " + peso.format(totalPrice);
     });
-    
 
     $('#moboSearch').click(function(){
 
 
-        alert ("This is working");
         var moboBrand = document.getElementById("moboBrand");
         
         var moboBrandText = moboBrand.options[moboBrand.selectedIndex].value;
@@ -349,8 +374,7 @@ $(document).ready(function(){
 
         var moboChipText = moboChip.options[moboChip.selectedIndex].value;
         document.getElementById("moboName").removeAttribute("disabled");
-
-        alert ("This is working 2");
+        
         var xmlhttp = new XMLHttpRequest();
         xmlhttp.onreadystatechange = function(){
             if (this.readyState == 4 && this.status == 200) {

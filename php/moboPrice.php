@@ -1,5 +1,8 @@
 <?php
-    $moboID = $_GET['moboID'];
+    $brand = isset($_GET['brand']) ? $_GET['brand'] : '';
+    $chipset = isset($_GET['chipset']) ? $_GET['chipset'] : '';
+    $name = isset($_GET['name']) ? $_GET['name'] : '';
+
     
     $servername = "localhost";
     $username = "root";
@@ -13,7 +16,7 @@
     }
     $sql = "SELECT m.price
             FROM motherboards m
-            WHERE name='$moboID' ";
+            WHERE m.name='$name' AND m.chipset= '$chipset' AND m.brand= '$brand' ";
     $result = $conn->query($sql);
 
     // Check if there are results
