@@ -1,8 +1,11 @@
 var cpuPrice = 0;
 var moboPrice = 0;
+var memPrice = 0;
 var totalPrice = 0;
 var socketID;
 var memSlots;
+var memQty;
+var ddrVersion;
 
 let peso = new Intl.NumberFormat('en-US', {
     style: 'currency',
@@ -219,8 +222,27 @@ function moboPriceGet(){
     xmlhttp.send();
 
     moboPrice = parseFloat(moboPrice);
+}
 
+function memPriceGet(){
 
+    var memBrand = document.getElementById("memBrand");
+    var memSize = document.getElementById("memSize");
+
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function(){
+        if (this.readyState == 4 && this.status == 200) {
+            memPrice =  this.responseText;
+        }
+    };
+
+    xmlhttp.open("GET", "./php/memPrice.php?brand=" + memBrand.options[memBrand.selectedIndex].text + 
+                                            "&size=" + memSize.options[memSize.selectedIndex].text, false);
+    xmlhttp.send();
+    
+    var memQtyElement = document.getElementById("memQty");
+    memQty = parseInt(memQtyElement.options[memQtyElement.selectedIndex].value, 10);
+    memPrice = parseFloat(memPrice) * memQty;
 }
 
 function hideAtStart(){
@@ -288,6 +310,7 @@ function moboQueryReplaceInput() {
                 moboFullName + " - " + peso.format(moboPrice),
                 response.description
             );
+            ddrVersion = response.ddrVersion;
             memSlots = response.memSlots;
             populateMem();
         }
@@ -321,6 +344,65 @@ function moboQueryReplaceText() {
 
 }
 
+function memQueryReplaceInput() {
+    
+    $('#memDataList').hide(); 
+    $('#memLoading').show();  
+    
+    var memBrand = document.getElementById("memBrand");
+    var memSize =  document.getElementById("memSize");
+    var memQtyElement = document.getElementById("memQty");
+    memQty = memQtyElement.options[memQtyElement.selectedIndex].text;
+
+    var memFullName = memBrand.options[memBrand.selectedIndex].text + " " +
+                      memSize.options[memSize.selectedIndex].text + "x" +
+                      memQty;
+    var xmlhttp = new XMLHttpRequest();
+
+    xmlhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            var response = JSON.parse(this.responseText);
+            
+            memShowQueryReturn(
+                memFullName + " - " + peso.format(memPrice),
+                response.description
+            );
+        }
+    };
+
+    xmlhttp.open("GET", "./php/memAdd.php?brand=" +  memBrand.options[memBrand.selectedIndex].text + 
+                                        "&size=" + memSize.options[memSize.selectedIndex].text ,false);
+    xmlhttp.send();
+    $('#memLoading').hide();
+    $('#addMemButton').hide();
+    $('#remMemButton').show();
+}
+
+function memShowQueryReturn(memName, memDesc){
+    $('#memProdName').text(memName);
+    $('#memDesc').text(memDesc);
+
+    $('#memProdName').show();
+    $('#memDesc').show();
+}
+
+function memRemoveQueryReturn(){
+    $('#memProdName').text("");
+    $('#memProdName').hide();
+    $('#memDesc').hide();
+}
+
+function memQueryReplaceText() {
+
+    $('#memDataList').show();
+    $('#memDesc').hide(); // Replace input with text
+
+    memRemoveQueryReturn();
+
+    $('#addMemButton').hide();
+    $('#remMemButton').show();
+
+}
 
 function queryReplaceText(cardDataList, cardLoading, addButton, remButton, itemProdName, itemProdDesc) {
     
@@ -440,12 +522,40 @@ $(document).ready(function(){
 
     $('#addMemButton').click(function() {
 
-        memPriceGet(); // Fetch motherboard price
+        memPriceGet();
         memQueryReplaceInput();
-    
+
         totalPrice += memPrice;
-        document.getElementById("memPriceList").innerText = "Memory: " + peso.format(moboPrice);
+        document.getElementById("memPriceList").innerText = "Memory: " + peso.format(memPrice);
         document.getElementById("totalPriceList").innerText = "Total: " + peso.format(totalPrice);
     });
 
+    $('#remMemButton').click(function() {
+        memQueryReplaceText(); 
+    
+        totalPrice -= memPrice;
+        memPrice = 0;
+        document.getElementById("memPriceList").innerText = "";
+        document.getElementById("totalPriceList").innerText = "Total: " + peso.format(totalPrice);
+    });
+
+    $('#memSearch').click(function(){
+        var memBrand = document.getElementById("memBrand");
+        
+        var memBrandText = memBrand.options[memBrand.selectedIndex].value;
+        var memSize = document.getElementById("memSize");
+
+        var memSizeText = memSize.options[memSize.selectedIndex].value;
+        document.getElementById("memName").removeAttribute("disabled");
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function(){
+            if (this.readyState == 4 && this.status == 200) {
+                document.getElementById("memName").innerHTML = this.responseText;                
+            }
+        };
+ 
+        xmlhttp.open("GET", "./php/memSearch.php?brand=" + memBrandText + "&size=" + memSizeText , true);
+        xmlhttp.send();
+
+    })
 });

@@ -1,4 +1,7 @@
 <?php
+    $brand = $_GET['brand'];
+    $size = $_GET['size'];
+    
     $servername = "localhost";
     $username = "root";
     $password = "";
@@ -9,19 +12,18 @@
     if ($conn->connect_error) {
         die("Connection failed: " . $conn->connect_error);
     }
-
-    $sql = "SELECT DISTINCT m.size
-            FROM memorysticks m;";
+    $sql = "SELECT m.price
+            FROM memorysticks m
+            JOIN ref_vendors rv ON m.vendorCode = rv.mbid 
+            WHERE m.size= '$size' AND rv.vendorName= '$brand'";
     $result = $conn->query($sql);
 
-    // Check if there are results
     if ($result->num_rows > 0) {
-        echo "<option value='' disabled selected>Select a size</option>";
         while ($row = $result->fetch_assoc()) {
-            echo "<option value='" . $row['size'] . "'>" . $row['size'] . "</option>";
+            echo $row['price'];
         }
     } else {
-        echo "<option disabled>No sizes available</option>";
+        echo "Error";
     }
 
     $conn->close();
