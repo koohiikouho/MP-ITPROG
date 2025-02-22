@@ -608,6 +608,7 @@ $(document).ready(function(){
         var caseBrand = document.getElementById("caseBrand");
         alert(caseBrand.value);
         var caseBrandText = caseBrand.options[caseBrand.selectedIndex].value;
+        alert(caseBrandText);
         
         var xmlhttp = new XMLHttpRequest();
         xmlhttp.onreadystatechange = function(){

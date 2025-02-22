@@ -14,7 +14,7 @@
     $sql = "SELECT c.cse_id, rv.vendorname, c.price, c.name
             FROM cases c
             JOIN ref_vendors rv ON rv.mbid=c.vendorcode
-            WHERE c.vendorcode='$brand'";
+            WHERE c.cse_id='$brand'";
     $result = $conn->query($sql);
 
     if ($result->num_rows > 0) {
