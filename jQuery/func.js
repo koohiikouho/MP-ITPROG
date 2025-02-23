@@ -1,11 +1,13 @@
 var cpuPrice = 0;
 var moboPrice = 0;
 var memPrice = 0;
+var stoPrice = 0;
 var totalPrice = 0;
 var socketID;
 var memSlots;
 var memQty;
 var ddrVersion;
+var m2Slots;
 
 let peso = new Intl.NumberFormat('en-US', {
     style: 'currency',
@@ -185,6 +187,30 @@ function populateMem(){
     
 }
 
+function populateSto() {
+
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function(){
+
+        if (this.readyState == 4 && this.status == 200) {
+                
+            document.getElementById("stoBrand").innerHTML = this.responseText;
+        }
+    };
+    xmlhttp.open("GET", "./php/stoInitBrand.php", true);
+    xmlhttp.send();
+
+    var xmlhttp2 = new XMLHttpRequest();
+    xmlhttp2.onreadystatechange = function(){
+    
+        if (this.readyState == 4 && this.status == 200) {
+            document.getElementById("stoType").innerHTML = this.responseText;
+        }
+    };
+    xmlhttp2.open("GET", "./php/stoInitType.php?m2Slots=" + m2Slots, true);
+    xmlhttp2.send();
+}
+
 function populateCase() {
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function(){
@@ -256,6 +282,27 @@ function memPriceGet(){
     memPrice = parseFloat(memPrice) * memQty;
 }
 
+function stoPriceGet(){
+
+    var stoBrand = document.getElementById("stoBrand");
+    var stoType = document.getElementById("stoType");
+    var stoSize = document.getElementById("stoSize");
+    
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function(){
+        if (this.readyState == 4 && this.status == 200) {
+            stoPrice =  this.responseText;
+        }
+    };
+
+    xmlhttp.open("GET", "./php/stoPrice.php?brand=" + stoBrand.options[stoBrand.selectedIndex].text + 
+                                            "&type=" + stoType.options[stoType.selectedIndex].text +
+                                            "&size=" + stoSize.options[stoSize.selectedIndex].value, false);
+    xmlhttp.send();
+
+    stoPrice = parseFloat(stoPrice);
+}
+
 function casePriceGet(){
 
     var caseName = document.getElementById("caseName");
@@ -290,7 +337,9 @@ function hideAtStart(){
     $('#memDataList').hide();
     $('#addMemButton').hide();
     //storage card hide
-    
+    $('#remStoButton').hide();
+    $('#StoProdName').hide();
+    $('#StoDesc').hide();
 
 }
 
@@ -340,7 +389,9 @@ function moboQueryReplaceInput() {
             );
             ddrVersion = response.ddrVersion;
             memSlots = response.memSlots;
+            m2Slots = response.m2Slots;
             populateMem();
+            populateSto();
         }
     };
 
@@ -429,6 +480,60 @@ function memQueryReplaceText() {
 
     $('#addMemButton').hide();
     $('#remMemButton').show();
+
+}
+
+function stoQueryReplaceInput() {
+    
+    $('#stoDataList').hide(); 
+    
+    var stoBrand = document.getElementById("stoBrand");
+    var stoType = document.getElementById("stoType");
+    var stoSize = document.getElementById("stoSize");
+    var stoFullName = stoBrand.options[stoBrand.selectedIndex].text + " " +
+                       stoSize.options[stoSize.selectedIndex].text + " " +
+                       stoType.options[stoType.selectedIndex].text;
+    var xmlhttp = new XMLHttpRequest();
+
+    // Handle response
+    xmlhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            var response = JSON.parse(this.responseText); // Expecting JSON { "moboname": "...", "description": "..." }
+            
+            // Update UI with motherboard details
+            stoShowQueryReturn(
+                stoFullName + " - " + peso.format(stoPrice),
+                response.description
+            );
+
+        }
+    };
+
+    xmlhttp.open("GET", "./php/stoAdd.php?brand=" +  stoBrand.options[stoBrand.selectedIndex].text + 
+                                        "&type=" + stoType.options[stoType.selectedIndex].text +
+                                        "&size=" + stoSize.options[stoSize.selectedIndex].text, false);
+    xmlhttp.send();
+
+    $('#addStoButton').hide();
+    $('#remStoButton').show();
+}
+
+
+function stoRemoveQueryReturn(){
+    $('#stoProdName').text("");
+    $('#stoProdName').hide();
+    $('#stoDesc').hide();
+}
+
+function stoQueryReplaceText() {
+
+    $('#stoDataList').show();
+    $('#stoDesc').hide(); // Replace input with text
+
+    stoRemoveQueryReturn();
+
+    $('#remStoButton').hide();
+    $('#addStoButton').show();
 
 }
 
@@ -615,6 +720,50 @@ $(document).ready(function(){
         xmlhttp.open("GET", "./php/memSearch.php?brand=" + memBrandText + 
                             "&size=" + memSizeText +
                             "&ddrversion=" + ddrVersion, true);
+        xmlhttp.send();
+
+    })
+
+    $('#addStoButton').click(function() {
+
+        stoPriceGet(); // Fetch motherboard price
+        alert(stoPrice);
+        stoQueryReplaceInput();
+    
+        totalPrice += stoPrice;
+        document.getElementById("stoPriceList").innerText = "Motherboard: " + peso.format(stoPrice);
+        document.getElementById("totalPriceList").innerText = "Total: " + peso.format(totalPrice);
+    });
+    
+    $('#remStoButton').click(function() {
+        stoQueryReplaceText(); 
+    
+        totalPrice -= stoPrice;
+        stoPrice = 0;
+        document.getElementById("stoPriceList").innerText = "";
+        document.getElementById("totalPriceList").innerText = "Total: " + peso.format(totalPrice);
+    });
+
+
+    $('#stoSearch').click(function(){
+
+
+        var stoBrand = document.getElementById("stoBrand");
+        
+        var stoBrandText = stoBrand.options[stoBrand.selectedIndex].value;
+        var stoType = document.getElementById("stoType");
+
+        var stoTypeText = stoType.options[stoType.selectedIndex].value;
+        document.getElementById("stoSize").removeAttribute("disabled");
+        
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function(){
+            if (this.readyState == 4 && this.status == 200) {
+                document.getElementById("stoSize").innerHTML = this.responseText;                
+            }
+        };
+        
+        xmlhttp.open("GET", "./php/stoSearch.php?brand=" + stoBrandText + "&type=" + stoTypeText , true);
         xmlhttp.send();
 
     })

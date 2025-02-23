@@ -378,35 +378,31 @@
                                 </div>
 
                                 <div class="col-9">
-                                    <div class ="row" id="storDataList">
+                                    <div class ="row" id="stoDataList">
                                         <div class="col-3">
                                             <p>Main OS Drive: </p>
                                             <div class="form-group">
-                                                <select class="form-control" id="mainDrive">
+                                                <select class="form-control" id="stoBrand">
                                                     <!-- TODO: do your back end magic here PLACEHOLDER VALUES-->
-                                                    <option selected>Option1</option>
-                                                    <option>Option2</option>
                                                 </select>
                                             </div>
                                          </div>
                                         <div class="col-3">
                                             <p>Storage Type:</p>
                                             <div class="form-group">
-                                                <select class="form-control" id="storDrive">
+                                                <select class="form-control" id="stoType">
                                                     <!-- TODO: do your back end magic here PLACEHOLDER VALUES-->
-                                                    <option selected>Option1</option>
-                                                    <option>Option2</option>
                                                 </select>
                                             </div>
                                             </div>
 
                                         <div class="col-1">
                                             <div class="d-flex form-group mb-2">
-                                                <button type="button" class="btn btn-outline-primary bouncer bounce w-100 button two searchbtn" id="storSearch">🔍</button>
+                                                <button type="button" class="btn btn-outline-primary bouncer bounce w-100 button two searchbtn" id="stoSearch">🔍</button>
                                             </div>
                                             Sort by:
                                             <div class="d-flex form-group mt-1">
-                                                <select class="form-control" id="storSort">
+                                                <select class="form-control" id="stoSort">
                                                     <!-- TODO: do your back end magic here PLACEHOLDER VALUES-->
                                                     <option>💵</option>
                                                     <option>📈</option>
@@ -414,9 +410,9 @@
                                             </div>
                                         </div>
                                         <div class="col-5">
-                                            <p>Select part:</p>
+                                            <p>Select size:</p>
                                             <div class="form-group">
-                                                <select class="form-control" id="storName">
+                                                <select class="form-control" id="stoSize", disabled>
                                                     <!-- TODO: do your back end magic here PLACEHOLDER VALUES-->
                                                     <option disabled selected style="display:none;"> </option>
                                                 </select>
@@ -426,7 +422,8 @@
                                
                         </div>
                         <div class="col-1">
-                            <button type="button" class="btn btn-outline-success bouncer bounce w-100 h-100 button two" id="addStorButton">+</button>
+                            <button type="button" class="btn btn-outline-success bouncer bounce w-100 h-100 button two" id="addStoButton">+</button>
+                            <button type="button" class="btn btn-outline-danger bouncer bounce w-100 h-100 button two" id="remStoButton">-</button>
         
                         </div>
                         </div>

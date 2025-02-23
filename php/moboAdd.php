@@ -24,7 +24,8 @@
         echo json_encode([
             "description" => "DDR version {$row['ddrversion']}, {$row['m2Slots']} M.2 Slots",
             "memSlots" => $row['memSlots'],
-            "ddrVersion" => $row['ddrversion']
+            "ddrVersion" => $row['ddrversion'],
+            "m2Slots" => $row['m2Slots']
         ]);
     } else {
         echo json_encode(["error" => "Motherboard not found"]);
