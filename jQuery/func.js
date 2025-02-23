@@ -4,6 +4,7 @@ var memPrice = 0;
 var stoPrice = 0;
 var casePrice = 0;
 var psuPrice = 0;
+var gpuPrice = 0;
 var totalPrice = 0;
 var socketID;
 var memSlots;
@@ -241,6 +242,21 @@ function populatePSU(){
     xmlhttp.send();
 }
 
+function populateGPU(){
+
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function(){
+
+        if (this.readyState == 4 && this.status == 200) {
+            
+            document.getElementById("gpuBrand").innerHTML = this.responseText;
+        }
+    };
+
+    xmlhttp.open("GET", "./php/gpuInitBrand.php", true);
+    xmlhttp.send();
+}
+
 function cpuPriceGet(){
 
     var name = document.getElementById("cpuName");
@@ -304,7 +320,6 @@ function stoPriceGet(){
     var stoBrand = document.getElementById("stoBrand");
     var stoType = document.getElementById("stoType");
     var stoSize = document.getElementById("stoSize");
-    
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function(){
         if (this.readyState == 4 && this.status == 200) {
@@ -312,7 +327,8 @@ function stoPriceGet(){
         }
     };
 
-    xmlhttp.open("GET", "./php/stoPrice.php?brand=" + stoBrand.options[stoBrand.selectedIndex].text + 
+
+    xmlhttp.open("GET", "./php/stoPrice.php?brand=" + stoBrand.options[stoBrand.selectedIndex].value + 
                                             "&type=" + stoType.options[stoType.selectedIndex].text +
                                             "&size=" + stoSize.options[stoSize.selectedIndex].value, false);
     xmlhttp.send();
@@ -353,6 +369,23 @@ function psuPriceGet(){
     psuPrice = parseFloat(psuPrice);
 }
 
+function gpuPriceGet(){
+
+    var id = document.getElementById("gpuName");
+    
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function(){
+        if (this.readyState == 4 && this.status == 200) {
+            gpuPrice =  this.responseText;
+        }
+    };
+
+    xmlhttp.open("GET", "./php/gpuPrice.php?id=" + id.value, false);
+    xmlhttp.send();
+
+    gpuPrice = parseFloat(gpuPrice);
+}
+
 function hideAtStart(){
     //cpu card hide
     $('#remCpuButton').hide();
@@ -371,11 +404,14 @@ function hideAtStart(){
     $('#addMemButton').hide();
     //storage card hide
     $('#remStoButton').hide();
-    $('#StoProdName').hide();
-    $('#StoDesc').hide();
+    $('#stoProdName').hide();
     
     $('#remCaseButton').hide();
     $('#remPsuButton').hide();
+
+    //storage card hide
+    $('#remGpuButton').hide();
+    $('#GpuProdName').hide();
 
 
 }
@@ -530,42 +566,30 @@ function stoQueryReplaceInput() {
     var stoFullName = stoBrand.options[stoBrand.selectedIndex].text + " " +
                        stoSize.options[stoSize.selectedIndex].text + " " +
                        stoType.options[stoType.selectedIndex].text;
-    var xmlhttp = new XMLHttpRequest();
 
-    // Handle response
-    xmlhttp.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
-            var response = JSON.parse(this.responseText); // Expecting JSON { "moboname": "...", "description": "..." }
-            
-            // Update UI with motherboard details
-            stoShowQueryReturn(
-                stoFullName + " - " + peso.format(stoPrice),
-                response.description
-            );
-
-        }
-    };
-
-    xmlhttp.open("GET", "./php/stoAdd.php?brand=" +  stoBrand.options[stoBrand.selectedIndex].text + 
-                                        "&type=" + stoType.options[stoType.selectedIndex].text +
-                                        "&size=" + stoSize.options[stoSize.selectedIndex].text, false);
-    xmlhttp.send();
+    stoShowQueryReturn(
+        stoFullName + " - " + peso.format(stoPrice)
+    );
 
     $('#addStoButton').hide();
     $('#remStoButton').show();
 }
 
 
+function stoShowQueryReturn(stoName){
+    $('#stoProdName').text(stoName);
+    $('#stoProdName').show();
+}
+
+
 function stoRemoveQueryReturn(){
     $('#stoProdName').text("");
     $('#stoProdName').hide();
-    $('#stoDesc').hide();
 }
 
 function stoQueryReplaceText() {
 
     $('#stoDataList').show();
-    $('#stoDesc').hide(); // Replace input with text
 
     stoRemoveQueryReturn();
 
@@ -667,6 +691,53 @@ function psuQueryReplaceText() {
 
 }
 
+function gpuQueryReplaceInput() {
+    
+    $('#gpuDataList').hide(); 
+    //$('#gpuLoading').show();
+
+    var gpuBrand = document.getElementById("gpuBrand");
+    var gpuBrandText = gpuBrand.options[gpuBrand.selectedIndex].text;
+    var gpuName = document.getElementById("gpuName");
+    var gpuNameText = gpuName.options[gpuName.selectedIndex].text;
+    var xmlhttp = new XMLHttpRequest();
+
+    xmlhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            var response = JSON.parse(this.responseText);
+            
+            gpuShowQueryReturn(
+                gpuBrandText + " " + gpuNameText + peso.format(gpuPrice)
+            );
+        }
+    };
+
+    //$('#gpuLoading').hide();
+    $('#addGpuButton').hide();
+    $('#remGpuButton').show();
+}
+
+function gpuShowQueryReturn(gpuName){
+    $('#gpuProdName').text(gpuName);
+
+    $('#gpuProdName').show();
+}
+
+function gpuRemoveQueryReturn(){
+    $('#gpuProdName').text("");
+    $('#gpuProdName').hide();
+}
+
+function gpuQueryReplaceText() {
+
+    $('#gpuDataList').show();
+    gpuRemoveQueryReturn();
+
+    $('#remGpuButton').hide();
+    $('#addGpuButton').show();
+
+}
+
 function queryReplaceText(cardDataList, cardLoading, addButton, remButton, itemProdName, itemProdDesc) {
     
     $(cardDataList).show();
@@ -696,6 +767,7 @@ $(document).ready(function(){
     populateSto();
     populateCase();
     populatePSU();
+    populateGPU();
 
     //don't use these or try to replicate it, this shit suckss
     $('#addCpuButton').click(function(){
@@ -829,12 +901,11 @@ $(document).ready(function(){
 
     $('#addStoButton').click(function() {
 
-        stoPriceGet(); // Fetch motherboard price
-        alert(stoPrice);
+        stoPriceGet();
         stoQueryReplaceInput();
     
         totalPrice += stoPrice;
-        document.getElementById("stoPriceList").innerText = "Motherboard: " + peso.format(stoPrice);
+        document.getElementById("stoPriceList").innerText = "Storage: " + peso.format(stoPrice);
         document.getElementById("totalPriceList").innerText = "Total: " + peso.format(totalPrice);
     });
     
@@ -936,6 +1007,42 @@ $(document).ready(function(){
         };
 
         xmlhttp.open("GET", "./php/psuSearch.php?brand=" + psuBrandText, true);
+        xmlhttp.send();
+
+    })
+
+    $('#addGpuButton').click(function() {
+        gpuPriceGet();
+        gpuQueryReplaceInput();
+
+        totalPrice += gpuPrice;
+        document.getElementById("gpuPriceList").innerText = "GPU: " + peso.format(gpuPrice);
+        document.getElementById("totalPriceList").innerText = "Total: " + peso.format(totalPrice);
+    });
+
+    $('#remGpuButton').click(function() {
+        gpuQueryReplaceText();
+    
+        totalPrice -= gpuPrice;
+        gpuPrice = 0;
+        document.getElementById("gpuPriceList").innerText = "";
+        document.getElementById("totalPriceList").innerText = "Total: " + peso.format(totalPrice);
+    });
+
+    $('#gpuSearch').click(function(){
+        var gpuBrand = document.getElementById("gpuBrand");
+        var gpuBrandText = gpuBrand.options[gpuBrand.selectedIndex].value;
+
+        document.getElementById("gpuName").removeAttribute("disabled");
+        
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function(){
+            if (this.readyState == 4 && this.status == 200) {
+                document.getElementById("gpuName").innerHTML = this.responseText;                
+            }
+        };
+
+        xmlhttp.open("GET", "./php/gpuSearch.php?brand=" + gpuBrandText, true);
         xmlhttp.send();
 
     })
