@@ -336,6 +336,23 @@ function casePriceGet(){
     casePrice = parseFloat(casePrice);
 }
 
+function psuPriceGet(){
+
+    var id = document.getElementById("psuName");
+    
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function(){
+        if (this.readyState == 4 && this.status == 200) {
+            psuPrice =  this.responseText;
+        }
+    };
+
+    xmlhttp.open("GET", "./php/psuPrice.php?id=" + id.value, false);
+    xmlhttp.send();
+
+    psuPrice = parseFloat(psuPrice);
+}
+
 function hideAtStart(){
     //cpu card hide
     $('#remCpuButton').hide();
@@ -358,6 +375,8 @@ function hideAtStart(){
     $('#StoDesc').hide();
     
     $('#remCaseButton').hide();
+    $('#remPsuButton').hide();
+
 
 }
 
@@ -608,7 +627,8 @@ function psuQueryReplaceInput() {
     $('#psuDataList').hide(); 
     //$('#psuLoading').show();  
     
-    var caseName = document.getElementById("psuName");
+    var psuName = document.getElementById("psuName");
+    var psuNameText = psuName.options[psuName.selectedIndex].text;
     var xmlhttp = new XMLHttpRequest();
 
     xmlhttp.onreadystatechange = function() {
@@ -616,13 +636,13 @@ function psuQueryReplaceInput() {
             var response = JSON.parse(this.responseText);
             
             caseShowQueryReturn(
-                psuName + " - " + peso.format(psuPrice)
+                psuNameText + " - " + peso.format(psuPrice)
             );
         }
     };
 
     //$('#psuLoading').hide();
-    $('#adPsuButton').hide();
+    $('#addPsuButton').hide();
     $('#remPsuButton').show();
 }
 
@@ -632,15 +652,18 @@ function psuShowQueryReturn(psuName){
     $('#psuProdName').show();
 }
 
+function psuRemoveQueryReturn(){
+    $('#psuProdName').text("");
+    $('#psuProdName').hide();
+}
+
 function psuQueryReplaceText() {
 
     $('#psuDataList').show();
-    $('#psuDesc').hide(); // Replace input with text
-
     psuRemoveQueryReturn();
 
-    $('#remCaseButton').hide();
-    $('#addCaseButton').show();
+    $('#remPsuButton').hide();
+    $('#addPsuButton').show();
 
 }
 
@@ -884,11 +907,10 @@ $(document).ready(function(){
     })
 
     $('#addPsuButton').click(function() {
-
         psuPriceGet();
         psuQueryReplaceInput();
 
-        totalPrice += casePrice;
+        totalPrice += psuPrice;
         document.getElementById("psuPriceList").innerText = "PSU: " + peso.format(psuPrice);
         document.getElementById("totalPriceList").innerText = "Total: " + peso.format(totalPrice);
     });
