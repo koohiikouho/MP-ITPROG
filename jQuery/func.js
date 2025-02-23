@@ -331,9 +331,8 @@ function casePriceGet(){
         }
     };
 
-    xmlhttp.open("GET", "./php/casePrice.php?id=" + caseName.options[caseName.selectedIndex].text , false);
+    xmlhttp.open("GET", "./php/casePrice.php?id=" + caseName.value , false);
     xmlhttp.send();
-
     casePrice = parseFloat(casePrice);
 }
 
@@ -357,6 +356,8 @@ function hideAtStart(){
     $('#remStoButton').hide();
     $('#StoProdName').hide();
     $('#StoDesc').hide();
+    
+    $('#remCaseButton').hide();
 
 }
 
@@ -495,8 +496,8 @@ function memQueryReplaceText() {
 
     memRemoveQueryReturn();
 
-    $('#addMemButton').hide();
-    $('#remMemButton').show();
+    $('#addMemButton').show();
+    $('#remMemButton').hide();
 
 }
 
@@ -560,6 +561,7 @@ function caseQueryReplaceInput() {
     $('#caseLoading').show();  
     
     var caseName = document.getElementById("caseName");
+    var caseNameText = caseName.options[caseName.selectedIndex].text;
     var xmlhttp = new XMLHttpRequest();
 
     xmlhttp.onreadystatechange = function() {
@@ -567,7 +569,7 @@ function caseQueryReplaceInput() {
             var response = JSON.parse(this.responseText);
             
             caseShowQueryReturn(
-                caseName + " - " + peso.format(casePrice)
+                caseNameText + " - " + peso.format(casePrice)
             );
         }
     };
@@ -581,6 +583,12 @@ function caseShowQueryReturn(caseName){
     $('#caseProdName').text(caseName);
 
     $('#caseProdName').show();
+}
+
+function caseRemoveQueryReturn(){
+    $('#caseProdName').text("");
+    $('#caseProdName').hide();
+    $('#caseDesc').hide();
 }
 
 function caseQueryReplaceText() {
