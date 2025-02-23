@@ -258,23 +258,19 @@ function memPriceGet(){
 
 function casePriceGet(){
 
-    var caseBrand = document.getElementById("caseBrand");
     var caseName = document.getElementById("caseName");
 
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function(){
         if (this.readyState == 4 && this.status == 200) {
-            memPrice =  this.responseText;
+            casePrice =  this.responseText;
         }
     };
 
-    xmlhttp.open("GET", "./php/casePrice.php?brand=" + memBrand.options[memBrand.selectedIndex].text + 
-                                            "&size=" + memSize.options[memSize.selectedIndex].text, false);
+    xmlhttp.open("GET", "./php/casePrice.php?id=" + caseName.options[caseName.selectedIndex].text , false);
     xmlhttp.send();
-    
-    var memQtyElement = document.getElementById("memQty");
-    memQty = parseInt(memQtyElement.options[memQtyElement.selectedIndex].value, 10);
-    memPrice = parseFloat(memPrice) * memQty;
+
+    casePrice = parseFloat(casePrice);
 }
 
 function hideAtStart(){
@@ -436,6 +432,35 @@ function memQueryReplaceText() {
 
 }
 
+function caseQueryReplaceInput() {
+    
+    $('#caseDataList').hide(); 
+    $('#caseLoading').show();  
+    
+    var caseNamw = document.getElementById("caseName");
+    var xmlhttp = new XMLHttpRequest();
+
+    xmlhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            var response = JSON.parse(this.responseText);
+            
+            caseShowQueryReturn(
+                caseName + " - " + peso.format(memPrice)
+            );
+        }
+    };
+
+    $('#caseLoading').hide();
+    $('#addCaseButton').hide();
+    $('#remCaseButton').show();
+}
+
+function caseShowQueryReturn(caseName){
+    $('#caseProdName').text(caseName);
+
+    $('#caseProdName').show();
+}
+
 function queryReplaceText(cardDataList, cardLoading, addButton, remButton, itemProdName, itemProdDesc) {
     
     $(cardDataList).show();
@@ -594,7 +619,7 @@ $(document).ready(function(){
 
     })
 
-    $('#addMemButton').click(function() {
+    $('#addCaseButton').click(function() {
 
         casePriceGet();
         caseQueryReplaceInput();
@@ -614,8 +639,6 @@ $(document).ready(function(){
                 document.getElementById("caseName").innerHTML = this.responseText;                
             }
         };
-        
-        alert(caseBrandText);
 
         xmlhttp.open("GET", "./php/caseSearch.php?brand=" + caseBrandText, true);
         xmlhttp.send();
