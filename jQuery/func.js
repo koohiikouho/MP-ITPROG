@@ -2,6 +2,8 @@ var cpuPrice = 0;
 var moboPrice = 0;
 var memPrice = 0;
 var stoPrice = 0;
+var casePrice = 0;
+var psuPrice = 0;
 var totalPrice = 0;
 var socketID;
 var memSlots;
@@ -221,6 +223,21 @@ function populateCase() {
         }
     };
     xmlhttp.open("GET", "./php/caseInitBrand.php", true);
+    xmlhttp.send();
+}
+
+function populatePSU(){
+
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function(){
+
+        if (this.readyState == 4 && this.status == 200) {
+            
+            document.getElementById("psuBrand").innerHTML = this.responseText;
+        }
+    };
+
+    xmlhttp.open("GET", "./php/psuInitBrand.php", true);
     xmlhttp.send();
 }
 
@@ -542,7 +559,7 @@ function caseQueryReplaceInput() {
     $('#caseDataList').hide(); 
     $('#caseLoading').show();  
     
-    var caseNamw = document.getElementById("caseName");
+    var caseName = document.getElementById("caseName");
     var xmlhttp = new XMLHttpRequest();
 
     xmlhttp.onreadystatechange = function() {
@@ -550,7 +567,7 @@ function caseQueryReplaceInput() {
             var response = JSON.parse(this.responseText);
             
             caseShowQueryReturn(
-                caseName + " - " + peso.format(memPrice)
+                caseName + " - " + peso.format(casePrice)
             );
         }
     };
@@ -564,6 +581,59 @@ function caseShowQueryReturn(caseName){
     $('#caseProdName').text(caseName);
 
     $('#caseProdName').show();
+}
+
+function caseQueryReplaceText() {
+
+    $('#caseDataList').show();
+    $('#caseDesc').hide(); // Replace input with text
+
+    caseRemoveQueryReturn();
+
+    $('#remCaseButton').hide();
+    $('#addCaseButton').show();
+
+}
+
+function psuQueryReplaceInput() {
+    
+    $('#psuDataList').hide(); 
+    //$('#psuLoading').show();  
+    
+    var caseName = document.getElementById("psuName");
+    var xmlhttp = new XMLHttpRequest();
+
+    xmlhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            var response = JSON.parse(this.responseText);
+            
+            caseShowQueryReturn(
+                psuName + " - " + peso.format(psuPrice)
+            );
+        }
+    };
+
+    //$('#psuLoading').hide();
+    $('#adPsuButton').hide();
+    $('#remPsuButton').show();
+}
+
+function psuShowQueryReturn(psuName){
+    $('#psuProdName').text(psuName);
+
+    $('#psuProdName').show();
+}
+
+function psuQueryReplaceText() {
+
+    $('#psuDataList').show();
+    $('#psuDesc').hide(); // Replace input with text
+
+    psuRemoveQueryReturn();
+
+    $('#remCaseButton').hide();
+    $('#addCaseButton').show();
+
 }
 
 function queryReplaceText(cardDataList, cardLoading, addButton, remButton, itemProdName, itemProdDesc) {
@@ -592,7 +662,9 @@ $(document).ready(function(){
     populateCPU();
     populateMobo();
     populateMem();
+    populateSto();
     populateCase();
+    populatePSU();
 
     //don't use these or try to replicate it, this shit suckss
     $('#addCpuButton').click(function(){
@@ -774,7 +846,16 @@ $(document).ready(function(){
         caseQueryReplaceInput();
 
         totalPrice += casePrice;
-        document.getElementById("casePriceList").innerText = "Case: " + peso.format(memPrice);
+        document.getElementById("casePriceList").innerText = "Case: " + peso.format(casePrice);
+        document.getElementById("totalPriceList").innerText = "Total: " + peso.format(totalPrice);
+    });
+
+    $('#remCaseButton').click(function() {
+        caseQueryReplaceText(); 
+    
+        totalPrice -= casePrice;
+        casePrice = 0;
+        document.getElementById("casePriceList").innerText = "";
         document.getElementById("totalPriceList").innerText = "Total: " + peso.format(totalPrice);
     });
 
@@ -790,6 +871,41 @@ $(document).ready(function(){
         };
 
         xmlhttp.open("GET", "./php/caseSearch.php?brand=" + caseBrandText, true);
+        xmlhttp.send();
+
+    })
+
+    $('#addPsuButton').click(function() {
+
+        psuPriceGet();
+        psuQueryReplaceInput();
+
+        totalPrice += casePrice;
+        document.getElementById("psuPriceList").innerText = "PSU: " + peso.format(psuPrice);
+        document.getElementById("totalPriceList").innerText = "Total: " + peso.format(totalPrice);
+    });
+
+    $('#remPsuButton').click(function() {
+        psuQueryReplaceText(); 
+    
+        totalPrice -= psuPrice;
+        psuPrice = 0;
+        document.getElementById("psuPriceList").innerText = "";
+        document.getElementById("totalPriceList").innerText = "Total: " + peso.format(totalPrice);
+    });
+
+    $('#psuSearch').click(function(){
+        var psuBrand = document.getElementById("psuBrand");
+        var psuBrandText = psuBrand.options[psuBrand.selectedIndex].value;
+        
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function(){
+            if (this.readyState == 4 && this.status == 200) {
+                document.getElementById("psuName").innerHTML = this.responseText;                
+            }
+        };
+
+        xmlhttp.open("GET", "./php/psuSearch.php?brand=" + psuBrandText, true);
         xmlhttp.send();
 
     })
