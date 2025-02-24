@@ -69,7 +69,7 @@ function cpuQueryReplaceInput() {
         }
     };
 
-    xmlhttp.open("GET", "./php/cpuAdd.php?name=" + name.options[name.selectedIndex].text, false);
+    xmlhttp.open("GET", "./php/cpuAdd.php?name=" + name.options[name.selectedIndex].value, false);
     xmlhttp.send();
 
     $('#cpuLoading').hide();
@@ -303,7 +303,7 @@ function moboPriceGet(){
 
     xmlhttp.open("GET", "./php/moboPrice.php?brand=" + moboBrand.options[moboBrand.selectedIndex].text + 
                                             "&chipset=" + moboChip.options[moboChip.selectedIndex].text +
-                                            "&name=" + moboName.options[moboName.selectedIndex].text, false);
+                                            "&mob_id=" + moboName.options[moboName.selectedIndex].value, false);
     xmlhttp.send();
 
     moboPrice = parseFloat(moboPrice);
@@ -465,16 +465,26 @@ function moboQueryReplaceInput() {
                        moboName.options[moboName.selectedIndex].text;
     var xmlhttp = new XMLHttpRequest();
 
+    var moboSort = document.getElementById("moboSort");
+    var moboSortText = cpuSort.options[moboSort.selectedIndex].id;
+
     // Handle response
     xmlhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
             var response = JSON.parse(this.responseText); // Expecting JSON { "moboname": "...", "description": "..." }
-            
-            // Update UI with motherboard details
-            moboShowQueryReturn(
-                moboFullName + " - " + peso.format(moboPrice),
-                response.description
-            );
+
+            // WIP
+            if (moboSortText == "price") {
+                moboShowQueryReturn(
+                    moboFullName,
+                    response.description
+                );
+            } else if (moboSortText == "popularity") {
+                moboShowQueryReturn(
+                    moboFullName + " - " + peso.format(moboPrice),
+                    response.description
+                );
+            }
             ddrVersion = response.ddrVersion;
             memSlots = response.memSlots;
             m2Slots = response.m2Slots;
@@ -483,10 +493,9 @@ function moboQueryReplaceInput() {
         }
     };
 
-    xmlhttp.open("GET", "./php/moboAdd.php?brand=" +  moboBrand.options[moboBrand.selectedIndex].text + 
-                                        "&chipset=" + moboChip.options[moboChip.selectedIndex].text +
-                                        "&name=" + moboName.options[moboName.selectedIndex].text, false);
+    xmlhttp.open("GET", "./php/moboAdd.php?mob_id=" +  moboName.options[moboName.selectedIndex].value, false);
     xmlhttp.send();
+
     $('#moboLoading').hide();
     $('#addMoboButton').hide();
     $('#remMoboButton').show();
@@ -582,9 +591,19 @@ function stoQueryReplaceInput() {
                        stoSize.options[stoSize.selectedIndex].text + " " +
                        stoType.options[stoType.selectedIndex].text;
 
-    stoShowQueryReturn(
-        stoFullName + " - " + peso.format(stoPrice)
-    );
+    var stoSort = document.getElementById("stoSort");
+    var stoSortText = stoSort.options[stoSort.selectedIndex].id;
+    
+    // No need to concat price to display
+    if (stoSortText == "price") {
+        stoShowQueryReturn(
+            stoFullName
+        );
+    } else if (stoSortText == "popularity") {
+        stoShowQueryReturn(
+            stoFullName + " - " + peso.format(stoPrice)
+        );
+    }
 
     $('#addStoButton').hide();
     $('#remStoButton').show();
@@ -873,7 +892,10 @@ $(document).ready(function(){
 
         var moboChipText = moboChip.options[moboChip.selectedIndex].value;
         document.getElementById("moboName").removeAttribute("disabled");
-        
+
+        var moboSort = document.getElementById("moboSort");
+        var moboSortText = moboSort.options[moboSort.selectedIndex].id;
+
         var xmlhttp = new XMLHttpRequest();
         xmlhttp.onreadystatechange = function(){
             if (this.readyState == 4 && this.status == 200) {
@@ -881,7 +903,7 @@ $(document).ready(function(){
             }
         };
         
-        xmlhttp.open("GET", "./php/moboSearch.php?brand=" + moboBrandText + "&chipset=" + moboChipText , true);
+        xmlhttp.open("GET", "./php/moboSearch.php?brand=" + moboBrandText + "&chipset=" + moboChipText + "&sortby=" + moboSortText, true);
         xmlhttp.send();
 
     })
@@ -913,6 +935,10 @@ $(document).ready(function(){
 
         var memSizeText = memSize.options[memSize.selectedIndex].value;
         document.getElementById("memName").removeAttribute("disabled");
+
+        var memSort = document.getElementById("memSort");
+        var memSortText = memSort.options[memSort.selectedIndex].id;
+
         var xmlhttp = new XMLHttpRequest();
         xmlhttp.onreadystatechange = function(){
             if (this.readyState == 4 && this.status == 200) {
@@ -922,7 +948,7 @@ $(document).ready(function(){
         
         xmlhttp.open("GET", "./php/memSearch.php?brand=" + memBrandText + 
                             "&size=" + memSizeText +
-                            "&ddrversion=" + ddrVersion, true);
+                            "&ddrversion=" + ddrVersion + "&sortby=" + memSortText, true);
         xmlhttp.send();
 
     })
@@ -955,6 +981,9 @@ $(document).ready(function(){
         var stoBrandText = stoBrand.options[stoBrand.selectedIndex].value;
         var stoType = document.getElementById("stoType");
 
+        var stoSort = document.getElementById("stoSort");
+        var stoSortText = stoSort.options[stoSort.selectedIndex].id;
+        
         var stoTypeText = stoType.options[stoType.selectedIndex].value;
         document.getElementById("stoSize").removeAttribute("disabled");
         
@@ -964,8 +993,9 @@ $(document).ready(function(){
                 document.getElementById("stoSize").innerHTML = this.responseText;                
             }
         };
-        
-        xmlhttp.open("GET", "./php/stoSearch.php?brand=" + stoBrandText + "&type=" + stoTypeText , true);
+
+
+        xmlhttp.open("GET", "./php/stoSearch.php?brand=" + stoBrandText + "&type=" + stoTypeText + "&sortby=" + stoSortText, true);
         xmlhttp.send();
 
     })

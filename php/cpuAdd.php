@@ -14,7 +14,7 @@ if ($conn->connect_error) {
 
 $sql = "SELECT p.cores, p.threads, p.baseClock, p.price, p.socketID
         FROM processors p
-        WHERE p.name = ?";
+        WHERE p.cpu_id = ?";
 
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("s", $cpuname);

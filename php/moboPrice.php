@@ -1,7 +1,7 @@
 <?php
     $brand = $_GET['brand'];
     $chipset = $_GET['chipset'];
-    $name = $_GET['name'];
+    $mob_id = $_GET['mob_id'];
 
     
     $servername = "localhost";
@@ -17,7 +17,7 @@
     $sql = "SELECT m.price
             FROM motherboards m
             JOIN ref_vendors rv ON m.vendorCode = rv.mbid 
-            WHERE m.name='$name' AND m.chipset= '$chipset' AND rv.vendorName= '$brand' ";
+            WHERE m.mob_id='$mob_id' AND m.chipset= '$chipset' AND rv.vendorName= '$brand' ";
     $result = $conn->query($sql);
 
     // Check if there are results
