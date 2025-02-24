@@ -786,6 +786,15 @@ $(document).ready(function(){
         lockMemory();
         totalPrice -= cpuPrice;
         cpuPrice = 0;
+
+        // Also remove mobo price and memory price
+        totalPrice -= moboPrice;
+        moboPrice = 0;
+        document.getElementById("moboPriceList").innerText = "";
+        totalPrice -= memPrice;
+        memPrice = 0;
+        document.getElementById("memPriceList").innerText = "";
+
         document.getElementById("cpuPriceList").innerText = "";
         document.getElementById("totalPriceList").innerText = "Total: " + peso.format(totalPrice);
     });    
@@ -832,6 +841,10 @@ $(document).ready(function(){
         totalPrice -= moboPrice;
         moboPrice = 0;
         document.getElementById("moboPriceList").innerText = "";
+        memPrice = 0;
+        totalPrice -= memPrice;
+        document.getElementById("memPriceList").innerText = "";
+
         document.getElementById("totalPriceList").innerText = "Total: " + peso.format(totalPrice);
     });
 
