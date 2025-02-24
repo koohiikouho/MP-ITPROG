@@ -44,7 +44,7 @@
                 }
     
                 // Store raw capacity in `value` while displaying formatted text
-                echo "<option value='" . $capacity . "'>" . $displayCapacity . " -  ₱" . number_format($row['price'], 2) . "</option>";
+                echo "<option value='" . $row['drv_id'] . "'>" . $displayCapacity . " -  ₱" . number_format($row['price'], 2) . "</option>";
             }
         } else {
             echo "<option disabled selected>No Storage Drives match filter</option>";
@@ -73,7 +73,7 @@
                 }
     
                 // Store raw capacity in `value` while displaying formatted text
-                echo "<option value='" . $capacity . "'>" . $displayCapacity . " -  Used by " . $row['popularity'] . " build/s" . "</option>";
+                echo "<option value='" . $row['drv_id'] . "'>" . $displayCapacity . " -  Used by " . $row['popularity'] . " build/s" . "</option>";
             }
         } else {
             echo "<option disabled selected>No Storage Drives match filter</option>";
