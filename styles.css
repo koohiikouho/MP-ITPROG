@@ -160,11 +160,11 @@ html, body {
     }
 
     50%{
-        top: 105%;
+        top: 80%;
     }
 
     70%{
-        top: 95%;
+        top: 75%;
     }
 
 
@@ -239,6 +239,7 @@ html, body {
 .fixed {
     position: fixed;
     top: 20%;
+    z-index: 1;
 }
 
 
@@ -454,4 +455,17 @@ footer {
     background-size: 20%;
     background-position: 0% 150%;
     opacity: 0.8;
+}
+
+.custom-card-background{
+    background-color: rgba(255, 255, 255, 0.9);
+
+
+}
+
+.custom-card-background-frost{
+    background-color: rgba(255, 255, 255, 0.8);
+    
+
+
 }

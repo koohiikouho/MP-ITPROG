@@ -420,15 +420,30 @@ function hideAtStart(){
     //storage card hide
     $('#remStoButton').hide();
     $('#stoProdName').hide();
+    $('#stoProdDesc').hide();
+    $('#stoLoading').hide();
     
     $('#remCaseButton').hide();
     $('#remPsuButton').hide();
 
     //storage card hide
+    $('#remStoButton').hide();
+    $('#Name').hide();
+
+    //case card hide
+    $('#caseLoading').hide();
+    $('#caseProdName').hide();
+    $('#caseProdDesc').hide();
+
+
+    $('#psuLoading').hide();
+    $('#psuProdName').hide();
+    $('#psuProdDesc').hide();
+
     $('#remGpuButton').hide();
-    $('#GpuProdName').hide();
-
-
+    $('#gpuLoading').hide();
+    $('#gpuProdName').hide();
+    $('#gpuProdDesc').hide();
 }
 
 function moboShowQueryReturn(moboName, moboDesc){
@@ -590,6 +605,7 @@ function memQueryReplaceText() {
 function stoQueryReplaceInput() {
     
     $('#stoDataList').hide(); 
+    $('#stoLoading').show(); 
     
     var stoBrand = document.getElementById("stoBrand");
     var stoType = document.getElementById("stoType");
@@ -611,6 +627,10 @@ function stoQueryReplaceInput() {
             stoFullName + " - " + peso.format(stoPrice)
         );
     }
+    
+    $('#stoProdName').show(); 
+    $('#stoProdDesc').show(); 
+    $('#stoLoading').hide(); 
 
     $('#addStoButton').hide();
     $('#remStoButton').show();
@@ -658,7 +678,13 @@ function caseQueryReplaceInput() {
         }
     };
 
+
+    caseShowQueryReturn(caseNameText);
     $('#caseLoading').hide();
+
+    $('#caseProdName').show();
+    $('#caseProdDesc').show();
+    
     $('#addCaseButton').hide();
     $('#remCaseButton').show();
 }
@@ -700,13 +726,18 @@ function psuQueryReplaceInput() {
         if (this.readyState == 4 && this.status == 200) {
             var response = JSON.parse(this.responseText);
             
-            caseShowQueryReturn(
+            psuShowQueryReturn(
                 psuNameText + " - " + peso.format(psuPrice)
             );
         }
     };
 
     //$('#psuLoading').hide();
+    psuShowQueryReturn(
+        psuNameText + " - " + peso.format(psuPrice)
+    );
+
+
     $('#addPsuButton').hide();
     $('#remPsuButton').show();
 }
@@ -735,7 +766,7 @@ function psuQueryReplaceText() {
 function gpuQueryReplaceInput() {
     
     $('#gpuDataList').hide(); 
-    //$('#gpuLoading').show();
+    $('#gpuLoading').show();
 
     var gpuBrand = document.getElementById("gpuBrand");
     var gpuBrandText = gpuBrand.options[gpuBrand.selectedIndex].text;
@@ -753,9 +784,16 @@ function gpuQueryReplaceInput() {
         }
     };
 
-    //$('#gpuLoading').hide();
+    gpuShowQueryReturn(
+        gpuBrandText + " " + gpuNameText
+    );
+
+    $('#gpuLoading').hide();
+    $('#gpuProdName').show();
+    $('#gpuProdDesc').show();
     $('#addGpuButton').hide();
     $('#remGpuButton').show();
+
 }
 
 function gpuShowQueryReturn(gpuName){
@@ -1086,6 +1124,19 @@ $(document).ready(function(){
         totalPrice += gpuPrice;
         document.getElementById("gpuPriceList").innerText = "GPU: " + peso.format(gpuPrice);
         document.getElementById("totalPriceList").innerText = "Total: " + peso.format(totalPrice);
+    });
+
+    $('#submitBuild').click(function() {
+
+        var cpuID = document.getElementById("cpuName").value;
+        var mobID = document.getElementById("moboName").value;
+        var memID = document.getElementById("memName").value;
+        var stoID = document.getElementById("stoSize").value;
+        var caseID = document.getElementById("caseName").value;
+        var psuID = document.getElementById("psuName").value;
+        var gpuID = document.getElementById("gpuName").value;
+
+        alert(cpuID + " " + mobID + " " + memID + " " + stoID + " " + caseID + " " + psuID + " " + gpuID );
     });
 
     $('#remGpuButton').click(function() {
