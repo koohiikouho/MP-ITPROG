@@ -1,5 +1,5 @@
 <?php
-    $cpuname = $_GET['name'];
+    $id = $_GET['id'];
     
     $servername = "localhost";
     $username = "root";
@@ -13,7 +13,7 @@
     }
     $sql = "SELECT p.price
             FROM processors p
-            WHERE name='$cpuname' ";
+            WHERE p.cpu_id='$id' ";
     $result = $conn->query($sql);
 
     // Check if there are results

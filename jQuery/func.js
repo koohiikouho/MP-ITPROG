@@ -45,10 +45,25 @@ function cpuQueryReplaceInput() {
     xmlhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
             var response = JSON.parse(this.responseText); // Expecting JSON { "description": "...", "socketID": "..." }
-            cpuShowQueryReturn(
-                brand.options[brand.selectedIndex].text + " " + name.options[name.selectedIndex].text + " - " + peso.format(cpuPrice),
-                response.description
-            );
+
+            var cpuSort = document.getElementById("cpuSort");
+            var cpuSortText = cpuSort.options[cpuSort.selectedIndex].id;
+
+            // No need to concat price to display
+            if (cpuSortText == "price") {
+                cpuShowQueryReturn(
+                    brand.options[brand.selectedIndex].text + " " + name.options[name.selectedIndex].text,
+                    response.description
+                );
+            } else if (cpuSortText == "popularity") {
+                cpuShowQueryReturn(
+                    brand.options[brand.selectedIndex].text + 
+                    " " + name.options[name.selectedIndex].text + 
+                    " - " + peso.format(cpuPrice),
+                    response.description
+                );
+            }
+        
             socketID = response.socketID;  // Store the CPU's socketID
             populateMobo(); // Refresh motherboard selection based on new socketID
         }
@@ -267,7 +282,7 @@ function cpuPriceGet(){
         }
     };
 
-    xmlhttp.open("GET", "./php/cpuPrice.php?name=" + name.options[name.selectedIndex].text, false);
+    xmlhttp.open("GET", "./php/cpuPrice.php?id=" + name.options[name.selectedIndex].value, false);
     xmlhttp.send();
 
     cpuPrice = parseFloat(cpuPrice);
@@ -802,14 +817,15 @@ $(document).ready(function(){
     $('#cpuSearch').click(function(){
         
         var cpuBrand = document.getElementById("cpuBrand");
-        
         var cpuBrandText = cpuBrand.options[cpuBrand.selectedIndex].value;
-        var cpuCores = document.getElementById("cpuCores");
 
+        var cpuCores = document.getElementById("cpuCores");
         var cpuCoresText = cpuCores.options[cpuCores.selectedIndex].value;
         document.getElementById("cpuName").removeAttribute("disabled");
 
-
+        var cpuSort = document.getElementById("cpuSort");
+        var cpuSortText = cpuSort.options[cpuSort.selectedIndex].id;
+        
         var xmlhttp = new XMLHttpRequest();
         xmlhttp.onreadystatechange = function(){
             if (this.readyState == 4 && this.status == 200) {
@@ -817,9 +833,8 @@ $(document).ready(function(){
             }
         };
         
-        xmlhttp.open("GET", "./php/cpuSearch.php?brand=" + cpuBrandText + "&cores=" + cpuCoresText , true);
+        xmlhttp.open("GET", "./php/cpuSearch.php?brand=" + cpuBrandText + "&cores=" + cpuCoresText + "&sortby=" + cpuSortText, true);
         xmlhttp.send();
-
 
     })
 
