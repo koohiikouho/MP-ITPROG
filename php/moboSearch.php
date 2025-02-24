@@ -31,11 +31,11 @@
                 echo "<option value='" . $row['mob_id'] . "'>" . $row['name']  . " -  ₱" . number_format($row['price'], 2) . "</option>";
             }
         } else {
-            echo "<option disabled selected>No Boards match filter</option>";
+            echo "<option disabled selected>No Mobos match filter</option>";
         }
 
     } elseif ($sortby == "popularity") {
-        $sql = "SELECT m.name, m.mob_id, COUNT(m.mob_id) AS popularity, m.price
+        $sql = "SELECT m.name, m.mob_id, COUNT(b.mobo_id) AS popularity, m.price
                 FROM motherboards m
                 LEFT JOIN builds b ON m.mob_id = m.mob_id
                 WHERE m.vendorCode = '$brand' AND m.chipset = '$chipset'

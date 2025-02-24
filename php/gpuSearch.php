@@ -1,5 +1,6 @@
 <?php
     $brand = $_GET['brand'];
+    $sortby = $_GET['sortby'];
 
     $servername = "localhost";
     $username = "root";
@@ -12,23 +13,49 @@
         die("Connection failed: " . $conn->connect_error);
     }
 
-    $sql = "SELECT v.gpu_id, vv.vendorName AS vendorName, v.model
-            FROM videocards v
-            JOIN ref_vendors vv ON v.vendorCode = vv.mbid
-            WHERE v.brandCode = '$brand'";
+    if ($sortby == "price") {
+        $sql = "SELECT v.gpu_id, rv.vendorName, v.model, v.price
+                FROM videocards v
+                JOIN ref_vendors rv ON v.vendorCode = rv.mbid
+                WHERE v.brandCode = '$brand'
+                ORDER BY v.price ASC;";
 
-    $result = $conn->query($sql);
+        $result = $conn->query($sql);
 
-    // Check if there are results
-    if ($result->num_rows > 0) {
-        echo "<option value='' disabled selected>Select a GPU</option>";
-        while ($row = $result->fetch_assoc()) {
-            echo "<option value='" . $row['gpu_id'] . "'>" 
-                . htmlspecialchars($row['vendorName']) . " - " 
-                . htmlspecialchars($row['model']) . "</option>";
+        if ($result->num_rows > 0) {
+            echo "<option value='' disabled selected>Select a GPU</option>";
+            while ($row = $result->fetch_assoc()) {
+                echo "<option value='" . $row['gpu_id'] . "'>" 
+                    . $row['vendorName'] . " - " 
+                    . $row['model'] . 
+                    " -  ₱" . number_format($row['price'], 2) . "</option>";
+            }
+        } else {
+            echo "<option disabled selected>No GPUs match filter</option>";
         }
-    } else {
-        echo "<option disabled selected>No GPUs match filter</option>";
+    } elseif ($sortby == "popularity") {
+        $sql = "SELECT v.gpu_id, rv.vendorName, v.model, v.price, COUNT(b.gpu_id) AS popularity
+                FROM videocards v
+                JOIN ref_vendors rv ON v.vendorCode = rv.mbid
+                LEFT JOIN builds b ON b.gpu_id = v.gpu_id
+                WHERE v.brandCode = '$brand'
+                GROUP BY v.gpu_id, v.price
+                ORDER BY popularity DESC;";
+
+        $result = $conn->query($sql);
+
+        // Check if there are results
+        if ($result->num_rows > 0) {
+            echo "<option value='' disabled selected>Select a GPU</option>";
+            while ($row = $result->fetch_assoc()) {
+                echo "<option value='" . $row['gpu_id'] . "'>" 
+                    . $row['vendorName'] . " - " 
+                    . $row['model'] . 
+                    " -  Used by " . $row['popularity'] . " build/s" . "</option>";
+            }
+        } else {
+            echo "<option disabled selected>No GPUs match filter</option>";
+        }
     }
 
     $conn->close();

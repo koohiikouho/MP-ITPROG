@@ -56,7 +56,6 @@
                 LEFT JOIN builds b ON b.drv_id = d.drv_id
                 WHERE storageType = '$storageType' AND connector = '$connector' AND vendorName = '$brand'
                 GROUP BY d.drv_id
-                HAVING COUNT(b.mem_id) > 0
                 ORDER BY popularity DESC;";
 
         $result = $conn->query($sql);

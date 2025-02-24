@@ -39,9 +39,9 @@
         $sql = "SELECT m.mem_id, rf.vendorname, m.size, COUNT(b.mem_id) AS popularity
                 FROM ref_vendors rf
                 JOIN memorysticks m ON m.vendorcode=rf.mbid
-                LEFT JOIN builds b ON m.mem_id = m.mem_id
+                LEFT JOIN builds b ON b.mem_id = m.mem_id
                 WHERE m.vendorcode='$brand' AND m.size='$size' AND m.ddrversion='$ddrversion'
-                HAVING COUNT(b.mem_id) > 0
+                GROUP BY m.mem_id, rf.vendorname, m.size
                 ORDER BY popularity DESC";
 
         $result = $conn->query($sql);

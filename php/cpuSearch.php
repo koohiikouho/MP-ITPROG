@@ -14,8 +14,6 @@
         die("Connection failed: " . $conn->connect_error);
     }
 
-    $sql;
-
     // Change sql query acc to sortby
     if ($sortby == "price") {
         $sql = "SELECT p.name, p.cpu_id, p.price

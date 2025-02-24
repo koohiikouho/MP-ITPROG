@@ -199,7 +199,7 @@ function populateMem(){
             document.getElementById("memQty").innerHTML = this.responseText;
         }
     };
-
+    
     xmlhttp3.open("GET", "./php/memInitQty.php?memSlots=" + memSlots, true);
     xmlhttp3.send();
     
@@ -477,19 +477,26 @@ function moboQueryReplaceInput() {
             if (moboSortText == "price") {
                 moboShowQueryReturn(
                     moboFullName,
-                    response.description
+                    response.description,
+                    response.memSlots,
+                    response.ddrVersion,
+                    response.m2Slots
                 );
             } else if (moboSortText == "popularity") {
                 moboShowQueryReturn(
                     moboFullName + " - " + peso.format(moboPrice),
-                    response.description
+                    response.description,
+                    response.memSlots,
+                    response.ddrVersion,
+                    response.m2Slots
                 );
             }
-            ddrVersion = response.ddrVersion;
+            
             memSlots = response.memSlots;
+            ddrVersion = response.ddrVersion;
             m2Slots = response.m2Slots;
+
             populateMem();
-            populateSto();
         }
     };
 
@@ -646,7 +653,7 @@ function caseQueryReplaceInput() {
             var response = JSON.parse(this.responseText);
             
             caseShowQueryReturn(
-                caseNameText + " - " + peso.format(casePrice)
+                caseNameText
             );
         }
     };
@@ -974,8 +981,6 @@ $(document).ready(function(){
 
 
     $('#stoSearch').click(function(){
-
-
         var stoBrand = document.getElementById("stoBrand");
         
         var stoBrandText = stoBrand.options[stoBrand.selectedIndex].value;
@@ -993,7 +998,6 @@ $(document).ready(function(){
                 document.getElementById("stoSize").innerHTML = this.responseText;                
             }
         };
-
 
         xmlhttp.open("GET", "./php/stoSearch.php?brand=" + stoBrandText + "&type=" + stoTypeText + "&sortby=" + stoSortText, true);
         xmlhttp.send();
@@ -1023,6 +1027,9 @@ $(document).ready(function(){
         var caseBrand = document.getElementById("caseBrand");
         var caseBrandText = caseBrand.options[caseBrand.selectedIndex].value;
         
+        var caseSort = document.getElementById("caseSort");
+        var caseSortText = caseSort.options[caseSort.selectedIndex].id;
+
         var xmlhttp = new XMLHttpRequest();
         xmlhttp.onreadystatechange = function(){
             if (this.readyState == 4 && this.status == 200) {
@@ -1030,7 +1037,7 @@ $(document).ready(function(){
             }
         };
 
-        xmlhttp.open("GET", "./php/caseSearch.php?brand=" + caseBrandText, true);
+        xmlhttp.open("GET", "./php/caseSearch.php?brand=" + caseBrandText + "&sortby=" + caseSortText, true);
         xmlhttp.send();
 
     })
@@ -1056,6 +1063,9 @@ $(document).ready(function(){
     $('#psuSearch').click(function(){
         var psuBrand = document.getElementById("psuBrand");
         var psuBrandText = psuBrand.options[psuBrand.selectedIndex].value;
+
+        var psuSort = document.getElementById("psuSort");
+        var psuSortText = psuSort.options[psuSort.selectedIndex].id;
         
         var xmlhttp = new XMLHttpRequest();
         xmlhttp.onreadystatechange = function(){
@@ -1064,7 +1074,7 @@ $(document).ready(function(){
             }
         };
 
-        xmlhttp.open("GET", "./php/psuSearch.php?brand=" + psuBrandText, true);
+        xmlhttp.open("GET", "./php/psuSearch.php?brand=" + psuBrandText + "&sortby=" + psuSortText, true);
         xmlhttp.send();
 
     })
@@ -1091,6 +1101,9 @@ $(document).ready(function(){
         var gpuBrand = document.getElementById("gpuBrand");
         var gpuBrandText = gpuBrand.options[gpuBrand.selectedIndex].value;
 
+        var gpuSort = document.getElementById("gpuSort");
+        var gpuSortText = gpuSort.options[gpuSort.selectedIndex].id;
+
         document.getElementById("gpuName").removeAttribute("disabled");
         
         var xmlhttp = new XMLHttpRequest();
@@ -1100,7 +1113,7 @@ $(document).ready(function(){
             }
         };
 
-        xmlhttp.open("GET", "./php/gpuSearch.php?brand=" + gpuBrandText, true);
+        xmlhttp.open("GET", "./php/gpuSearch.php?brand=" + gpuBrandText + "&sortby=" + gpuSortText, true);
         xmlhttp.send();
 
     })
