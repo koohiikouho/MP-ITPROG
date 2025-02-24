@@ -1,11 +1,11 @@
-var cpuPrice = 0;
-var moboPrice = 0;
-var memPrice = 0;
-var stoPrice = 0;
-var casePrice = 0;
-var psuPrice = 0;
-var gpuPrice = 0;
-var totalPrice = 0;
+var cpuPrice = 0.00;
+var moboPrice = 0.00;
+var memPrice = 0.00;
+var stoPrice = 0.00;
+var casePrice = 0.00;
+var psuPrice = 0.00;
+var gpuPrice = 0.00;
+var totalPrice = 0.00;
 var socketID;
 var memSlots;
 var memQty;
@@ -278,7 +278,10 @@ function cpuPriceGet(){
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function(){
         if (this.readyState == 4 && this.status == 200) {
-            cpuPrice =  this.responseText;
+            tempPrice = this.responseText;
+            if(tempPrice != "Error")            
+                cpuPrice = tempPrice;
+                
         }
     };
 
@@ -297,7 +300,9 @@ function moboPriceGet(){
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function(){
         if (this.readyState == 4 && this.status == 200) {
-            moboPrice =  this.responseText;
+            tempPrice = this.responseText;
+            if(tempPrice != "Error")
+                moboPrice =  tempPrice;
         }
     };
 
@@ -317,7 +322,9 @@ function memPriceGet(){
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function(){
         if (this.readyState == 4 && this.status == 200) {
-            memPrice =  this.responseText;
+            tempPrice = this.responseText;
+            if(tempPrice != "Error")   
+                memPrice =  tempPrice;
         }
     };
 
@@ -331,21 +338,18 @@ function memPriceGet(){
 }
 
 function stoPriceGet(){
-
-    var stoBrand = document.getElementById("stoBrand");
-    var stoType = document.getElementById("stoType");
-    var stoSize = document.getElementById("stoSize");
+    var stoID = document.getElementById("stoSize");
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function(){
         if (this.readyState == 4 && this.status == 200) {
-            stoPrice =  this.responseText;
+            tempPrice = this.responseText;
+            if(parseFloat(tempPrice) > 0)   
+                stoPrice =  tempPrice;
         }
     };
 
 
-    xmlhttp.open("GET", "./php/stoPrice.php?brand=" + stoBrand.options[stoBrand.selectedIndex].value + 
-                                            "&type=" + stoType.options[stoType.selectedIndex].text +
-                                            "&size=" + stoSize.options[stoSize.selectedIndex].value, false);
+    xmlhttp.open("GET", "./php/stoPrice.php?id=" + stoSize.options[stoSize.selectedIndex].value, false);
     xmlhttp.send();
 
     stoPrice = parseFloat(stoPrice);
@@ -358,7 +362,9 @@ function casePriceGet(){
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function(){
         if (this.readyState == 4 && this.status == 200) {
-            casePrice =  this.responseText;
+            tempPrice = this.responseText;
+            if(tempPrice != "Error")   
+                casePrice =  tempPrice;
         }
     };
 
@@ -374,7 +380,9 @@ function psuPriceGet(){
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function(){
         if (this.readyState == 4 && this.status == 200) {
-            psuPrice =  this.responseText;
+            tempPrice = this.responseText;
+            if(tempPrice != "Error")   
+                psuPrice =  tempPrice;
         }
     };
 
@@ -385,20 +393,22 @@ function psuPriceGet(){
 }
 
 function gpuPriceGet(){
-
     var id = document.getElementById("gpuName");
     
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function(){
         if (this.readyState == 4 && this.status == 200) {
-            gpuPrice =  this.responseText;
+            tempPrice = this.responseText;
+            if(tempPrice != "Error")   
+                gpuPrice =  tempPrice;
         }
     };
 
     xmlhttp.open("GET", "./php/gpuPrice.php?id=" + id.value, false);
     xmlhttp.send();
-
-    gpuPrice = parseFloat(gpuPrice);
+    
+        gpuPrice = parseFloat(gpuPrice);
+        
 }
 
 function hideAtStart(){
@@ -837,6 +847,12 @@ function removeQueryReturn(itemProdName, itemProdDesc){
     $(itemProdDesc).hide();
 }
 
+function turnNanToFloat(nanvar){
+    if(nanvar == NaN)
+        nanvar = 0;
+}
+
+
 $(document).ready(function(){
     
     hideAtStart();
@@ -923,7 +939,6 @@ $(document).ready(function(){
         memPrice = 0;
         totalPrice -= memPrice;
         document.getElementById("memPriceList").innerText = "";
-
         document.getElementById("totalPriceList").innerText = "Total: " + peso.format(totalPrice);
     });
 
@@ -1006,6 +1021,7 @@ $(document).ready(function(){
         totalPrice += stoPrice;
         document.getElementById("stoPriceList").innerText = "Storage: " + peso.format(stoPrice);
         document.getElementById("totalPriceList").innerText = "Total: " + peso.format(totalPrice);
+
     });
     
     $('#remStoButton').click(function() {
@@ -1056,7 +1072,6 @@ $(document).ready(function(){
         caseQueryReplaceText(); 
     
         totalPrice -= casePrice;
-        casePrice = 0;
         document.getElementById("casePriceList").innerText = "";
         document.getElementById("totalPriceList").innerText = "Total: " + peso.format(totalPrice);
     });
@@ -1121,6 +1136,7 @@ $(document).ready(function(){
         gpuPriceGet();
         gpuQueryReplaceInput();
 
+        gpuPrice += 0.00;
         totalPrice += gpuPrice;
         document.getElementById("gpuPriceList").innerText = "GPU: " + peso.format(gpuPrice);
         document.getElementById("totalPriceList").innerText = "Total: " + peso.format(totalPrice);
@@ -1131,19 +1147,29 @@ $(document).ready(function(){
         var cpuID = document.getElementById("cpuName").value;
         var mobID = document.getElementById("moboName").value;
         var memID = document.getElementById("memName").value;
+        var memQty = document.getElementById("memQty").value;
         var stoID = document.getElementById("stoSize").value;
         var caseID = document.getElementById("caseName").value;
         var psuID = document.getElementById("psuName").value;
         var gpuID = document.getElementById("gpuName").value;
+        var buildName = document.getElementById("buildName").value;
 
-        alert(cpuID + " " + mobID + " " + memID + " " + stoID + " " + caseID + " " + psuID + " " + gpuID );
+        alert("./php/finalizeBuild.php?caseID=" + caseID + "&drvID=" + stoID + "&memID=" + memID + "&memQty="
+            + memQty + "&moboID=" + mobID + "&psuID=" + psuID + "&cpuID=" + cpuID + "&gpuID=" + gpuID + "&name=" + buildName)
+        var xmlhttp = new XMLHttpRequest();
+        
+        xmlhttp.open("GET", "./php/finalizeBuild.php?caseID=" + caseID + "&drvID=" + stoID + "&memID=" + memID + "&memQty="
+            + memQty + "&moboID=" + mobID + "&psuID=" + psuID + "&cpuID=" + cpuID + "&gpuID=" + gpuID + "&name=" + buildName
+            , true);
+        xmlhttp.send();
+
     });
 
     $('#remGpuButton').click(function() {
         gpuQueryReplaceText();
     
         totalPrice -= gpuPrice;
-        gpuPrice = 0;
+        gpuPrice = 0.00;
         document.getElementById("gpuPriceList").innerText = "";
         document.getElementById("totalPriceList").innerText = "Total: " + peso.format(totalPrice);
     });
