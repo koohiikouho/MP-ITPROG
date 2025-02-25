@@ -491,7 +491,7 @@ function moboQueryReplaceInput() {
     var xmlhttp = new XMLHttpRequest();
 
     var moboSort = document.getElementById("moboSort");
-    var moboSortText = cpuSort.options[moboSort.selectedIndex].id;
+    var moboSortText = moboSort.options[moboSort.selectedIndex].id;
 
     // Handle response
     xmlhttp.onreadystatechange = function() {
@@ -557,24 +557,31 @@ function memQueryReplaceInput() {
     $('#memDataList').hide(); 
     $('#memLoading').show();  
     
-    var memBrand = document.getElementById("memBrand");
-    var memSize =  document.getElementById("memSize");
+    var memName = document.getElementById("memName");
     var memQtyElement = document.getElementById("memQty");
     memQty = memQtyElement.options[memQtyElement.selectedIndex].text;
 
-    var memFullName = memBrand.options[memBrand.selectedIndex].text + " " +
-                      memSize.options[memSize.selectedIndex].text + "x" +
-                      memQty;
+    var memNameText = memQty + "x " + memName.options[memName.selectedIndex].text;
+                      
+    var memSort = document.getElementById("memSort");
+    var memSortText = memSort.options[memSort.selectedIndex].id;
     var xmlhttp = new XMLHttpRequest();
 
     xmlhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
             var response = JSON.parse(this.responseText);
-            
-            memShowQueryReturn(
-                memFullName + " - " + peso.format(memPrice),
-                response.description
-            );
+
+            if (memSortText == "price") {
+                memShowQueryReturn(
+                    memNameText,
+                    response.description
+                );
+            } else if (memSortText == "popularity") {
+                memShowQueryReturn(
+                    memNameText + " - " + peso.format(memPrice),
+                    response.description
+                );
+            }
         }
     };
 
@@ -676,20 +683,38 @@ function caseQueryReplaceInput() {
     
     var caseName = document.getElementById("caseName");
     var caseNameText = caseName.options[caseName.selectedIndex].text;
+    var caseSort = document.getElementById("caseSort");
+    var caseSortText = caseSort.options[caseSort.selectedIndex].id;
+    
     var xmlhttp = new XMLHttpRequest();
 
     xmlhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
             var response = JSON.parse(this.responseText);
-            
-            caseShowQueryReturn(
-                caseNameText
-            );
+        
+            if (caseSortText == "price") {
+                caseShowQueryReturn(
+                    caseNameText
+                );
+            } else if (caseSortText == "popularity") {
+                caseShowQueryReturn(
+                    caseNameText + " - " + peso.format(casePrice)
+                );
+            }
         }
     };
 
 
-    caseShowQueryReturn(caseNameText);
+    if (caseSortText == "price") {
+        caseShowQueryReturn(
+            caseNameText
+        );
+    } else if (caseSortText == "popularity") {
+        caseShowQueryReturn(
+            caseNameText + " - " + peso.format(casePrice)
+        );
+    }
+
     $('#caseLoading').hide();
 
     $('#caseProdName').show();
@@ -730,23 +755,36 @@ function psuQueryReplaceInput() {
     
     var psuName = document.getElementById("psuName");
     var psuNameText = psuName.options[psuName.selectedIndex].text;
+    var psuSort = document.getElementById("psuSort");
+    var psuSortText = psuSort.options[psuSort.selectedIndex].id;
     var xmlhttp = new XMLHttpRequest();
 
     xmlhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
             var response = JSON.parse(this.responseText);
             
-            psuShowQueryReturn(
-                psuNameText + " - " + peso.format(psuPrice)
-            );
+            if (psuSortText == "price") {
+                psuShowQueryReturn(
+                    psuNameText
+                );
+            } else if (psuSortText == "popularity") {
+                psuShowQueryReturn(
+                    psuNameText + " - " + peso.format(psuPrice)
+                );
+            }
         }
     };
 
     //$('#psuLoading').hide();
-    psuShowQueryReturn(
-        psuNameText + " - " + peso.format(psuPrice)
-    );
-
+    if (psuSortText == "price") {
+        psuShowQueryReturn(
+            psuNameText
+        );
+    } else if (psuSortText == "popularity") {
+        psuShowQueryReturn(
+            psuNameText + " - " + peso.format(psuPrice)
+        );
+    }
 
     $('#addPsuButton').hide();
     $('#remPsuButton').show();
@@ -778,10 +816,10 @@ function gpuQueryReplaceInput() {
     $('#gpuDataList').hide(); 
     $('#gpuLoading').show();
 
-    var gpuBrand = document.getElementById("gpuBrand");
-    var gpuBrandText = gpuBrand.options[gpuBrand.selectedIndex].text;
     var gpuName = document.getElementById("gpuName");
     var gpuNameText = gpuName.options[gpuName.selectedIndex].text;
+    var gpuSort = document.getElementById("gpuSort");
+    var gpuSortText = gpuSort.options[gpuSort.selectedIndex].id;
     var xmlhttp = new XMLHttpRequest();
 
     xmlhttp.onreadystatechange = function() {
@@ -789,14 +827,20 @@ function gpuQueryReplaceInput() {
             var response = JSON.parse(this.responseText);
             
             gpuShowQueryReturn(
-                gpuBrandText + " " + gpuNameText + peso.format(gpuPrice)
+                gpuNameText + " - " + peso.format(gpuPrice)
             );
         }
     };
 
-    gpuShowQueryReturn(
-        gpuBrandText + " " + gpuNameText
-    );
+    if (gpuSortText == "price") {
+        gpuShowQueryReturn(
+            gpuNameText
+        );
+    } else if (gpuSortText == "popularity") {
+        gpuShowQueryReturn(
+            gpuNameText + " - " + peso.format(gpuPrice)
+        );
+    }
 
     $('#gpuLoading').hide();
     $('#gpuProdName').show();
@@ -1132,16 +1176,6 @@ $(document).ready(function(){
 
     })
 
-    $('#addGpuButton').click(function() {
-        gpuPriceGet();
-        gpuQueryReplaceInput();
-
-        gpuPrice += 0.00;
-        totalPrice += gpuPrice;
-        document.getElementById("gpuPriceList").innerText = "GPU: " + peso.format(gpuPrice);
-        document.getElementById("totalPriceList").innerText = "Total: " + peso.format(totalPrice);
-    });
-
     $('#submitBuild').click(function() {
 
         var cpuID = document.getElementById("cpuName").value;
@@ -1163,6 +1197,16 @@ $(document).ready(function(){
             , true);
         xmlhttp.send();
 
+    });
+
+    $('#addGpuButton').click(function() {
+        gpuPriceGet();
+        gpuQueryReplaceInput();
+
+        gpuPrice += 0.00;
+        totalPrice += gpuPrice;
+        document.getElementById("gpuPriceList").innerText = "GPU: " + peso.format(gpuPrice);
+        document.getElementById("totalPriceList").innerText = "Total: " + peso.format(totalPrice);
     });
 
     $('#remGpuButton').click(function() {
