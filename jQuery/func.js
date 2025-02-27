@@ -1203,19 +1203,54 @@ $(document).ready(function(){
         var buildName = document.getElementById("buildName").value;
 
 
-        if(cpuID != "" && mobID != "" && memId != "" && memQty != "" && cpuID != "" && stoID != "" && caseID != "" && 
-            psuID!= "" && gpuID != "" && buildName != ""
-        ){
+        if(cpuID != "" && mobID != "" && memID != "" && memQty != "" && cpuID != "" && stoID != "" && caseID != "" && 
+            psuID!= "" && gpuID != "" && buildName != ""){
         var xmlhttp = new XMLHttpRequest();
         
         xmlhttp.open("GET", "./php/finalizeBuild.php?caseID=" + caseID + "&drvID=" + stoID + "&memID=" + memID + "&memQty="
             + memQty + "&moboID=" + mobID + "&psuID=" + psuID + "&cpuID=" + cpuID + "&gpuID=" + gpuID + "&name=" + buildName
             , true);
         xmlhttp.send();
-            alert("Sucessfully Submitted!");
+        alert("Sucessfully Submitted!");
+
+
+            // var xmlhttp2 = newXMLHttpRequest();
+            // xmlhttp2.onreadystatechange = function(){
+            //     if (this.readyState == 4 && this.status == 200) {
+            //         string = this.responseText;
+            //         string = string.replace(/<\/?[^>]+(>|$)/g, "");
+            //         alert("This build's number is " + string);              
+            //     }
+            // };
+            // xmlhttp2.open("GET", "./php/indexBuild.php", true);
+            // xmlhttp2.send();
+            var xmlhttp2 = new XMLHttpRequest();
+        xmlhttp2.onreadystatechange = function(){
+            if (this.readyState == 4 && this.status == 200) {
+                string = this.responseText;
+                string = string.replace(/<\/?[^>]+(>|$)/g, "");
+                alert("This build's number is " + string);              
+            }
+        };
+        xmlhttp2.open("GET", "./php/indexBuild.php", true);
+        xmlhttp2.send();
+
         }
         else
             alert("Incomplete Details!");
+
+    });
+    $('#testButton').click(function(){
+        var xmlhttp2 = new XMLHttpRequest();
+        xmlhttp2.onreadystatechange = function(){
+            if (this.readyState == 4 && this.status == 200) {
+                string = this.responseText;
+                string = string.replace(/<\/?[^>]+(>|$)/g, "");
+                alert("This build's number is " + string);              
+            }
+        };
+        xmlhttp2.open("GET", "./php/indexBuild.php", true);
+        xmlhttp2.send();
 
     });
 

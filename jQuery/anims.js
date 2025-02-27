@@ -21,7 +21,24 @@ $(document).ready(function(){
 
     //HELLOW
     $('#searchBuild').click(function() {
-        alert("Working");
+        buildID = prompt("Enter Build ID");
+        var string = "";
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function(){
+            if (this.readyState == 4 && this.status == 200) {
+                string = this.responseText;    
+                string = string.replace(/<\/?[^>]+(>|$)/g, "");
+                alert(string);         
+            }
+        };
+
+        xmlhttp.open("GET", "./php/viewBuild.php?buildID=" + buildID, true);
+        xmlhttp.send();
+        
+        
+        
+
     });
+
 
 });
