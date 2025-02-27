@@ -1126,6 +1126,7 @@ $(document).ready(function(){
         
         var caseSort = document.getElementById("caseSort");
         var caseSortText = caseSort.options[caseSort.selectedIndex].id;
+        document.getElementById("moboName").removeAttribute("disabled");
 
         var xmlhttp = new XMLHttpRequest();
         xmlhttp.onreadystatechange = function(){
@@ -1163,6 +1164,7 @@ $(document).ready(function(){
 
         var psuSort = document.getElementById("psuSort");
         var psuSortText = psuSort.options[psuSort.selectedIndex].id;
+        document.getElementById("moboName").removeAttribute("disabled");
         
         var xmlhttp = new XMLHttpRequest();
         xmlhttp.onreadystatechange = function(){
