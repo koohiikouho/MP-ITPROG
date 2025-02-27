@@ -1142,6 +1142,8 @@ $(document).ready(function(){
         document.getElementById("totalPriceList").innerText = "Total: " + peso.format(totalPrice);
     });
 
+
+
     $('#submitBuild').click(function() {
 
         var cpuID = document.getElementById("cpuName").value;
@@ -1154,25 +1156,34 @@ $(document).ready(function(){
         var gpuID = document.getElementById("gpuName").value;
         var buildName = document.getElementById("buildName").value;
 
-        alert("./php/finalizeBuild.php?caseID=" + caseID + "&drvID=" + stoID + "&memID=" + memID + "&memQty="
-            + memQty + "&moboID=" + mobID + "&psuID=" + psuID + "&cpuID=" + cpuID + "&gpuID=" + gpuID + "&name=" + buildName)
-        var xmlhttp = new XMLHttpRequest();
+
+        if(cpuId != null && mobId != null && memId != null && memQty != null && cpuId != null && stoID != null && caseID != null && 
+
+            psuId != null && gpuId != null && buildName
+        ){
+                    // alert("./php/finalizeBuild.php?caseID=" + caseID + "&drvID=" + stoID + "&memID=" + memID + "&memQty="
+        //     + memQty + "&moboID=" + mobID + "&psuID=" + psuID + "&cpuID=" + cpuID + "&gpuID=" + gpuID + "&name=" + buildName)
+        // var xmlhttp = new XMLHttpRequest();
         
         xmlhttp.open("GET", "./php/finalizeBuild.php?caseID=" + caseID + "&drvID=" + stoID + "&memID=" + memID + "&memQty="
             + memQty + "&moboID=" + mobID + "&psuID=" + psuID + "&cpuID=" + cpuID + "&gpuID=" + gpuID + "&name=" + buildName
             , true);
         xmlhttp.send();
+        }
+        else
+            alert("Incomplete Details!");
 
     });
 
     $('#remGpuButton').click(function() {
         gpuQueryReplaceText();
-    
         totalPrice -= gpuPrice;
         gpuPrice = 0.00;
         document.getElementById("gpuPriceList").innerText = "";
         document.getElementById("totalPriceList").innerText = "Total: " + peso.format(totalPrice);
     });
+
+
 
     $('#gpuSearch').click(function(){
         var gpuBrand = document.getElementById("gpuBrand");
@@ -1194,4 +1205,5 @@ $(document).ready(function(){
         xmlhttp.send();
 
     })
+
 });

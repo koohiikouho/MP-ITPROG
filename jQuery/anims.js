@@ -19,4 +19,9 @@ $(document).ready(function(){
         $('#sidecard').animate({top:$(this).scrollTop()},100,"linear");
     })
 
+    //HELLOW
+    $('#searchBuild').click(function() {
+        alert("Working");
+    });
+
 });
