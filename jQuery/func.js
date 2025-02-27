@@ -1202,7 +1202,6 @@ $(document).ready(function(){
 
 
         if(cpuID != "" && mobID != "" && memId != "" && memQty != "" && cpuID != "" && stoID != "" && caseID != "" && 
-
             psuID!= "" && gpuID != "" && buildName != ""
         ){
         var xmlhttp = new XMLHttpRequest();
@@ -1211,6 +1210,7 @@ $(document).ready(function(){
             + memQty + "&moboID=" + mobID + "&psuID=" + psuID + "&cpuID=" + cpuID + "&gpuID=" + gpuID + "&name=" + buildName
             , true);
         xmlhttp.send();
+            alert("Sucessfully Submitted!");
         }
         else
             alert("Incomplete Details!");
