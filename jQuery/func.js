@@ -1201,13 +1201,11 @@ $(document).ready(function(){
         var buildName = document.getElementById("buildName").value;
 
 
-        if(cpuId != null && mobId != null && memId != null && memQty != null && cpuId != null && stoID != null && caseID != null && 
+        if(cpuID != "" && mobID != "" && memId != "" && memQty != "" && cpuID != "" && stoID != "" && caseID != "" && 
 
-            psuId != null && gpuId != null && buildName
+            psuID!= "" && gpuID != "" && buildName != ""
         ){
-                    // alert("./php/finalizeBuild.php?caseID=" + caseID + "&drvID=" + stoID + "&memID=" + memID + "&memQty="
-        //     + memQty + "&moboID=" + mobID + "&psuID=" + psuID + "&cpuID=" + cpuID + "&gpuID=" + gpuID + "&name=" + buildName)
-        // var xmlhttp = new XMLHttpRequest();
+        var xmlhttp = new XMLHttpRequest();
         
         xmlhttp.open("GET", "./php/finalizeBuild.php?caseID=" + caseID + "&drvID=" + stoID + "&memID=" + memID + "&memQty="
             + memQty + "&moboID=" + mobID + "&psuID=" + psuID + "&cpuID=" + cpuID + "&gpuID=" + gpuID + "&name=" + buildName
