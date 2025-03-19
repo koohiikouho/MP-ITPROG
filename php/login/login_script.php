@@ -1,50 +1,46 @@
 <?php
-    require '../../vendor/autoload.php';
-
-    $username = $_POST["user"];
-    $password = $_POST["password"];
+    require '../../vendor/autoload.php'; //import randomlib composer shit
+    require './dbcred.php'; //import credentials
 
     $factory = new RandomLib\Factory;
     $generator = $factory->getGenerator(new SecurityLib\Strength(SecurityLib\Strength::MEDIUM));
-
-    $servername = "localhost";
-    $dbusername = "root";
-    $dbpassword = "";
-    $dbname = "dbpcpartspicker";
 
     $conn = new mysqli($servername, $dbusername, $dbpassword, $dbname);
 
     if ($conn->connect_error) {
         die("Connection failed: " . $conn->connect_error);
     }
-    $sql = "SELECT u.username, u.password, u.user_id
-            FROM users u
-            WHERE u.username='$username' AND u.password='$password' ";
 
-    $result = $conn->query($sql);
+    $query = "SELECT u.username, u.password FROM users u WHERE u.username=?";
 
-    if ($result->num_rows > 0) {
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param("s", $_POST["user"]);
+    $stmt->execute(); 
+
+    $result = $stmt->get_result(); //get result from prepared statement 
+
+    if ($result->num_rows > 0) { //if user exists
 
         while ($row = $result->fetch_assoc()) {
-            $userid = $row['user_id'];
+            $hash = $row['password'];
         }
-            $token= $generator->generateString(22);
-            $sesid = $generator->generateString(22);
-            $sql2 = "UPDATE users
-                    SET session_token='$token', session_id='$sesid'
-                    WHERE user_id='$userid'";
-
-            $conn->query($sql2);
+        
+        if(password_verify($_POST["password"], $hash) == true){ //if password matches bcrypt hash on db
+            $token= $generator->generateString(22); //generate a random sessionid with the length of 22
+            $query2 = "UPDATE users SET session_token=? WHERE username=?";
+            $stmt2 = $conn->prepare($query2);
+            $stmt2->bind_param("ss", $token, $_POST["user"]);
+            $stmt2->execute(); //save token on db
             
-            setcookie("sesid", $sesid, time() + 86400, "/");
-            setcookie("sestoken", $token, time() + 86400, "/");
-            header('Location: ../../admin/admin.html');
-
+            setcookie("sestoken", $token, time() + 86400, "/"); //session lasts 1 day before getting sent to the depths of hell
+            header('Location: ../../admin/index.html'); //redirect to admin site
+            
+        } else{
+            header('Location: ../../login.html'); //otherwise log in again
+        }
     } else {
         echo "<br>Error";
-        header('Location: ../../login.html');
+        header('Location: ../../login.html'); //same thing as above except if there's 0 username matches
     }
-
-    
     $conn->close();
 ?>
