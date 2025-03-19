@@ -8,6 +8,7 @@ function populateCPU(){
         if (this.readyState == 4 && this.status == 200) {
             
             document.getElementById("cpuBrand").innerHTML = this.responseText;
+            
         }
     };
 
@@ -54,7 +55,12 @@ function popMem(){
             fillAll = this.responseText;
             document.getElementById("memBrand").innerHTML = fillAll;
             document.getElementById("moboBrand").innerHTML = fillAll;
-            document.getElementById("stoBrand").innerHTML = fillAll;
+            document.getElementById("stoBrand").innerHTML = fillAll;            
+            document.getElementById("psuBrand").innerHTML = fillAll;
+            document.getElementById("caseBrand").innerHTML = fillAll;
+            document.getElementById("gpuVendor").innerHTML = fillAll;
+            document.getElementById("gpuBrand").innerHTML = fillAll;
+
         }
     };
 
