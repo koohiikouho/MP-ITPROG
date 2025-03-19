@@ -13,9 +13,10 @@ function populateCPU(){
 
     xmlhttp.open("GET", "../php/cpuInitBrand.php", true);
     xmlhttp.send();
+    getCPUSockets();
 };
 
-function populateCPU(){
+function getCPUSockets(){
 
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function(){
@@ -30,7 +31,25 @@ function populateCPU(){
     xmlhttp.send();
 };
 
+function validSessionIDCheck(){
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function(){
+    
+        if (this.readyState == 4 && this.status == 200) {
+            
+           if(this.responseText == "Invalid")
+                window.location.replace("../login.html");
+        }
+    };
+
+    xmlhttp.open("GET", "./php/sesCheckJS.php", true);
+    xmlhttp.send();
+
+}
+
 $(document).ready(function(){
+    
+    validSessionIDCheck();
     populateCPU();
 
 });
