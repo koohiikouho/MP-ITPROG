@@ -43,7 +43,7 @@
         
                 <div class="tab-content mt-4">
                     <div class="tab-pane fade show active" id="addCPU">
-                        <form id="addCPU" >
+                        <form id="addCPUForm" >
                             
                             <div class="mb-3">
                                 <label class="form-label">CPU Name</label>
@@ -84,8 +84,9 @@
                             <button type="submit" class="btn btn-success w-100">Add Component</button>
                         </form>
                     </div>
-                    <div class="tab-pane fade show active" id="addMotherboard">
-                        <form id="addCPU" >
+
+                    <div class="tab-pane fade" id="addMotherboard">
+                        <form id="addMoboForm" >
                             
                             <div class="mb-3">
                                 <label class="form-label">Mobo Name</label>
@@ -115,12 +116,77 @@
 
                             <div class="mb-3">
                                 <label class="form-label">Chipsets</label>
-                                <select class="form-control" id="moboChipset" required> </select>
+                                <input type="text" class="form-control" id="moboChipset" required> </select>
                             </div>
 
                             <div class="mb-3">
                                 <label class="form-label">Price</label>
                                 <input type="number" class="form-control" id="moboPrice" required>
+                            </div>
+                    
+                            <button type="submit" class="btn btn-success w-100">Add Component</button>
+                        </form>
+                    </div>
+
+                    <div class="tab-pane fade" id="addMemory">
+                        <form id="addMemForm" >
+                            
+                            <div class="mb-3">
+                                <label class="form-label" for="memBrand" ">Vendor</label> 
+                                <select class="form-control" id="memBrand" required> </select>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">DDR Version</label>
+                                <input type="number" class="form-control" id="memDDR" required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">Size</label>
+                                <input type="number" class="form-control" id="memSize" required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">Price</label>
+                                <input type="number" class="form-control" id="memPrice" required>
+                            </div>
+                    
+                            <button type="submit" class="btn btn-success w-100">Add Component</button>
+                        </form>
+                    </div>
+
+                    <div class="tab-pane fade" id="addStorage">
+                        <form id="addStoForm" >
+                            
+                            <div class="mb-3">
+                                <label class="form-label" for="stoBrand">Vendor</label> 
+                                <select class="form-control" id="stoBrand" required> </select>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">Capacity</label>
+                                <input type="number" class="form-control" id="stoSize" required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label" for="stoType">Storage Type</label> 
+                                <select class="form-control" id="stoType" required> 
+                                    <option value="HDD">HDD</option>
+                                    <option value="HDD">SSD</option>
+                                </select>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label" for="stoConn">Connector Type</label> 
+                                <select class="form-control" id="stoConn" required> 
+                                    <option value="M.2">M.2</option>
+                                    <option value="SATA">SATA</option>
+                                </select>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">Price</label>
+                                <input type="number" class="form-control" id="stoPrice" required>
                             </div>
                     
                             <button type="submit" class="btn btn-success w-100">Add Component</button>

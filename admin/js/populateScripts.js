@@ -46,10 +46,32 @@ function validSessionIDCheck(){
     xmlhttp.send();
 
 }
+function popMem(){
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function(){
+    
+        if (this.readyState == 4 && this.status == 200) {
+            fillAll = this.responseText;
+            document.getElementById("memBrand").innerHTML = fillAll;
+            document.getElementById("moboBrand").innerHTML = fillAll;
+            document.getElementById("stoBrand").innerHTML = fillAll;
+        }
+    };
+
+    xmlhttp.open("GET", "./php/getVendor.php", true);
+    xmlhttp.send();
+}
+
+function populateCompBrand(){
+    
+    popMem();
+    
+}
 
 $(document).ready(function(){
     
     validSessionIDCheck();
     populateCPU();
+    populateCompBrand();
 
 });
