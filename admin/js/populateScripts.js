@@ -62,16 +62,11 @@ function popMem(){
     xmlhttp.send();
 }
 
-function populateCompBrand(){
-    
-    popMem();
-    
-}
 
 $(document).ready(function(){
     
     validSessionIDCheck();
     populateCPU();
-    populateCompBrand();
+    popMem();
 
 });
