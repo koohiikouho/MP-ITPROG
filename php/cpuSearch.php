@@ -16,12 +16,16 @@
 
     // Change sql query acc to sortby
     if ($sortby == "price") {
-        $sql = "SELECT p.name, p.cpu_id, p.price
-                FROM processors p
-                WHERE vendorCode='$brand' AND cores='$cores'
-                ORDER BY p.price ASC;";
+        $stmt = $conn->prepare("SELECT p.name, p.cpu_id, p.price
+                                FROM processors p
+                                WHERE p.vendorCode = ? 
+                                AND p.cores = ? 
+                                AND p.isDeleted = '0'
+                                ORDER BY p.price ASC");
 
-        $result = $conn->query($sql);
+        $stmt->bind_param("ss", $brand, $cores);
+        $stmt->execute();
+        $result = $stmt->get_result();
 
         if ($result->num_rows > 0) {
             echo "<option value='' disabled selected>Select a CPU</option>";
@@ -33,14 +37,18 @@
         }
 
     } elseif ($sortby == "popularity") {
-        $sql = "SELECT p.name, p.cpu_id, COUNT(b.cpu_id) AS popularity, p.price
-                FROM processors p
-                LEFT JOIN builds b ON b.cpu_id = p.cpu_id
-                WHERE p.vendorCode = '$brand' AND p.cores = '$cores'
-                GROUP BY p.name, p.cpu_id
-                ORDER BY popularity DESC;";
+         $stmt = $conn->prepare("SELECT p.name, p.cpu_id, COUNT(b.cpu_id) AS popularity, p.price
+                                 FROM processors p
+                                 LEFT JOIN builds b ON b.cpu_id = p.cpu_id
+                                 WHERE p.vendorCode = ? 
+                                 AND p.cores = ?
+                                 AND p.isDeleted = '0'
+                                 GROUP BY p.name, p.cpu_id
+                                 ORDER BY popularity DESC;");
 
-        $result = $conn->query($sql);
+        $stmt->bind_param("ss", $brand, $cores);
+        $stmt->execute();
+        $result = $stmt->get_result();
 
         if ($result->num_rows > 0) {
             echo "<option value='' disabled selected>Select a CPU</option>";

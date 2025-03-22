@@ -16,13 +16,16 @@
     $sql;
 
     if ($sortby == "price") {
-        $sql = "SELECT c.cse_id, rv.vendorName, c.name, c.price
-                FROM cases c
-                JOIN ref_vendors rv ON rv.mbid = c.vendorCode
-                WHERE c.vendorCode = '$brand'
-                ORDER BY c.price ASC;";
+        $stmt = $conn->prepare("SELECT c.cse_id, rv.vendorName, c.name, c.price
+                        FROM cases c
+                        JOIN ref_vendors rv ON rv.mbid = c.vendorCode
+                        WHERE c.vendorCode = ? 
+                        AND c.isDeleted = '0'
+                        ORDER BY c.price ASC;");
 
-        $result = $conn->query($sql);
+        $stmt->bind_param("s", $brand);
+        $stmt->execute();
+        $result = $stmt->get_result();
 
         if ($result->num_rows > 0) {
             echo "<option value='' disabled selected>Select a case</option>";
@@ -33,14 +36,18 @@
             echo "<option disabled selected>No case matches filter</option>";
         }
     } elseif ($sortby == "popularity") {
-        $sql = "SELECT c.cse_id, rv.vendorName, c.name, c.price, COUNT(b.cse_id) AS popularity
-                FROM cases c
-                JOIN ref_vendors rv ON rv.mbid = c.vendorCode
-                LEFT JOIN builds b ON b.cse_id = c.cse_id
-                WHERE c.vendorCode = '$brand'
-                GROUP BY c.cse_id, rv.vendorName, c.name, c.price
-                ORDER BY popularity DESC;";
-        $result = $conn->query($sql);
+        $stmt = $conn->prepare("SELECT c.cse_id, rv.vendorName, c.name, c.price, COUNT(b.cse_id) AS popularity
+                               FROM cases c
+                                JOIN ref_vendors rv ON rv.mbid = c.vendorCode
+                                LEFT JOIN builds b ON b.cse_id = c.cse_id
+                                WHERE c.vendorCode = ?  
+                                AND c.isDeleted = '0'
+                                GROUP BY c.cse_id, rv.vendorName, c.name, c.price
+                                ORDER BY popularity DESC;");
+
+        $stmt->bind_param("s", $brand);
+        $stmt->execute();
+        $result = $stmt->get_result();
 
         if ($result->num_rows > 0) {
             echo "<option value='' disabled selected>Select a case</option>";

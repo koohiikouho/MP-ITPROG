@@ -24,12 +24,18 @@
     $sql;
 
     if ($sortby == "price") {
-        $sql = "SELECT drv_id, capacity, price
-                FROM drives
-                WHERE storageType = '$storageType' AND connector = '$connector' AND vendorName = '$brand'
-                ORDER BY price ASC;";
+        $stmt = $conn->prepare("SELECT drv_id, capacity, price
+                        FROM drives
+                        WHERE storageType = ? 
+                        AND connector = ? 
+                        AND vendorName = ? 
+                        AND isDeleted = '0'
+                        ORDER BY price ASC");
 
-        $result = $conn->query($sql);
+        $stmt->bind_param("sss", $storageType, $connector, $brand);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
 
         if ($result->num_rows > 0) {
             echo "<option value='' disabled selected>Select Storage Size</option>";
@@ -51,14 +57,18 @@
         }
 
     } elseif ($sortby == "popularity") {
-        $sql = "SELECT d.drv_id, COUNT(b.drv_id) AS popularity, d.price, d.capacity
+        $stmt = $conn->prepare("SELECT d.drv_id, COUNT(b.drv_id) AS popularity, d.price, d.capacity
                 FROM drives d
                 LEFT JOIN builds b ON b.drv_id = d.drv_id
-                WHERE storageType = '$storageType' AND connector = '$connector' AND vendorName = '$brand'
+                WHERE storageType = ? 
+                AND connector = ? 
+                AND vendorName = ?
                 GROUP BY d.drv_id
-                ORDER BY popularity DESC;";
+                ORDER BY popularity DESC;");
 
-        $result = $conn->query($sql);
+                $stmt->bind_param("sss", $storageType, $connector, $brand);
+                $stmt->execute();
+                $result = $stmt->get_result();
 
         if ($result->num_rows > 0) {
             echo "<option value='' disabled selected>Select Storage Size</option>";

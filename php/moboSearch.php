@@ -18,12 +18,16 @@
 
     // Change sql query acc to sortby
     if ($sortby == "price") {
-        $sql = "SELECT b.name, b.mob_id, b.price
-                FROM motherboards b
-                WHERE vendorCode='$brand' AND chipset='$chipset'
-                ORDER BY b.price ASC;";
+        $stmt = $conn->prepare("SELECT m.name, m.mob_id, m.price
+                        FROM motherboards m
+                        WHERE m.vendorCode = ? 
+                        AND m.chipset = ? 
+                        AND m.isDeleted = '0'
+                        ORDER BY m.price ASC");
 
-        $result = $conn->query($sql);
+        $stmt->bind_param("ss", $brand, $chipset);
+        $stmt->execute();
+        $result = $stmt->get_result();
 
         if ($result->num_rows > 0) {
             echo "<option value='' disabled selected>Select a Motherboard</option>";
@@ -35,14 +39,18 @@
         }
 
     } elseif ($sortby == "popularity") {
-        $sql = "SELECT m.name, m.mob_id, COUNT(b.mobo_id) AS popularity, m.price
+        $stmt = $conn->prepare("SELECT m.name, m.mob_id, COUNT(b.mobo_id) AS popularity, m.price
                 FROM motherboards m
                 LEFT JOIN builds b ON m.mob_id = m.mob_id
-                WHERE m.vendorCode = '$brand' AND m.chipset = '$chipset'
+                WHERE m.vendorCode = ? 
+                AND m.chipset = ?
+                AND m.isDeleted = '0'
                 GROUP BY m.name, m.mob_id
-                ORDER BY popularity DESC;";
+                ORDER BY popularity DESC;");
 
-        $result = $conn->query($sql);
+        $stmt->bind_param("ss", $brand, $chipset);
+        $stmt->execute();
+        $result = $stmt->get_result();
 
         if ($result->num_rows > 0) {
             echo "<option value='' disabled selected>Select a Motherboard</option>";

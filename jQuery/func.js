@@ -1178,18 +1178,6 @@ $(document).ready(function(){
 
     })
 
-    $('#addGpuButton').click(function() {
-        gpuPriceGet();
-        gpuQueryReplaceInput();
-
-        gpuPrice += 0.00;
-        totalPrice += gpuPrice;
-        document.getElementById("gpuPriceList").innerText = "GPU: " + peso.format(gpuPrice);
-        document.getElementById("totalPriceList").innerText = "Total: " + peso.format(totalPrice);
-    });
-
-
-
     $('#submitBuild').click(function() {
 
         var cpuID = document.getElementById("cpuName").value;
@@ -1259,23 +1247,19 @@ $(document).ready(function(){
         gpuPriceGet();
         gpuQueryReplaceInput();
 
-        gpuPrice += 0.00;
         totalPrice += gpuPrice;
         document.getElementById("gpuPriceList").innerText = "GPU: " + peso.format(gpuPrice);
         document.getElementById("totalPriceList").innerText = "Total: " + peso.format(totalPrice);
     });
 
-
-
     $('#remGpuButton').click(function() {
         gpuQueryReplaceText();
+
         totalPrice -= gpuPrice;
-        gpuPrice = 0.00;
+        gpuPrice = 0;
         document.getElementById("gpuPriceList").innerText = "";
         document.getElementById("totalPriceList").innerText = "Total: " + peso.format(totalPrice);
     });
-
-
 
     $('#gpuSearch').click(function(){
         var gpuBrand = document.getElementById("gpuBrand");

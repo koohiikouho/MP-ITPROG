@@ -14,13 +14,15 @@
     }
 
     if ($sortby == "price") {
-        $sql = "SELECT v.gpu_id, rv.vendorName, v.model, v.price
-                FROM videocards v
-                JOIN ref_vendors rv ON v.vendorCode = rv.mbid
-                WHERE v.brandCode = '$brand'
-                ORDER BY v.price ASC;";
+        $stmt = $conn->prepare("SELECT v.gpu_id, rv.vendorName, v.model, v.price
+                        FROM videocards v
+                        JOIN ref_vendors rv ON v.vendorCode = rv.mbid
+                        WHERE v.brandCode = ? AND v.isDeleted ='0'
+                        ORDER BY v.price ASC");
 
-        $result = $conn->query($sql);
+        $stmt->bind_param("s", $brand);
+        $stmt->execute();
+        $result = $stmt->get_result();
 
         if ($result->num_rows > 0) {
             echo "<option value='' disabled selected>Select a GPU</option>";
@@ -34,15 +36,17 @@
             echo "<option disabled selected>No GPUs match filter</option>";
         }
     } elseif ($sortby == "popularity") {
-        $sql = "SELECT v.gpu_id, rv.vendorName, v.model, v.price, COUNT(b.gpu_id) AS popularity
+        $stmt = $conn->prepare("SELECT v.gpu_id, rv.vendorName, v.model, v.price, COUNT(b.gpu_id) AS popularity
                 FROM videocards v
                 JOIN ref_vendors rv ON v.vendorCode = rv.mbid
                 LEFT JOIN builds b ON b.gpu_id = v.gpu_id
-                WHERE v.brandCode = '$brand'
+                WHERE v.brandCode = ? AND v.isDeleted = '0'
                 GROUP BY v.gpu_id, v.price
-                ORDER BY popularity DESC;";
+                ORDER BY popularity DESC;");
 
-        $result = $conn->query($sql);
+        $stmt->bind_param("s", $brand);
+        $stmt->execute();
+        $result = $stmt->get_result();
 
         // Check if there are results
         if ($result->num_rows > 0) {

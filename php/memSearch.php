@@ -18,13 +18,19 @@
     $sql;
 
     if ($sortby == "price") {
-        $sql = "SELECT m.mem_id, rf.vendorname, m.size, m.price
-                FROM ref_vendors rf
-                JOIN memorysticks m ON m.vendorcode=rf.mbid
-                WHERE m.vendorcode='$brand' AND m.size='$size' AND m.ddrversion='$ddrversion'
-                ORDER BY m.price ASC;";
+        $stmt = $conn->prepare("SELECT m.mem_id, rf.vendorname, m.size, m.price
+                        FROM ref_vendors rf
+                        JOIN memorysticks m ON m.vendorcode = rf.mbid
+                        WHERE m.vendorcode = ? 
+                        AND m.size = ? 
+                        AND m.ddrversion = ? 
+                        AND m.isDeleted = '0'
+                        ORDER BY m.price ASC");
 
-        $result = $conn->query($sql);
+        $stmt->bind_param("sss", $brand, $size, $ddrversion);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
 
         if ($result->num_rows > 0) {
             echo "<option value='' disabled selected>Select a Memory Stick</option>";
@@ -36,15 +42,20 @@
         }
 
     } elseif ($sortby == "popularity") {
-        $sql = "SELECT m.mem_id, rf.vendorname, m.size, COUNT(b.mem_id) AS popularity
-                FROM ref_vendors rf
-                JOIN memorysticks m ON m.vendorcode=rf.mbid
-                LEFT JOIN builds b ON b.mem_id = m.mem_id
-                WHERE m.vendorcode='$brand' AND m.size='$size' AND m.ddrversion='$ddrversion'
-                GROUP BY m.mem_id, rf.vendorname, m.size
-                ORDER BY popularity DESC";
+        $stmt = $conn->prepare("SELECT m.mem_id, rf.vendorname, m.size, COUNT(b.mem_id) AS popularity
+                                FROM ref_vendors rf
+                                JOIN memorysticks m ON m.vendorcode=rf.mbid
+                                LEFT JOIN builds b ON b.mem_id = m.mem_id
+                                WHERE m.vendorcode = ? 
+                                AND m.size = ? 
+                                AND m.ddrversion =? 
+                                AND m.isDeleted = '0'
+                                GROUP BY m.mem_id, rf.vendorname, m.size
+                                ORDER BY popularity DESC");
 
-        $result = $conn->query($sql);
+                $stmt->bind_param("sss", $brand, $size, $ddrversion);
+                $stmt->execute();
+                $result = $stmt->get_result();
 
         if ($result->num_rows > 0) {
             echo "<option value='' disabled selected>Select a Memory Stick</option>";

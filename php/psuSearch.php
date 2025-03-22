@@ -14,12 +14,17 @@
     }
 
     if ($sortby == "price") {
-        $sql = "SELECT p.psu_id, rf.vendorname ,p.wattage, p.efficiency, p.price
-            FROM powersupplies p
-            JOIN ref_vendors rf ON rf.mbid=p.vendorcode
-            WHERE p.vendorcode='$brand'
-            ORDER BY p.price ASC;";
-        $result = $conn->query($sql);
+        $stmt = $conn->prepare("SELECT p.psu_id, rf.vendorname, p.wattage, p.efficiency, p.price
+                        FROM powersupplies p
+                        JOIN ref_vendors rf ON rf.mbid = p.vendorcode
+                        WHERE p.vendorcode = ? 
+                        AND p.isDeleted = '0'
+                        ORDER BY p.price ASC");
+
+        $stmt->bind_param("s", $brand);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
 
         // Check if there are results
         if ($result->num_rows > 0) {
@@ -33,14 +38,18 @@
             echo "<option disabled selected>No PSUs match filter</option>";
         }
     } elseif ($sortby == "popularity") {
-        $sql = "SELECT p.psu_id, rf.vendorname ,p.wattage, p.efficiency, p.price, COUNT(b.psu_id) AS popularity
+        $stmt = $conn->prepare("SELECT p.psu_id, rf.vendorname ,p.wattage, p.efficiency, p.price, COUNT(b.psu_id) AS popularity
                 FROM powersupplies p
                 JOIN ref_vendors rf ON rf.mbid=p.vendorcode
                 LEFT JOIN builds b ON b.psu_id = p.psu_id
-                WHERE p.vendorcode='$brand'
+                WHERE p.vendorcode=?
+                AND p.isDeleted = '0'
                 GROUP BY p.psu_id, p.price
-                ORDER BY popularity DESC;";
-        $result = $conn->query($sql);
+                ORDER BY popularity DESC;");
+        
+        $stmt->bind_param("s", $brand);
+        $stmt->execute();
+        $result = $stmt->get_result();
 
         // Check if there are results
         if ($result->num_rows > 0) {
