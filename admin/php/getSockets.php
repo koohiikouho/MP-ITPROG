@@ -1,27 +1,26 @@
 <?php
-    require './checkValidSession.php';
-    require './dbcred.php';
+    $servername = "localhost";
+    $username = "root";
+    $password = "";
+    $dbname = "dbpcpartspicker";
 
-    checkValidSession();
-
-   
-    $conn = new mysqli($servername, $dbusername, $dbpassword, $dbname);
+    $conn = new mysqli($servername, $username, $password, $dbname);
 
     if ($conn->connect_error) {
         die("Connection failed: " . $conn->connect_error);
     }
 
-    $sql = "SELECT * FROM ref_sockets";
+    $sql = "SELECT *
+            FROM ref_sockets;";
     $result = $conn->query($sql);
-    
-    // Check if there are results
+
     if ($result->num_rows > 0) {
-        echo "<option value='' disabled selected>Select a Socket for the CPU</option>";
+        echo "<option value='' disabled selected>Select a socket</option>";
         while ($row = $result->fetch_assoc()) {
             echo "<option value='" . $row['socketID'] . "'>" . $row['socketName']  . "</option>";
         }
     } else {
-        echo "<option disabled>Error: No socket found CHECK DB</option>";
+        echo "<option disabled>No sockets available</option>";
     }
 
     $conn->close();
