@@ -24,12 +24,7 @@ $sql = $conn->prepare("INSERT INTO powersupplies (vendorCode, wattage, efficienc
                        VALUES (?, ?, ?, ?)");
 
 $sql->bind_param("sisd", $brand, $wattage, $efficiency, $price);
-
-if ($sql->execute()) {
-    echo json_encode(["success" => true, "message" => "PSU added successfully!"]);
-} else {
-    echo json_encode(["success" => false, "message" => "Error: " . $sql->error]);
-}
+$sql->execute();
 
 $sql->close();
 $conn->close();

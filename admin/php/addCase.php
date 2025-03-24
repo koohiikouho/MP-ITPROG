@@ -23,12 +23,7 @@ $sql = $conn->prepare("INSERT INTO cases (vendorCode, name, price)
                        VALUES (?, ?, ?)");
 
 $sql->bind_param("ssd", $brand, $name, $price);
-
-if ($sql->execute()) {
-    echo json_encode(["success" => true, "message" => "Case added successfully!"]);
-} else {
-    echo json_encode(["success" => false, "message" => "Error: " . $sql->error]);
-}
+$sql->execute();
 
 $sql->close();
 $conn->close();

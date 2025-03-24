@@ -258,14 +258,6 @@ $(document).ready(function(){
         var psuEfficiency = document.getElementById("psuEfficiency").value;
         var psuPrice = document.getElementById("psuPrice").value;
 
-        alert(
-            "PSU Details:\n" +
-            "Brand: " + psuBrandText + "\n" +
-            "Wattage: " + psuWattage + "\n" +
-            "Efficiency: " + psuEfficiency + "\n" +
-            "Price: $" + psuPrice
-        );
-
         var formData = new FormData(form);
     
         formData.append("brand", psuBrandText);
@@ -274,6 +266,41 @@ $(document).ready(function(){
         formData.append("price", psuPrice);
     
         fetch("./php/addPSU.php", {
+            method: "POST",
+            body: formData,
+        })
+        .catch(error => {
+            console.error("Error:", error);
+            alert("Something went wrong. Please try again.");
+        });
+    });
+
+    document.getElementById("gpuAdd").addEventListener("click", function() {
+        var form = document.getElementById("addGPUForm");
+    
+        var gpuBrand = document.getElementById("gpuBrand");
+        var gpuBrandText = gpuBrand.options[gpuBrand.selectedIndex].value;
+        var gpuVendor = document.getElementById("gpuVendor");
+        var gpuVendorText = gpuVendor.options[gpuVendor.selectedIndex].value;
+        var gpuName = document.getElementById("gpuModel").value;
+        var gpuPrice = document.getElementById("gpuPrice").value;
+    
+        alert(
+            "GPU Details:\n" +
+            "Brand: " + gpuBrandText + "\n" +
+            "Vendor: " + gpuVendorText + "\n" +
+            "Model: " + gpuName + "\n" +
+            "Price: $" + gpuPrice
+        );
+
+        var formData = new FormData(form);
+    
+        formData.append("brand", gpuBrandText);
+        formData.append("vendor", gpuVendorText);
+        formData.append("name", gpuName);
+        formData.append("price", gpuPrice);
+    
+        fetch("./php/addGPU.php", {
             method: "POST",
             body: formData,
         })
