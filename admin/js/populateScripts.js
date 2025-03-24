@@ -97,6 +97,31 @@ function popBuilds(){
 
 }
 
+function moboFill(){
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function(){
+        if (this.readyState == 4 && this.status == 200) {
+            document.getElementById("manBuild").innerHTML = this.responseText;
+        }
+    };
+    xmlhttp.open("GET", "./php/getBuilds.php", true);
+    xmlhttp.send();
+}
+function populateMotherboard(){
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function(){
+        if (this.readyState == 4 && this.status == 200) {
+            document.getElementById("mobUpdateList").innerHTML = this.responseText;
+        }
+    };
+    xmlhttp.open("GET", "./php/updateComponent/mobo/popMobo.php", true);
+    xmlhttp.send();
+}
+
+function helpMotherboard(){
+
+}
+
 $(document).ready(function(){
 
     validSessionIDCheck();
@@ -104,7 +129,19 @@ $(document).ready(function(){
     getSockets();
     popMem();
     popBuilds();
+    populateMotherboard();
+    
+    $('#searchMob').click(function(){
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function(){
+            if (this.readyState == 4 && this.status == 200) {
+                document.getElementById("updMoboForm").innerHTML = this.responseText;
+            }
+        };
+        xmlhttp.open("GET","./php/updateComponent/mobo/helpMobo.php?mobo_id=" + document.getElementById("mobUpdateList").value, true);
+        xmlhttp.send();
 
+    });
 
     $('#cpuAdd').click(function(){
         var cpuName = document.getElementById("cpuName").value;
