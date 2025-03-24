@@ -71,6 +71,33 @@ function popMem(){
     xmlhttp.send();
 }
 
+function delBuild(buildNumber){
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function(){
+    
+        if (this.readyState == 4 && this.status == 200) {
+
+        }
+    };
+
+    xmlhttp.open("GET", "./php/deleteBuild.php?id=" + buildNumber, true);
+    xmlhttp.send();
+    location.reload();
+}
+
+
+function popBuilds(){
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function(){
+        if (this.readyState == 4 && this.status == 200) {
+            document.getElementById("manBuild").innerHTML = this.responseText;
+        }
+    };
+
+    xmlhttp.open("GET", "./php/getBuilds.php", true);
+    xmlhttp.send();
+
+}
 
 $(document).ready(function(){
 
@@ -78,6 +105,7 @@ $(document).ready(function(){
     populateCPU();
     getCPUSockets();
     popMem();
+    popBuilds();
 
 
     $('#cpuAdd').click(function(){

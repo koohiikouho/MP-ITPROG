@@ -25,11 +25,48 @@
             <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#deleteComponent">❌ Delete Component</a></li>
             <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#updateComponent">✏️ Update Component</a></li>
             <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#generateReport">📊 Generate Report</a></li>
-            <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#manRef">📊 Manipulate References</a></li>
-            <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#manUser">📊 Manipulate users</a></li>
+            <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#manRef"> Manage References</a></li>
+            <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#manBuild"> Manage Builds</a></li>
         </ul>
 
         <div class="tab-content mt-4">
+
+            <div class="tab-pane fade" id="manBuild">
+
+            </div>
+
+
+
+            <div class="tab-pane fade" id="manRef">
+                <ul class="nav nav-tabs mt-3" id="addTabs">
+                    <li class="nav-item"><a class="nav-link active" data-bs-toggle="tab" href="#addVendors">Add Vendors</a></li>
+                    <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#addSocket">Add Sockets</a></li>
+                </ul>
+                <div class="tab-content mt-4">
+
+                    <div class="tab-pane fade show active" id="addVendors">
+                        <form id="addVendorForm">
+                                <label class="form-label">Vendor ID</label>
+                                <input type="text" class="form-control" id="venName" maxlength="3" required>
+
+                                <label class="form-label">Vendor Name</label>
+                                <input type="text" class="form-control" id="venName" required>
+                            <button type="submit" class="btn btn-success w-100">Add Vendor</button>
+                        </form>
+                    </div>
+                
+                    <div class="tab-pane fade" id="addSocket">
+                        <form id="addSocketForm">
+                                <label class="form-label">Socket Name</label>
+                                <input type="text" class="form-control" id="sockName" required>
+                            <button type="submit" class="btn btn-success w-100">Add Socket</button>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+
+
         
             <div class="tab-pane fade" id="generateReport">
                 <h4>Generate Report</h4>
