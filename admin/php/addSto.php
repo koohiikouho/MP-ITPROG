@@ -25,7 +25,11 @@ $sql = $conn->prepare("INSERT INTO drives (vendorName, capacity, storageType, co
                        VALUES (?, ?, ?, ?, ?)");
 
 $sql->bind_param("sissd", $brand, $size, $type, $connection, $price);
-$sql->execute();
+if ($sql->execute()) {
+    echo json_encode(["success" => true, "message" => "Storage added successfully"]);
+} else {
+    echo json_encode(["success" => false, "message" => "Execution failed: " . $sql->error]);
+}
 
 $sql->close();
 $conn->close();

@@ -24,7 +24,11 @@ $sql = $conn->prepare("INSERT INTO videocards (brandCode, vendorCode, model, pri
                        VALUES (?, ?, ?, ?)");
 
 $sql->bind_param("sssd", $brand, $vendor, $name, $price);
-$sql->execute();
+if ($sql->execute()) {
+    echo json_encode(["success" => true, "message" => "GPU added successfully"]);
+} else {
+    echo json_encode(["success" => false, "message" => "Execution failed: " . $sql->error]);
+}
 
 
 $sql->close();

@@ -25,7 +25,11 @@ $sql = $conn->prepare("INSERT INTO memorysticks (vendorCode, ddrVersion, size, p
 
 
 $sql->bind_param("siid", $brand, $ddr, $size, $price);
-$sql->execute();
+if ($sql->execute()) {
+    echo json_encode(["success" => true, "message" => "Memory added successfully"]);
+} else {
+    echo json_encode(["success" => false, "message" => "Execution failed: " . $sql->error]);
+}
 
 $sql->close();
 $conn->close();

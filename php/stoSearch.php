@@ -63,6 +63,7 @@
                 WHERE storageType = ? 
                 AND connector = ? 
                 AND vendorName = ?
+                AND d.isDeleted = '0'
                 GROUP BY d.drv_id
                 ORDER BY popularity DESC;");
 
