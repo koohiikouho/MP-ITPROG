@@ -49,7 +49,7 @@ if (
     $stmt = $conn->prepare($sql);
 
     if ($stmt) {
-        $stmt->bind_param("siisdidi", $cpuName, $cpuCores, $cpuThreads, $cpuClock, $cpuSocket, $cpuBrand, $cpuPrice, $cpuId);
+        $stmt->bind_param("siissssi", $cpuName, $cpuCores, $cpuThreads, $cpuClock, $cpuSocket, $cpuBrand, $cpuPrice, $cpuId);
         
         if ($stmt->execute()) {
             echo json_encode(["success" => "CPU details updated successfully"]);

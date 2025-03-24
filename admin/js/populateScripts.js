@@ -243,7 +243,7 @@ $(document).ready(function(){
         var cpuBrandText = cpuBrand.options[cpuBrand.selectedIndex].value;
         var cpuPrice = document.getElementById("updcpuPrice").value;
     
-    
+
         if (
             cpuId === "" || cpuName === "" || cpuCores === "" || cpuThreads === "" || cpuClock === "" ||
             cpuSocketText === "" || cpuBrandText === "" || cpuPrice === ""
@@ -276,11 +276,6 @@ $(document).ready(function(){
             alert("Something went wrong. Please try again.");
         });
     });
-    
-    
-
-    
-
     
 
     document.getElementById("moboAdd").addEventListener("click", function() {
