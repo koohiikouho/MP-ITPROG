@@ -186,5 +186,44 @@ $(document).ready(function(){
         });
     });
     
+    document.getElementById("memAdd").addEventListener("click", function() {
+        var form = document.getElementById("addMemForm");
+    
+        var memBrand = document.getElementById("memBrand");
+        var memBrandText = memBrand.options[memBrand.selectedIndex].value;
+        var memDdr = document.getElementById("memDDR").value;
+        var memSize = document.getElementById("memSize").value;
+        var memPrice = document.getElementById("memPrice").value;
 
+        if (memBrandText === "" || memDdr === "" || memSize === "" || memPrice === "") {
+            alert("All fields are required.");
+            return;
+        }
+    
+        var formData = new FormData(form);
+    
+        formData.append("brand", memBrandText);
+        formData.append("ddr", memDdr);
+        formData.append("size", memSize);
+        formData.append("price", memPrice);
+    
+        fetch("./php/addMem.php", {
+            method: "POST",
+            body: formData,
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert("Memory added successfully!");
+                form.reset();
+            } else {
+                alert("Error: " + data.message);
+            }
+        })
+        .catch(error => {
+            console.error("Error:", error);
+            alert("Something went wrong. Please try again.");
+        });
+    });
+    
 });

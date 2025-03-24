@@ -30,10 +30,11 @@ $sql = $conn->prepare("INSERT INTO motherboards (name, socketID, vendorCode, ddr
 $sql->bind_param("sisiiisd", $name, $socketId, $brand, $ddr, $memSlots, $m2slots, $chipset, $price);
 
 if ($sql->execute()) {
-    echo json_encode(["success" => "CPU added successfully!"]);
+    echo json_encode(["success" => true, "message" => "Motherboard added successfully!"]);
 } else {
-    echo json_encode(["error" => "Error: " . $sql->error]);
+    echo json_encode(["success" => false, "message" => "Error: " . $sql->error]);
 }
+
 
 $sql->close();
 $conn->close();
