@@ -171,15 +171,6 @@ $(document).ready(function(){
             method: "POST",
             body: formData,
         })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                alert("Motherboard added successfully!");
-                form.reset();
-            } else {
-                alert("Error: " + data.message);
-            }
-        })
         .catch(error => {
             console.error("Error:", error);
             alert("Something went wrong. Please try again.");
@@ -211,14 +202,38 @@ $(document).ready(function(){
             method: "POST",
             body: formData,
         })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                alert("Memory added successfully!");
-                form.reset();
-            } else {
-                alert("Error: " + data.message);
-            }
+        .catch(error => {
+            console.error("Error:", error);
+            alert("Something went wrong. Please try again.");
+        });
+    });
+    
+    document.getElementById("stoAdd").addEventListener("click", function() {
+        var form = document.getElementById("addStoForm");
+    
+        var stoBrand = document.getElementById("stoBrand");
+        var stoBrandText = stoBrand.options[stoBrand.selectedIndex].value;
+        var stoSize = document.getElementById("stoSize").value;
+        var stoType = document.getElementById("stoType").value;
+        var stoConn = document.getElementById("stoConn").value;
+        var stoPrice = document.getElementById("stoPrice").value;
+    
+        if (stoBrandText === "" || stoSize === "" || stoType === "" || stoConn === "" || stoPrice === "") {
+            alert("All fields are required.");
+            return;
+        }
+    
+        var formData = new FormData(form);
+    
+        formData.append("brand", stoBrandText);
+        formData.append("size", stoSize);
+        formData.append("type", stoType);
+        formData.append("connection", stoConn);
+        formData.append("price", stoPrice);
+    
+        fetch("./php/addSto.php", {
+            method: "POST",
+            body: formData,
         })
         .catch(error => {
             console.error("Error:", error);
