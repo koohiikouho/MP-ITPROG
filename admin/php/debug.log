@@ -1,0 +1,11 @@
+Array
+(
+    [name] => a
+    [socketId] => 2
+    [brand] => AMD
+    [ddr] => 1
+    [memSlots] => 2
+    [m2slots] => 3
+    [chipset] => 4
+    [price] => 5
+)
