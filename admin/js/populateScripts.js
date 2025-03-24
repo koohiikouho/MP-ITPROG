@@ -249,4 +249,38 @@ $(document).ready(function(){
         });
     });
     
+    document.getElementById("psuAdd").addEventListener("click", function() {
+        var form = document.getElementById("addPSUForm");
+    
+        var psuBrand = document.getElementById("psuBrand");
+        var psuBrandText = psuBrand.options[psuBrand.selectedIndex].value;
+        var psuWattage = document.getElementById("psuWattage").value;
+        var psuEfficiency = document.getElementById("psuEfficiency").value;
+        var psuPrice = document.getElementById("psuPrice").value;
+
+        alert(
+            "PSU Details:\n" +
+            "Brand: " + psuBrandText + "\n" +
+            "Wattage: " + psuWattage + "\n" +
+            "Efficiency: " + psuEfficiency + "\n" +
+            "Price: $" + psuPrice
+        );
+
+        var formData = new FormData(form);
+    
+        formData.append("brand", psuBrandText);
+        formData.append("wattage", psuWattage);
+        formData.append("efficiency", psuEfficiency);
+        formData.append("price", psuPrice);
+    
+        fetch("./php/addPSU.php", {
+            method: "POST",
+            body: formData,
+        })
+        .catch(error => {
+            console.error("Error:", error);
+            alert("Something went wrong. Please try again.");
+        });
+    });
+    
 });
