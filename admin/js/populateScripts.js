@@ -216,9 +216,6 @@ $(document).ready(function(){
     getSockets();
     popMem();
     popBuilds();
-<<<<<<< Updated upstream
-
-=======
     populateMotherboard();
     populateMemory();
     
@@ -232,7 +229,6 @@ $(document).ready(function(){
         xmlhttp.open("GET","./php/updateComponent/mobo/helpMobo.php?mobo_id=" + document.getElementById("mobUpdateList").value, true);
         xmlhttp.send();
     });
->>>>>>> Stashed changes
 
     $('#cpuAdd').click(function(){
         var cpuName = document.getElementById("cpuName").value;

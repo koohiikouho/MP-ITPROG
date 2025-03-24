@@ -13,7 +13,7 @@
     if ($result->num_rows > 0) {
         echo "<option value='' disabled selected>Select memory</option>";
         while ($row = $result->fetch_assoc()) {
-            echo "<option value='" . $row['MEM_ID'] . "'>" . $row['name']  . "</option>";
+            echo "<option value='" . $row['MEM_ID'] . "'>" . $row['vendorCode'] . " ". $row['size'] . "</option>";
         }
     } else {
         echo "<option disabled>No memory</option>";
