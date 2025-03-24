@@ -418,18 +418,18 @@
                                     <input type="number" class="form-control" id="updcpuPrice" required>
                                 </div>
                         
-                                <button type="submit" class="btn btn-success w-100">Update Component</button>
+                                <button type="submit" class="btn btn-success w-100" id="updCPU">Update Component</button>
                             </form>
                         </div>
     
-                        <div class="tab-pane fade" id="updMotherboard">
+                        <div class="tab-pane fade" id="updMotherboard" >
 
                             <select class="form-control" id="mobUpdateList"></select>
                             <button class="btn w-100 btn-primary mt-3" id="searchMob">Search Component</button>
 
-                            <form id="updMoboForm" >
-                                
-                                <div class="mb-3">
+                            <form id="updMoboForm" action="./php/updateComponent/mobo/updMobo.php" method="get">
+                              
+                                <!-- <div class="mb-3">
                                     <label class="form-label">Mobo Name</label>
                                     <input type="text" class="form-control" id="updmoboName" required>
                                 </div>
@@ -438,8 +438,6 @@
                                     <label class="form-label" for="updmoboBrand" ">Vendor</label> 
                                     <select class="form-control" id="updmoboBrand" required> </select>
                                 </div>
-    
-    
                                 <div class="mb-3">
                                     <label class="form-label">DDR Version</label>
                                     <input type="number" class="form-control" id="updmoboDDR" required>
@@ -463,9 +461,9 @@
                                 <div class="mb-3">
                                     <label class="form-label">Price</label>
                                     <input type="number" class="form-control" id="updmoboPrice" required>
-                                </div>
+                                </div> -->
                         
-                                <button type="submit" class="btn btn-success w-100">Update Component</button>
+                                <!-- <button type="submit" class="btn btn-success w-100">Update Component</button> -->
                             </form>
                         </div>
     
