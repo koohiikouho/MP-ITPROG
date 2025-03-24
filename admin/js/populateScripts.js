@@ -1,5 +1,3 @@
-
-
 function populateCPU(){
 
     var xmlhttp = new XMLHttpRequest();
@@ -18,7 +16,7 @@ function populateCPU(){
 
 };
 
-function getCPUSockets(){
+function getSockets(){
 
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function(){
@@ -26,7 +24,7 @@ function getCPUSockets(){
         if (this.readyState == 4 && this.status == 200) {
             
             document.getElementById("cpuSocket").innerHTML = this.responseText;
-            document.getElementById("moboScoket").innerHTML = this.responseText;
+            document.getElementById("moboSocket").innerHTML = this.responseText;
         }
     };
 
@@ -76,7 +74,7 @@ $(document).ready(function(){
 
     validSessionIDCheck();
     populateCPU();
-    getCPUSockets();
+    getSockets();
     popMem();
 
 
@@ -111,58 +109,54 @@ $(document).ready(function(){
     });
     
 
-    $('#moboAdd').click(function(){
-        validSessionIDCheck();
+    document.getElementById("moboAdd").addEventListener("click", function() {
+        var form = document.getElementById("addMoboForm");
     
-        var form = document.getElementById("addMoboForm"); // Corrected form ID
-    
-        var moboName = document.getElementById("moboName").value.trim();
+        var moboName = document.getElementById("moboName").value
+        var moboSocketId = document.getElementById("moboSocket").value;
         var moboBrand = document.getElementById("moboBrand");
         var moboBrandText = moboBrand.options[moboBrand.selectedIndex].value;
-        var moboDdr = document.getElementById("moboDdr").value.trim();
-        var moboMemSlots = document.getElementById("moboMemSlots").value.trim();
-        var moboM2Slots = document.getElementById("moboMemM2Slots").value.trim();
-        var moboChipset = document.getElementById("moboChipset").value.trim();
-        var moboPrice = document.getElementById("moboPrice").value.trim();
-    
-        if (moboName === "" || moboBrandText === "" || moboDdr === "" || moboMemSlots === "" || 
+        var moboDdr = document.getElementById("moboDDR").value
+        var moboMemSlots = document.getElementById("moboMemSlots").value
+        var moboM2Slots = document.getElementById("moboM2Slots").value
+        var moboChipset = document.getElementById("moboChipset").value
+        var moboPrice = document.getElementById("moboPrice").value
+
+        if (moboName === "" || moboSocketId === "" || moboBrandText === "" || moboDdr === "" || moboMemSlots === "" || 
             moboM2Slots === "" || moboChipset === "" || moboPrice === "") {
             alert("All fields are required.");
             return;
         }
     
-        var formData = new FormData();
+        var formData = new FormData(form);
+    
         formData.append("name", moboName);
+        formData.append("socketId", moboSocketId);
         formData.append("brand", moboBrandText);
         formData.append("ddr", moboDdr);
         formData.append("memSlots", moboMemSlots);
         formData.append("m2slots", moboM2Slots);
-        formData.append("cpuSocket", moboChipset);
+        formData.append("chipset", moboChipset);
         formData.append("price", moboPrice);
-    
-        var xmlhttp = new XMLHttpRequest();
-        xmlhttp.onreadystatechange = function(){
-            if (this.readyState == 4 && this.status == 200) {
-                try {
-                    var response = JSON.parse(this.responseText);
-                    if (response.success) {
-                        alert(response.success);
-                        document.getElementById("addMoboForm").reset();
-                    } else {
-                        alert(response.error);
-                    }
-                } catch (e) {
-                    alert("Unexpected response from the server.");
-                }
+
+        fetch("./php/addMobo.php", {
+            method: "POST",
+            body: formData,
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert("Motherboard added successfully!");
+                form.reset();
+            } else {
+                alert("Error: " + data.message);
             }
-        };
-    
-        xmlhttp.open("POST", "./php/addMobo.php", true);
-        xmlhttp.send(formData);
+        })
+        .catch(error => {
+            console.error("Error:", error);
+            alert("Something went wrong. Please try again.");
+        });
     });
     
-    
-    
-
 
 });
