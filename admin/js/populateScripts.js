@@ -284,14 +284,6 @@ $(document).ready(function(){
         var gpuVendorText = gpuVendor.options[gpuVendor.selectedIndex].value;
         var gpuName = document.getElementById("gpuModel").value;
         var gpuPrice = document.getElementById("gpuPrice").value;
-    
-        alert(
-            "GPU Details:\n" +
-            "Brand: " + gpuBrandText + "\n" +
-            "Vendor: " + gpuVendorText + "\n" +
-            "Model: " + gpuName + "\n" +
-            "Price: $" + gpuPrice
-        );
 
         var formData = new FormData(form);
     
