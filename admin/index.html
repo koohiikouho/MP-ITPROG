@@ -25,6 +25,8 @@
             <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#deleteComponent">❌ Delete Component</a></li>
             <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#updateComponent">✏️ Update Component</a></li>
             <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#generateReport">📊 Generate Report</a></li>
+            <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#manRef">📊 Manipulate References</a></li>
+            <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#manUser">📊 Manipulate users</a></li>
         </ul>
 
         <div class="tab-content mt-4">
@@ -295,7 +297,9 @@
                             <option value="PSU">PSU</option>
                             <option value="GPU">GPU</option> 
                         </select>
+                        <button class="btn w-100 btn-primary mt-3" id="delSearch">Search Component</button>
                     </div>
+                
 
                     <label class="form-label">Select Component</label>
                     <select class="form-control" id="deleteComponentSelect"></select>
@@ -308,153 +312,167 @@
                 <h4>Update Component</h4>
                 <div class="tab-pane fade show active" id="updComponent">
                     <ul class="nav nav-tabs mt-3" id="updTabs">
-                        <li class="nav-item"><a class="nav-link active" data-bs-toggle="tab" href="#addCPU">CPU</a></li>
-                        <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#addMotherboard">Motherboard</a></li>
-                        <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#addMemory">Memory</a></li>
-                        <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#addStorage">Storage</a></li>
-                        <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#addCase">Case</a></li>
-                        <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#addPSU">PSU</a></li>
-                        <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#addGPU">GPU</a></li>
+                        <li class="nav-item"><a class="nav-link active" data-bs-toggle="tab" href="#updCPU">CPU</a></li>
+                        <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#updMotherboard">Motherboard</a></li>
+                        <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#updMemory">Memory</a></li>
+                        <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#updStorage">Storage</a></li>
+                        <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#updCase">Case</a></li>
+                        <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#updPSU">PSU</a></li>
+                        <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#updGPU">GPU</a></li>
                     </ul>
             
                     <div class="tab-content mt-4">
-                        <div class="tab-pane fade show active" id="addCPU">
-                            <form id="addCPUForm" >
-                                
+                        <div class="tab-pane fade show active" id="updCPU">
+
+                            <select class="form-control" id="cpuUpdateList">
+
+                            </select>
+                            <button class="btn w-100 btn-primary mt-3" id="searchCPU" >Search Component</button>
+
+                            <form id="updCPUForm" >
                                 <div class="mb-3">
                                     <label class="form-label">CPU Name</label>
-                                    <input type="text" class="form-control" id="cpuName" required>
+                                    <input type="text" class="form-control" id="updcpuName" required>
                                 </div>
                     
                                 <div class="mb-3">
-                                    <label class="form-label" for="cpuBrand" ">Vendor</label> 
-                                    <select class="form-control" id="cpuBrand" required> </select>
+                                    <label class="form-label" for="updcpuBrand" ">Vendor</label> 
+                                    <select class="form-control" id="updcpuBrand" required> </select>
                                 </div>
     
     
                                 <div class="mb-3">
                                     <label class="form-label">Cores</label>
-                                    <input type="number" class="form-control" id="cpuCores" required>
+                                    <input type="number" class="form-control" id="updcpuCores" required>
                                 </div>
     
                                 <div class="mb-3">
                                     <label class="form-label">Threads</label>
-                                    <input type="number" class="form-control" id="cpuThreads" required>
+                                    <input type="number" class="form-control" id="updcpuThreads" required>
                                 </div>
     
                                 <div class="mb-3">
                                     <label class="form-label">Clock Speed</label>
-                                    <input type="number" class="form-control" id="cpuClock" required>
+                                    <input type="number" class="form-control" id="updcpuClock" required>
                                 </div>
     
                                 <div class="mb-3">
                                     <label class="form-label">Socket</label>
-                                    <select class="form-control" id="cpuSocket" required> </select>
+                                    <select class="form-control" id="updcpuSocket" required> </select>
                                 </div>
     
                                 <div class="mb-3">
                                     <label class="form-label">Price</label>
-                                    <input type="number" class="form-control" id="cpuPrice" required>
+                                    <input type="number" class="form-control" id="updcpuPrice" required>
                                 </div>
                         
-                                <button type="submit" class="btn btn-success w-100">Add Component</button>
+                                <button type="submit" class="btn btn-success w-100">Update Component</button>
                             </form>
                         </div>
     
-                        <div class="tab-pane fade" id="addMotherboard">
-                            <form id="addMoboForm" >
+                        <div class="tab-pane fade" id="updMotherboard">
+
+                            <select class="form-control" id="mobUpdateList"></select>
+                            <button class="btn w-100 btn-primary mt-3" id="searchMob">Search Component</button>
+
+                            <form id="updMoboForm" >
                                 
                                 <div class="mb-3">
                                     <label class="form-label">Mobo Name</label>
-                                    <input type="text" class="form-control" id="moboName" required>
+                                    <input type="text" class="form-control" id="updmoboName" required>
                                 </div>
                     
                                 <div class="mb-3">
-                                    <label class="form-label" for="moboBrand" ">Vendor</label> 
-                                    <select class="form-control" id="moboBrand" required> </select>
+                                    <label class="form-label" for="updmoboBrand" ">Vendor</label> 
+                                    <select class="form-control" id="updmoboBrand" required> </select>
                                 </div>
     
     
                                 <div class="mb-3">
                                     <label class="form-label">DDR Version</label>
-                                    <input type="number" class="form-control" id="moboDDR" required>
+                                    <input type="number" class="form-control" id="updmoboDDR" required>
                                 </div>
     
                                 <div class="mb-3">
                                     <label class="form-label">Memory Slots</label>
-                                    <input type="number" class="form-control" id="moboMemSlots" required>
+                                    <input type="number" class="form-control" id="updmoboMemSlots" required>
                                 </div>
     
                                 <div class="mb-3">
                                     <label class="form-label">M.2 Slots</label>
-                                    <input type="number" class="form-control" id="moboM2Slots" required>
+                                    <input type="number" class="form-control" id="updmoboM2Slots" required>
                                 </div>
     
                                 <div class="mb-3">
                                     <label class="form-label">Chipsets</label>
-                                    <input type="text" class="form-control" id="moboChipset" required> </select>
+                                    <input type="text" class="form-control" id="updmoboChipset" required> </select>
                                 </div>
     
                                 <div class="mb-3">
                                     <label class="form-label">Price</label>
-                                    <input type="number" class="form-control" id="moboPrice" required>
+                                    <input type="number" class="form-control" id="updmoboPrice" required>
                                 </div>
                         
-                                <button type="submit" class="btn btn-success w-100">Add Component</button>
+                                <button type="submit" class="btn btn-success w-100">Update Component</button>
                             </form>
                         </div>
     
-                        <div class="tab-pane fade" id="addMemory">
-                            <form id="addMemForm" >
+                        <div class="tab-pane fade" id="updMemory">
+                            <select class="form-control" id="memUpdateList"></select>
+                            <button class="btn w-100 btn-primary mt-3" id="searchMem">Search Component</button>
+
+                            <form id="updMemForm" >
                                 
                                 <div class="mb-3">
-                                    <label class="form-label" for="memBrand" ">Vendor</label> 
-                                    <select class="form-control" id="memBrand" required> </select>
+                                    <label class="form-label" for="updmemBrand" ">Vendor</label> 
+                                    <select class="form-control" id="updmemBrand" required> </select>
                                 </div>
     
                                 <div class="mb-3">
                                     <label class="form-label">DDR Version</label>
-                                    <input type="number" class="form-control" id="memDDR" required>
+                                    <input type="number" class="form-control" id="updmemDDR" required>
                                 </div>
     
                                 <div class="mb-3">
                                     <label class="form-label">Size</label>
-                                    <input type="number" class="form-control" id="memSize" required>
+                                    <input type="number" class="form-control" id="updmemSize" required>
                                 </div>
     
                                 <div class="mb-3">
                                     <label class="form-label">Price</label>
-                                    <input type="number" class="form-control" id="memPrice" required>
+                                    <input type="number" class="form-control" id="updmemPrice" required>
                                 </div>
                         
-                                <button type="submit" class="btn btn-success w-100">Add Component</button>
+                                <button type="submit" class="btn btn-success w-100">Update Component</button>
                             </form>
                         </div>
     
-                        <div class="tab-pane fade" id="addStorage">
-                            <form id="addStoForm" >
+                        <div class="tab-pane fade" id="updStorage">
+                            <select class="form-control" id="stoUpdateList"></select>
+                            <button class="btn w-100 btn-primary mt-3" id="searchSto">Search Component</button>
+                            <form id="updStoForm" >
                                 
                                 <div class="mb-3">
-                                    <label class="form-label" for="stoBrand">Vendor</label> 
-                                    <select class="form-control" id="stoBrand" required> </select>
+                                    <label class="form-label" for="updBrand">Vendor</label> 
+                                    <select class="form-control" id="updBrand" required> </select>
                                 </div>
     
                                 <div class="mb-3">
                                     <label class="form-label">Capacity</label>
-                                    <input type="number" class="form-control" id="stoSize" required>
+                                    <input type="number" class="form-control" id="updstoSize" required>
                                 </div>
     
                                 <div class="mb-3">
-                                    <label class="form-label" for="stoType">Storage Type</label> 
-                                    <select class="form-control" id="stoType" required> 
+                                    <label class="form-label" for="updstoType">Storage Type</label> 
+                                    <select class="form-control" id="updstoType" required> 
                                         <option value="HDD">HDD</option>
                                         <option value="HDD">SSD</option>
                                     </select>
                                 </div>
     
                                 <div class="mb-3">
-                                    <label class="form-label" for="stoConn">Connector Type</label> 
-                                    <select class="form-control" id="stoConn" required> 
+                                    <label class="form-label" for="updstoConn">Connector Type</label> 
+                                    <select class="form-control" id="updstoConn" required> 
                                         <option value="M.2">M.2</option>
                                         <option value="SATA">SATA</option>
                                     </select>
@@ -462,100 +480,96 @@
     
                                 <div class="mb-3">
                                     <label class="form-label">Price</label>
-                                    <input type="number" class="form-control" id="stoPrice" required>
+                                    <input type="number" class="form-control" id="updstoPrice" required>
                                 </div>
                         
-                                <button type="submit" class="btn btn-success w-100">Add Component</button>
+                                <button type="submit" class="btn btn-success w-100">Update Component</button>
                             </form>
                         </div>
-    
-                        <div class="tab-pane fade" id="addCase">
-                            <form id="addCaseForm" >
-                                
+
+                        <div class="tab-pane fade" id="updCase">
+                            <select class="form-control" id="caseUpdateList"></select>
+                            <button class="btn w-100 btn-primary mt-3" id="searchCase">Search Component</button>
+                            <form id="updCaseForm">
                                 <div class="mb-3">
                                     <label class="form-label">Case Name</label>
-                                    <input type="text" class="form-control" id="caseName" required>
-                                </div>
-                    
-                                <div class="mb-3">
-                                    <label class="form-label" for="caseBrand" ">Vendor</label> 
-                                    <select class="form-control" id="caseBrand" required> </select>
-                                </div>
-    
-                                <div class="mb-3">
-                                    <label class="form-label">Price</label>
-                                    <input type="number" class="form-control" id="casePrice" required>
+                                    <input type="text" class="form-control" id="updCaseName" required>
                                 </div>
                         
-                                <button type="submit" class="btn btn-success w-100">Add Component</button>
+                                <div class="mb-3">
+                                    <label class="form-label" for="updCaseBrand">Vendor</label>
+                                    <select class="form-control" id="updCaseBrand" required></select>
+                                </div>
+                        
+                                <div class="mb-3">
+                                    <label class="form-label">Price</label>
+                                    <input type="number" class="form-control" id="updCasePrice" required>
+                                </div>
+                        
+                                <button type="submit" class="btn btn-success w-100">Update Component</button>
                             </form>
                         </div>
-    
-                        <div class="tab-pane fade" id="addPSU">
-                            <form id="addPSUForm" >
-                                
+                        
+                        <div class="tab-pane fade" id="updPSU">
+                            <select class="form-control" id="psuUpdateList"></select>
+                            <button class="btn w-100 btn-primary mt-3" id="searchPsu">Search Component</button>
+                            <form id="updPSUForm">
                                 <div class="mb-3">
                                     <label class="form-label">PSU Name</label>
-                                    <input type="text" class="form-control" id="psuName" required>
+                                    <input type="text" class="form-control" id="updPSUName" required>
                                 </div>
-                    
+                        
                                 <div class="mb-3">
-                                    <label class="form-label" for="psuBrand" ">Vendor</label> 
-                                    <select class="form-control" id="psuBrand" required> </select>
+                                    <label class="form-label" for="updPSUBrand">Vendor</label>
+                                    <select class="form-control" id="updPSUBrand" required></select>
                                 </div>
-    
+                        
                                 <div class="mb-3">
-                                    <label class="form-label" for="psuWattage" ">Wattage</label> 
-                                    <input type = "number" class="form-control" id="psuWattage" required> </select>
+                                    <label class="form-label" for="updPSUWattage">Wattage</label>
+                                    <input type="number" class="form-control" id="updPSUWattage" required>
                                 </div>
-    
+                        
                                 <div class="mb-3">
-                                    <label class="form-label" for="psuEfficency" ">Efficiency</label> 
-                                    <input type = "number" class="form-control" id="psuEfficency" required> </select>
+                                    <label class="form-label" for="updPSUEfficiency">Efficiency</label>
+                                    <input type="number" class="form-control" id="updPSUEfficiency" required>
                                 </div>
-                                
+                        
                                 <div class="mb-3">
                                     <label class="form-label">Price</label>
-                                    <input type="number" class="form-control" id="psuPrice" required>
+                                    <input type="number" class="form-control" id="updPSUPrice" required>
                                 </div>
-    
-                                    <button type="submit" class="btn btn-success w-100">Add Component</button>
-                                
+                        
+                                <button type="submit" class="btn btn-success w-100">Update Component</button>
                             </form>
                         </div>
-    
-                        <div class="tab-pane fade" id="addGPU">
-                            <form id="addGPUForm" >
-                                
+                        
+                        <div class="tab-pane fade" id="updGPU">
+                            <select class="form-control" id="gpuUpdateList"></select>
+                            <button class="btn w-100 btn-primary mt-3" id="searchGpu">Search Component</button>
+                            <form id="updGPUForm">
                                 <div class="mb-3">
                                     <label class="form-label">GPU Name</label>
-                                    <input type="text" class="form-control" id="gpuModel" required>
+                                    <input type="text" class="form-control" id="updGPUModel" required>
                                 </div>
-                    
+                        
                                 <div class="mb-3">
-                                    <label class="form-label" for="gpuVendor" ">Vendor</label> 
-                                    <select class="form-control" id="gpuVendor" required> </select>
+                                    <label class="form-label" for="updGPUVendor">Vendor</label>
+                                    <select class="form-control" id="updGPUVendor" required></select>
                                 </div>
-    
+                        
                                 <div class="mb-3">
-                                    <label class="form-label" for="gpuBrand" ">Brand</label> 
-                                    <select class="form-control" id="gpuBrand" required> </select>
+                                    <label class="form-label" for="updGPUBrand">Brand</label>
+                                    <select class="form-control" id="updGPUBrand" required></select>
                                 </div>
-    
+                        
                                 <div class="mb-3">
                                     <label class="form-label">Price</label>
-                                    <input type="number" class="form-control" id="gpuPrice" required>
+                                    <input type="number" class="form-control" id="updGPUPrice" required>
                                 </div>
-    
-                                    <button type="submit" class="btn btn-success w-100">Add Component</button>
-                                
+                        
+                                <button type="submit" class="btn btn-success w-100">Update Component</button>
                             </form>
                         </div>
-    
-                    </div>
-                </div>
-            </div>
-
         
             <div class="tab-pane fade" id="generateReport">
                 <h4>Generate Report</h4>
