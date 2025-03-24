@@ -61,7 +61,7 @@ function popMem(){
             document.getElementById("caseBrand").innerHTML = fillAll;
             document.getElementById("gpuVendor").innerHTML = fillAll;
             document.getElementById("gpuBrand").innerHTML = fillAll;
-
+            document.getElementById("vendorSelect").innerHTML = fillAll;
         }
     };
 

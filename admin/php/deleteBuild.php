@@ -12,7 +12,7 @@
     }
 
 
-    $query   = "UPDATE builds SET isDeleted ='1' WHERE build_id=?";
+    $query  = "UPDATE builds SET isDeleted ='1' WHERE build_id=?";
 
     $stmt = $conn->prepare($query);
     $stmt->bind_param("i", $_GET['id']);
