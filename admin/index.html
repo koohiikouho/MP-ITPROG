@@ -46,28 +46,31 @@
                 <div class="tab-content mt-4">
 
                     <div class="tab-pane fade show active" id="addVendors">
-                        <form id="addVendorForm">
+                        <form id="addVendorForm" action="./php/manageReferences/addVendor.php" method="get">
                                 <label class="form-label">Vendor ID</label>
-                                <input type="text" class="form-control" id="venID" maxlength="3" required>
+                                <input type="text" class="form-control" name="venID" id="venID" maxlength="3" required>
                                 <label class="form-label">Vendor Name</label>
-                                <input type="text" class="form-control" id="venName" required>
-                            <button type="submit" class="btn btn-success w-100">Add Vendor</button>
-
+                                <input type="text" class="form-control" name="venName" id="venName" required>
+                            <button type="submit" value="Submit" class="btn btn-success w-100">Add Vendor</button>
                         </form>
                     </div>
 
                     <div class="tab-pane fade" id="editVendors">
-                        <form id="editVendorForm">
-                                <label class="form-label">Vendor Name</label>
-                                <input type="text" class="form-control" id="venName" required>
+                        <form id="editVendorForm" action="./php/manageReferences/editVendor.php" method="get">
+                            <label class="form-label">Vendor Name to Edit</label>
+                            <select class="form-control" id="vendorSelect" name="vendorSelect" required> </select>
+                            <label class="form-label">New Vendor Name</label>
+                                
+                            <input type="text" class="form-control" id="venName" name="vendorName" required>
                             <button type="submit" class="btn btn-success w-100">Add Vendor</button>
 
                         </form>
                     </div>
                 
-                    <div class="tab-pane fade" id="addSocket">
+                    <div class="tab-pane fade" id="addSocket" action="./php/manageReferences/editVendor.php" method="get">
                         <form id="addSocketForm">
-                                <label class="form-label">Socket Name</label>
+                                <label class="form-label">Socket ID</label>
+                                
                                 <input type="text" class="form-control" id="sockName" required>
                             <button type="submit" class="btn btn-success w-100">Add Socket</button>
                         </form>
