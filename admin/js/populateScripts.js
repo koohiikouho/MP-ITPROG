@@ -16,6 +16,85 @@ function populateCPU(){
 
 };
 
+function populateCPUUpdateList() {
+
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function() {
+
+        if (this.readyState == 4 && this.status == 200) {
+            document.getElementById("cpuUpdateList").innerHTML = this.responseText;
+        }
+    };
+
+    xmlhttp.open("GET", "./php/getCPUs.php", true);
+    xmlhttp.send();
+
+}
+
+function fetchCPUDetails(cpuId) {
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            var cpuDetails = JSON.parse(this.responseText);
+
+            document.getElementById("updcpuName").value = cpuDetails.name;
+            document.getElementById("updcpuCores").value = cpuDetails.cores;
+            document.getElementById("updcpuThreads").value = cpuDetails.threads;
+            document.getElementById("updcpuClock").value = cpuDetails.baseClock;
+            document.getElementById("updcpuPrice").value = cpuDetails.price;
+
+            // Fetch and populate socket dropdown
+            updgetSocket(cpuDetails.socketName);
+
+            // Fetch and populate vendor dropdown
+            updgetVendors(cpuDetails.vendorName);
+        }
+    };
+    xmlhttp.open("GET", "./php/getCPUDetails.php?id=" + cpuId, true);
+    xmlhttp.send();
+}
+
+function updgetSocket(selectedSocket) {
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            document.getElementById("updcpuSocket").innerHTML = this.responseText;
+
+            // Set selected option for socket
+            let socketDropdown = document.getElementById("updcpuSocket");
+            for (let i = 0; i < socketDropdown.options.length; i++) {
+                if (socketDropdown.options[i].text === selectedSocket) {
+                    socketDropdown.selectedIndex = i;
+                    break;
+                }
+            }
+        }
+    };
+    xmlhttp.open("GET", "./php/getSockets.php", true);
+    xmlhttp.send();
+}
+
+function updgetVendors(selectedVendor) {
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            document.getElementById("updcpuBrand").innerHTML = this.responseText;
+
+            // Set selected option for vendor
+            let vendorDropdown = document.getElementById("updcpuBrand");
+            for (let i = 0; i < vendorDropdown.options.length; i++) {
+                if (vendorDropdown.options[i].text === selectedVendor) {
+                    vendorDropdown.selectedIndex = i;
+                    break;
+                }
+            }
+        }
+    };
+    xmlhttp.open("GET", "./php/getVendor.php", true);
+    xmlhttp.send();
+}
+
+
 function getSockets(){
 
     var xmlhttp = new XMLHttpRequest();
@@ -104,6 +183,7 @@ $(document).ready(function(){
     getSockets();
     popMem();
     popBuilds();
+    populateCPUUpdateList();
 
 
     $('#cpuAdd').click(function(){
@@ -124,8 +204,7 @@ $(document).ready(function(){
                 document.getElementById("addCPUForm").reset(); // Reset form after submission
             }
         };
-    
-        // Construct GET request without encodeURIComponent()
+
         xmlhttp.open("GET", "./php/addCPU.php?cpuName=" + cpuName +
                      "&cpuBrand=" + cpuBrandText +
                      "&cpuCores=" + cpuCores +
@@ -135,6 +214,73 @@ $(document).ready(function(){
                      "&cpuPrice=" + cpuPrice, true);
         xmlhttp.send();
     });
+
+
+
+    document.getElementById("searchCPU").addEventListener("click", function(event) {
+        event.preventDefault();
+
+        var selectedCPUId = document.getElementById("cpuUpdateList").value;
+
+        if (selectedCPUId) {
+            fetchCPUDetails(selectedCPUId);
+        } else {
+            alert("Please select a CPU first.");
+        }
+    });
+
+    document.getElementById("updCPUForm").addEventListener("submit", function (event) {
+        event.preventDefault(); // Prevent form from submitting automatically
+    
+        var cpuId = document.getElementById("cpuUpdateList").value;
+        var cpuName = document.getElementById("updcpuName").value;
+        var cpuCores = document.getElementById("updcpuCores").value;
+        var cpuThreads = document.getElementById("updcpuThreads").value;
+        var cpuClock = document.getElementById("updcpuClock").value;
+        var cpuSocket = document.getElementById("updcpuSocket");
+        var cpuSocketText = cpuSocket.options[cpuSocket.selectedIndex].value;
+        var cpuBrand = document.getElementById("updcpuBrand");
+        var cpuBrandText = cpuBrand.options[cpuBrand.selectedIndex].value;
+        var cpuPrice = document.getElementById("updcpuPrice").value;
+    
+    
+        if (
+            cpuId === "" || cpuName === "" || cpuCores === "" || cpuThreads === "" || cpuClock === "" ||
+            cpuSocketText === "" || cpuBrandText === "" || cpuPrice === ""
+        ) {
+            alert("All fields are required.");
+            return;
+        }
+    
+        var formData = new FormData(this);
+    
+        formData.append("id", cpuId);
+        formData.append("name", cpuName);
+        formData.append("cores", cpuCores);
+        formData.append("threads", cpuThreads);
+        formData.append("baseClock", cpuClock);
+        formData.append("socketID", cpuSocketText);
+        formData.append("vendorCode", cpuBrandText);
+        formData.append("price", cpuPrice);
+    
+        fetch("./php/updateCPU.php", {
+            method: "POST",
+            body: formData,
+        })
+        .then(response => response.text())
+        .then(data => {
+            alert("Response from server: " + data);
+        })
+        .catch(error => {
+            console.error("Error:", error);
+            alert("Something went wrong. Please try again.");
+        });
+    });
+    
+    
+
+    
+
     
 
     document.getElementById("moboAdd").addEventListener("click", function() {
