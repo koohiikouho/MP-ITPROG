@@ -197,9 +197,17 @@ function populateMotherboard(){
     xmlhttp.send();
 }
 
-function helpMotherboard(){
-
+function populateMemory(){
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function(){
+        if (this.readyState == 4 && this.status == 200) {
+            document.getElementById("memUpdateList").innerHTML = this.responseText;
+        }
+    };
+    xmlhttp.open("GET", "./php/updateComponent/memory/popMem.php", true);
+    xmlhttp.send();
 }
+
 
 $(document).ready(function(){
 
@@ -208,7 +216,23 @@ $(document).ready(function(){
     getSockets();
     popMem();
     popBuilds();
+<<<<<<< Updated upstream
 
+=======
+    populateMotherboard();
+    populateMemory();
+    
+    $('#searchMob').click(function(){
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function(){
+            if (this.readyState == 4 && this.status == 200) {
+                document.getElementById("updMoboForm").innerHTML = this.responseText;
+            }
+        };
+        xmlhttp.open("GET","./php/updateComponent/mobo/helpMobo.php?mobo_id=" + document.getElementById("mobUpdateList").value, true);
+        xmlhttp.send();
+    });
+>>>>>>> Stashed changes
 
     $('#cpuAdd').click(function(){
         var cpuName = document.getElementById("cpuName").value;
