@@ -1,41 +1,38 @@
 <?php
-    // Check if all required parameters exist
-    if (!isset($_GET['cpuName'], $_GET['cpuBrand'], $_GET['cpuCores'], $_GET['cpuThreads'], $_GET['cpuClock'], $_GET['cpuSocket'], $_GET['cpuPrice'])) {
-        die(json_encode(["error" => "Missing required parameters"]));
-    }
+if (!isset($_POST['cpuName'], $_POST['cpuBrand'], $_POST['cpuCores'], $_POST['cpuThreads'], $_POST['cpuClock'], $_POST['cpuSocket'], $_POST['cpuPrice'])) {
+    echo json_encode(["success" => false, "message" => "Missing required fields"]);
+    exit;
+}
 
-    // Get values from GET request
-    $cpuName = $_GET['cpuName'];
-    $cpuBrand = $_GET['cpuBrand'];
-    $cpuCores = $_GET['cpuCores'];
-    $cpuThreads = $_GET['cpuThreads'];
-    $cpuClock = $_GET['cpuClock'];
-    $cpuSocket = $_GET['cpuSocket'];
-    $cpuPrice = $_GET['cpuPrice'];
+$cpuName = trim($_POST['cpuName']);
+$cpuBrand = trim($_POST['cpuBrand']);
+$cpuCores = intval($_POST['cpuCores']);
+$cpuThreads = intval($_POST['cpuThreads']);
+$cpuClock = floatval($_POST['cpuClock']);
+$cpuSocket = trim($_POST['cpuSocket']);
+$cpuPrice = floatval($_POST['cpuPrice']);
 
-    $servername = "localhost";
-    $username = "root";
-    $password = "";
-    $dbname = "dbpcpartspicker";
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "dbpcpartspicker";
 
-    // Connect to database
-    $conn = new mysqli($servername, $username, $password, $dbname);
-    
-    if ($conn->connect_error) {
-        die(json_encode(["error" => "Connection failed: " . $conn->connect_error]));
-    }
+$conn = new mysqli($servername, $username, $password, $dbname);
 
-    $sql = "INSERT INTO processors (name, vendorCode, cores, threads, baseClock, socketID, price) 
-            VALUES (?, ?, ?, ?, ?, ?, ?)";
+if ($conn->connect_error) {
+    die(json_encode(["success" => false, "message" => "Connection failed: " . $conn->connect_error]));
+}
 
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ssiiidd", $cpuName, $cpuBrand, $cpuCores, $cpuThreads, $cpuClock, $cpuSocket, $cpuPrice);
-    if ($stmt->execute()) {
-        echo json_encode(["success" => true, "message" => "CPU added successfully"]);
-    } else {
-        echo json_encode(["success" => false, "message" => "Execution failed: " . $stmt->error]);
-    }
+$sql = $conn->prepare("INSERT INTO processors (name, vendorCode, cores, threads, baseClock, socketID, price) 
+                       VALUES (?, ?, ?, ?, ?, ?, ?)");
 
-    $stmt->close();
-    $conn->close();
+$sql->bind_param("ssiiisd", $cpuName, $cpuBrand, $cpuCores, $cpuThreads, $cpuClock, $cpuSocket, $cpuPrice);
+if ($sql->execute()) {
+    echo json_encode(["success" => true, "message" => "CPU added successfully"]);
+} else {
+    echo json_encode(["success" => false, "message" => "Execution failed: " . $sql->error]);
+}
+
+$sql->close();
+$conn->close();
 ?>

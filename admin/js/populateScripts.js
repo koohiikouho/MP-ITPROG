@@ -243,7 +243,9 @@ $(document).ready(function(){
         xmlhttp.send();
     });
 
-    $('#cpuAdd').click(function(){
+    document.getElementById("cpuAdd").addEventListener("click", function() {
+        var form = document.getElementById("addCPUForm");
+    
         var cpuName = document.getElementById("cpuName").value;
         var cpuBrand = document.getElementById("cpuBrand");
         var cpuBrandText = cpuBrand.options[cpuBrand.selectedIndex].value;
@@ -254,22 +256,24 @@ $(document).ready(function(){
         var cpuSocketText = cpuSocket.options[cpuSocket.selectedIndex].value;
         var cpuPrice = document.getElementById("cpuPrice").value;
     
-        var xmlhttp = new XMLHttpRequest();
-        xmlhttp.onreadystatechange = function(){
-            if (this.readyState == 4 && this.status == 200) {
-                alert("Response from PHP: " + this.responseText); // Show success or error message
-                document.getElementById("addCPUForm").reset(); // Reset form after submission
-            }
-        };
-
-        xmlhttp.open("GET", "./php/addCPU.php?cpuName=" + cpuName +
-                     "&cpuBrand=" + cpuBrandText +
-                     "&cpuCores=" + cpuCores +
-                     "&cpuThreads=" + cpuThreads +
-                     "&cpuClock=" + cpuClock +
-                     "&cpuSocket=" + cpuSocketText +
-                     "&cpuPrice=" + cpuPrice, true);
-        xmlhttp.send();
+        var formData = new FormData(form);
+        
+        formData.append("cpuName", cpuName);
+        formData.append("cpuBrand", cpuBrandText);
+        formData.append("cpuCores", cpuCores);
+        formData.append("cpuThreads", cpuThreads);
+        formData.append("cpuClock", cpuClock);
+        formData.append("cpuSocket", cpuSocketText);
+        formData.append("cpuPrice", cpuPrice);
+    
+        fetch("./php/addCPU.php", {
+            method: "POST",
+            body: formData,
+        })
+        .catch(error => {
+            console.error("Error:", error);
+            alert("Something went wrong. Please try again.");
+        });
     });
 
 
