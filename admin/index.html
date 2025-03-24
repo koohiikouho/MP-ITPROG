@@ -434,29 +434,9 @@
                             <select class="form-control" id="memUpdateList"></select>
                             <button class="btn w-100 btn-primary mt-3" id="searchMem">Search Component</button>
 
-                            <form id="updMemForm" >
+                            <form id="updMemForm" action="./php/updateComponent/memory/updMem.php" method="get">
                                 
-                                <div class="mb-3">
-                                    <label class="form-label" for="updmemBrand">Vendor</label> 
-                                    <select class="form-control" id="updmemBrand" required> </select>
-                                </div>
-    
-                                <div class="mb-3">
-                                    <label class="form-label">DDR Version</label>
-                                    <input type="number" class="form-control" id="updmemDDR" required>
-                                </div>
-    
-                                <div class="mb-3">
-                                    <label class="form-label">Size</label>
-                                    <input type="number" class="form-control" id="updmemSize" required>
-                                </div>
-    
-                                <div class="mb-3">
-                                    <label class="form-label">Price</label>
-                                    <input type="number" class="form-control" id="updmemPrice" required>
-                                </div>
-                        
-                                <button type="submit" class="btn btn-success w-100">Update Component</button>
+
                             </form>
                         </div>
     

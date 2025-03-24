@@ -219,6 +219,18 @@ $(document).ready(function(){
     populateCPUUpdateList();
     populateMotherboard();
     populateMemory();
+
+    $('#searchMem').click(function(){
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function(){
+            if (this.readyState == 4 && this.status == 200) {
+                document.getElementById("updMemForm").innerHTML = this.responseText;
+            }
+        };
+        xmlhttp.open("GET","./php/updateComponent/memory/helpMem.php?mem_id=" + document.getElementById("memUpdateList").value, true);
+        xmlhttp.send();
+
+    });
     
     $('#searchMob').click(function(){
         var xmlhttp = new XMLHttpRequest();
