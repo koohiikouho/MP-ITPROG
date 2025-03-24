@@ -491,5 +491,24 @@ $(document).ready(function(){
             alert("Something went wrong. Please try again.");
         });
     });
+
+    document.getElementById("generateReportBtn").addEventListener("click", function() {
+        fetch("./php/popularityReport.php", {
+            method: "POST",
+        })
+        .then(response => response.json()) // Expect JSON response
+        .then(data => {
+            if (data.status === "success") {
+                alert(data.message); // Display report in an alert
+            } else {
+                alert("Error: " + data.message);
+            }
+        })
+        .catch(error => {
+            console.error("Error:", error);
+            alert("Something went wrong. Please try again.");
+        });
+    });
+    
     
 });
