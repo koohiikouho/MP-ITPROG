@@ -216,6 +216,7 @@ $(document).ready(function(){
     getSockets();
     popMem();
     popBuilds();
+    populateCPUUpdateList();
     populateMotherboard();
     populateMemory();
     
