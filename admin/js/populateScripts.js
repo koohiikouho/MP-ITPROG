@@ -22,7 +22,7 @@ function populateCPUUpdateList() {
     xmlhttp.onreadystatechange = function() {
 
         if (this.readyState == 4 && this.status == 200) {
-            document.getElementById("cpuUpdateList").innerHTML = this.responseText;
+            document.getElementById("updCPU").innerHTML = this.responseText;
         }
     };
 
@@ -163,6 +163,103 @@ function delBuild(buildNumber){
 }
 
 
+function delCases(buildNumber){
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function(){
+    
+        if (this.readyState == 4 && this.status == 200) {
+
+        }
+    };
+
+    xmlhttp.open("GET", "./php/deleteCases.php?id=" + buildNumber, true);
+    xmlhttp.send();
+    location.reload();
+}
+
+
+
+
+function getCases(){
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function(){
+        if (this.readyState == 4 && this.status == 200) {
+            document.getElementById("updCase").innerHTML = this.responseText;
+        }
+    };
+
+    xmlhttp.open("GET", "./php/getCases.php", true);
+    xmlhttp.send();
+
+}
+
+function getPSUs(){
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function(){
+        if (this.readyState == 4 && this.status == 200) {
+            document.getElementById("updPSU").innerHTML = this.responseText;
+        }
+    };
+
+    xmlhttp.open("GET", "./php/getPSUs.php", true);
+    xmlhttp.send();
+
+}
+
+
+function getGPUs(){
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function(){
+        if (this.readyState == 4 && this.status == 200) {
+            document.getElementById("updGPU").innerHTML = this.responseText;
+        }
+    };
+
+    xmlhttp.open("GET", "./php/getGPUs.php", true);
+    xmlhttp.send();
+
+}
+
+
+function getStorage(){
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function(){
+        if (this.readyState == 4 && this.status == 200) {
+            document.getElementById("updStorage").innerHTML = this.responseText;
+        }
+    };
+
+    xmlhttp.open("GET", "./php/getStorage.php", true);
+    xmlhttp.send();
+
+}
+
+function getMobo(){
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function(){
+        if (this.readyState == 4 && this.status == 200) {
+            document.getElementById("updMotherboard").innerHTML = this.responseText;
+        }
+    };
+
+    xmlhttp.open("GET", "./php/getMobo.php", true);
+    xmlhttp.send();
+
+}
+
+function getMem(){
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function(){
+        if (this.readyState == 4 && this.status == 200) {
+            document.getElementById("updMemory").innerHTML = this.responseText;
+        }
+    };
+
+    xmlhttp.open("GET", "./php/getMem.php", true);
+    xmlhttp.send();
+
+}
+
 function popBuilds(){
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function(){
@@ -232,6 +329,10 @@ function populateCase(){
 
 
 
+
+
+
+
 $(document).ready(function(){
 
     validSessionIDCheck();
@@ -244,6 +345,14 @@ $(document).ready(function(){
     populateMemory();
     populateStorage();
     populateCase();
+    getCases();
+    getPSUs();
+    getStorage();
+    getGPUs();
+    getMobo();
+    getMem();
+
+
 
     $('#searchCase').click(function(){
         var xmlhttp = new XMLHttpRequest();
