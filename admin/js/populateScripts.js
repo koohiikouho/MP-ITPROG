@@ -26,6 +26,7 @@ function getCPUSockets(){
         if (this.readyState == 4 && this.status == 200) {
             
             document.getElementById("cpuSocket").innerHTML = this.responseText;
+            document.getElementById("moboScoket").innerHTML = this.responseText;
         }
     };
 
