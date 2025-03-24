@@ -30,7 +30,7 @@
 
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("ssiiidd", $cpuName, $cpuBrand, $cpuCores, $cpuThreads, $cpuClock, $cpuSocket, $cpuPrice);
-    if ($stmtl->execute()) {
+    if ($stmt->execute()) {
         echo json_encode(["success" => true, "message" => "CPU added successfully"]);
     } else {
         echo json_encode(["success" => false, "message" => "Execution failed: " . $stmt->error]);
