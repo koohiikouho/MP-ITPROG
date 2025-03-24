@@ -66,11 +66,10 @@
 
                         </form>
                     </div>
-                
-                    <div class="tab-pane fade" id="addSocket" action="./php/manageReferences/addSocket.php" method="get">
-                        <form id="addSocketForm">
+                    <div class="tab-pane fade" id="addSocket" >
+                        <form id="addSocketForm" action="./php/manageReferences/addSocket.php" method="get">
                                 <label class="form-label">Socket ID</label>
-                                <input type="text" class="form-control" id="sockName" required>
+                                <input type="text" class="form-control" id="sockName" name="sockName" required>
                             <button type="submit" class="btn btn-success w-100">Add Socket</button>
                         </form>
                     </div>
