@@ -176,6 +176,31 @@ function popBuilds(){
 
 }
 
+function moboFill(){
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function(){
+        if (this.readyState == 4 && this.status == 200) {
+            document.getElementById("manBuild").innerHTML = this.responseText;
+        }
+    };
+    xmlhttp.open("GET", "./php/getBuilds.php", true);
+    xmlhttp.send();
+}
+function populateMotherboard(){
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function(){
+        if (this.readyState == 4 && this.status == 200) {
+            document.getElementById("mobUpdateList").innerHTML = this.responseText;
+        }
+    };
+    xmlhttp.open("GET", "./php/updateComponent/mobo/popMobo.php", true);
+    xmlhttp.send();
+}
+
+function helpMotherboard(){
+
+}
+
 $(document).ready(function(){
 
     validSessionIDCheck();
@@ -183,7 +208,6 @@ $(document).ready(function(){
     getSockets();
     popMem();
     popBuilds();
-    populateCPUUpdateList();
 
 
     $('#cpuAdd').click(function(){
@@ -290,12 +314,6 @@ $(document).ready(function(){
         var moboM2Slots = document.getElementById("moboM2Slots").value
         var moboChipset = document.getElementById("moboChipset").value
         var moboPrice = document.getElementById("moboPrice").value
-
-        if (moboName === "" || moboSocketId === "" || moboBrandText === "" || moboDdr === "" || moboMemSlots === "" || 
-            moboM2Slots === "" || moboChipset === "" || moboPrice === "") {
-            alert("All fields are required.");
-            return;
-        }
     
         var formData = new FormData(form);
     
@@ -326,11 +344,6 @@ $(document).ready(function(){
         var memDdr = document.getElementById("memDDR").value;
         var memSize = document.getElementById("memSize").value;
         var memPrice = document.getElementById("memPrice").value;
-
-        if (memBrandText === "" || memDdr === "" || memSize === "" || memPrice === "") {
-            alert("All fields are required.");
-            return;
-        }
     
         var formData = new FormData(form);
     
@@ -358,12 +371,7 @@ $(document).ready(function(){
         var stoType = document.getElementById("stoType").value;
         var stoConn = document.getElementById("stoConn").value;
         var stoPrice = document.getElementById("stoPrice").value;
-    
-        if (stoBrandText === "" || stoSize === "" || stoType === "" || stoConn === "" || stoPrice === "") {
-            alert("All fields are required.");
-            return;
-        }
-    
+
         var formData = new FormData(form);
     
         formData.append("brand", stoBrandText);
@@ -373,6 +381,83 @@ $(document).ready(function(){
         formData.append("price", stoPrice);
     
         fetch("./php/addSto.php", {
+            method: "POST",
+            body: formData,
+        })
+        .catch(error => {
+            console.error("Error:", error);
+            alert("Something went wrong. Please try again.");
+        });
+    });
+    
+    document.getElementById("caseAdd").addEventListener("click", function() {
+        var form = document.getElementById("addCaseForm");
+    
+        var caseBrand = document.getElementById("caseBrand");
+        var caseBrandText = caseBrand.options[caseBrand.selectedIndex].value;
+        var caseName = document.getElementById("caseName").value;
+        var casePrice = document.getElementById("casePrice").value;
+        
+        var formData = new FormData(form);
+    
+        formData.append("brand", caseBrandText);
+        formData.append("name", caseName);
+        formData.append("price", casePrice);
+    
+        fetch("./php/addCase.php", {
+            method: "POST",
+            body: formData,
+        })
+        .catch(error => {
+            console.error("Error:", error);
+            alert("Something went wrong. Please try again.");
+        });
+    });
+    
+    document.getElementById("psuAdd").addEventListener("click", function() {
+        var form = document.getElementById("addPSUForm");
+    
+        var psuBrand = document.getElementById("psuBrand");
+        var psuBrandText = psuBrand.options[psuBrand.selectedIndex].value;
+        var psuWattage = document.getElementById("psuWattage").value;
+        var psuEfficiency = document.getElementById("psuEfficiency").value;
+        var psuPrice = document.getElementById("psuPrice").value;
+
+        var formData = new FormData(form);
+    
+        formData.append("brand", psuBrandText);
+        formData.append("wattage", psuWattage);
+        formData.append("efficiency", psuEfficiency);
+        formData.append("price", psuPrice);
+    
+        fetch("./php/addPSU.php", {
+            method: "POST",
+            body: formData,
+        })
+        .catch(error => {
+            console.error("Error:", error);
+            alert("Something went wrong. Please try again.");
+        });
+    });
+
+    document.getElementById("gpuAdd").addEventListener("click", function() {
+        var form = document.getElementById("addGPUForm");
+    
+        var gpuBrand = document.getElementById("gpuBrand");
+        var gpuBrandText = gpuBrand.options[gpuBrand.selectedIndex].value;
+        var gpuVendor = document.getElementById("gpuVendor");
+        var gpuVendorText = gpuVendor.options[gpuVendor.selectedIndex].value;
+        var gpuName = document.getElementById("gpuModel").value;
+        var gpuPrice = document.getElementById("gpuPrice").value;
+
+        var formData = new FormData(form);
+    
+        formData.append("brand", gpuBrandText);
+        formData.append("vendor", gpuVendorText);
+        formData.append("name", gpuName);
+        formData.append("price", gpuPrice);
+    
+        fetch("./php/addGPU.php", {
             method: "POST",
             body: formData,
         })

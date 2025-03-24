@@ -1,13 +1,11 @@
 <?php
-if (!isset($_POST['brand'], $_POST['size'], $_POST['type'], $_POST['connection'], $_POST['price'])) {
+if (!isset($_POST['brand'], $_POST['name'], $_POST['price'])) {
     echo json_encode(["success" => false, "message" => "Missing required fields"]);
     exit;
 }
 
 $brand = trim($_POST['brand']);
-$size = intval($_POST['size']);
-$type = trim($_POST['type']);
-$connection = trim($_POST['connection']);
+$name = trim($_POST['name']);
 $price = floatval($_POST['price']);
 
 $servername = "localhost";
@@ -21,10 +19,10 @@ if ($conn->connect_error) {
     die(json_encode(["success" => false, "message" => "Connection failed: " . $conn->connect_error]));
 }
 
-$sql = $conn->prepare("INSERT INTO drives (vendorName, capacity, storageType, connector, price) 
-                       VALUES (?, ?, ?, ?, ?)");
+$sql = $conn->prepare("INSERT INTO cases (vendorCode, name, price) 
+                       VALUES (?, ?, ?)");
 
-$sql->bind_param("sissd", $brand, $size, $type, $connection, $price);
+$sql->bind_param("ssd", $brand, $name, $price);
 $sql->execute();
 
 $sql->close();

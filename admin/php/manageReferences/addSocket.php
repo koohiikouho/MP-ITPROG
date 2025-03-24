@@ -1,6 +1,6 @@
 <?php
     include '../dbcred.php';
-    $name = $_GET['venName'];
+    $name = $_GET['sockName'];
 
     $id = strtoupper($id);
     
@@ -20,12 +20,12 @@
     $result = $stmt->get_result();
 
     if ($row = $result->fetch_assoc()) {
-        echo("vendor name or mbid is not unique");
+        echo("socket name or mbid is not unique");
     } else {
-        $sql = "INSERT INTO ref_vendors (mbid, vendorName) VALUES (?,?)";
-        $stmt = $conn->prepare($sql);
+        $sql = "INSERT INTO ref_sockets (socketName) VALUES (?)";
 
-        $stmt->bind_param("ss", $id, $name);
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("s", $name);
         $stmt->execute();
         $result = $stmt->get_result();
         header("Location:../../index.html");
