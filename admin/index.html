@@ -362,7 +362,8 @@
             
             <div class="tab-pane fade" id="updateComponent">
                 <h4>Update Component</h4>
-                <div class="tab-pane fade show active" id="updComponent">
+         
+               <div class="tab-pane fade show active" id="updComponent">
                     <ul class="nav nav-tabs mt-3" id="updTabs">
                         <li class="nav-item"><a class="nav-link active" data-bs-toggle="tab" href="#updCPU">CPU</a></li>
                         <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#updMotherboard">Motherboard</a></li>
@@ -376,7 +377,8 @@
                     <div class="tab-content mt-4">
                         <div class="tab-pane fade show active" id="updCPU">
 
-                            <select class="form-control" id="cpuUpdateList">
+                            <!--
+                              <select class="form-control" id="cpuUpdateList">
 
                             </select>
                             <button class="btn w-100 btn-primary mt-3" id="searchCPU" >Search Component</button>
@@ -420,44 +422,58 @@
                         
                                 <button type="submit" class="btn btn-success w-100" id="updCPU">Update Component</button>
                             </form>
+                            
+                            
+                            -->
+                          
                         </div>
     
                         <div class="tab-pane fade" id="updMotherboard" >
-
+                            <!--
                             <select class="form-control" id="mobUpdateList"></select>
                             <button class="btn w-100 btn-primary mt-3" id="searchMob">Search Component</button>
 
                             <form id="updMoboForm" action="./php/updateComponent/mobo/updMobo.php" method="get"> </form>
+                            -->
                         </div>
     
                         <div class="tab-pane fade" id="updMemory">
-                            <select class="form-control" id="memUpdateList"></select>
+                          <!--          
+                           <select class="form-control" id="memUpdateList"></select>
                             <button class="btn w-100 btn-primary mt-3" id="searchMem">Search Component</button>
 
                             <form id="updMemForm" action="./php/updateComponent/memory/updMem.php" method="get">
                                 
 
                             </form>
+                          --> 
                         </div>
     
                         <div class="tab-pane fade" id="updStorage">
+                            <!--
                             <select class="form-control" id="stoUpdateList"></select>
                             <button class="btn w-100 btn-primary mt-3" id="searchSto">Search Component</button>
                             <form id="updStoForm" action="./php/updateComponent/storage/updSto.php" method="get">
 
                             </form>
+                           
+                           
+                           --> 
                         </div>
 
                         <div class="tab-pane fade" id="updCase">
-                            <select class="form-control" id="caseUpdateList"></select>
+                        <!--
+                         <select class="form-control" id="caseUpdateList"></select>
                             <button class="btn w-100 btn-primary mt-3" id="searchCase">Search Component</button>
                             <form id="updCaseForm" action="./php/updateComponent/case/updCase.php" method="get">
                                 
-                            </form>
+                            </form>    
+                        -->
                         </div>
                         
                         <div class="tab-pane fade" id="updPSU">
-                            <select class="form-control" id="psuUpdateList"></select>
+                           <!--
+                           <select class="form-control" id="psuUpdateList"></select>
                             <button class="btn w-100 btn-primary mt-3" id="searchPsu">Search Component</button>
                             <form id="updPSUForm">
                                 <div class="mb-3">
@@ -487,9 +503,11 @@
                         
                                 <button type="submit" class="btn btn-success w-100">Update Component</button>
                             </form>
+                           --> 
                         </div>
                         
                         <div class="tab-pane fade" id="updGPU">
+                           <!--
                             <select class="form-control" id="gpuUpdateList"></select>
                             <button class="btn w-100 btn-primary mt-3" id="searchGpu">Search Component</button>
                             <form id="updGPUForm">
@@ -515,12 +533,17 @@
                         
                                 <button type="submit" class="btn btn-success w-100">Update Component</button>
                             </form>
+                           
+                           
+                           
+                           --> 
                         </div>
         
-
-
+                        
         </div>
+        
     </div>
+    
 
     
 </body>
