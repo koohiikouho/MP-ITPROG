@@ -49,6 +49,7 @@ function validSessionIDCheck(){
     xmlhttp.send();
 
 }
+
 function popMem(){
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function(){
@@ -90,15 +91,6 @@ $(document).ready(function(){
         var cpuSocketText = cpuSocket.options[cpuSocket.selectedIndex].value;
         var cpuPrice = document.getElementById("cpuPrice").value;
     
-        // Debugging alerts
-        alert("CPU Name: " + cpuName);
-        alert("CPU Brand: " + cpuBrandText);
-        alert("CPU Cores: " + cpuCores);
-        alert("CPU Threads: " + cpuThreads);
-        alert("CPU Clock: " + cpuClock);
-        alert("CPU Socket: " + cpuSocketText);
-        alert("CPU Price: " + cpuPrice);
-    
         var xmlhttp = new XMLHttpRequest();
         xmlhttp.onreadystatechange = function(){
             if (this.readyState == 4 && this.status == 200) {
@@ -116,10 +108,61 @@ $(document).ready(function(){
                      "&cpuSocket=" + cpuSocketText +
                      "&cpuPrice=" + cpuPrice, true);
         xmlhttp.send();
+    });
     
-        alert("PHP request sent!");
+
+    $('#moboAdd').click(function(){
+        validSessionIDCheck();
+    
+        var form = document.getElementById("addMoboForm"); // Corrected form ID
+    
+        var moboName = document.getElementById("moboName").value.trim();
+        var moboBrand = document.getElementById("moboBrand");
+        var moboBrandText = moboBrand.options[moboBrand.selectedIndex].value;
+        var moboDdr = document.getElementById("moboDdr").value.trim();
+        var moboMemSlots = document.getElementById("moboMemSlots").value.trim();
+        var moboM2Slots = document.getElementById("moboMemM2Slots").value.trim();
+        var moboChipset = document.getElementById("moboChipset").value.trim();
+        var moboPrice = document.getElementById("moboPrice").value.trim();
+    
+        if (moboName === "" || moboBrandText === "" || moboDdr === "" || moboMemSlots === "" || 
+            moboM2Slots === "" || moboChipset === "" || moboPrice === "") {
+            alert("All fields are required.");
+            return;
+        }
+    
+        var formData = new FormData();
+        formData.append("name", moboName);
+        formData.append("brand", moboBrandText);
+        formData.append("ddr", moboDdr);
+        formData.append("memSlots", moboMemSlots);
+        formData.append("m2slots", moboM2Slots);
+        formData.append("cpuSocket", moboChipset);
+        formData.append("price", moboPrice);
+    
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function(){
+            if (this.readyState == 4 && this.status == 200) {
+                try {
+                    var response = JSON.parse(this.responseText);
+                    if (response.success) {
+                        alert(response.success);
+                        document.getElementById("addMoboForm").reset();
+                    } else {
+                        alert(response.error);
+                    }
+                } catch (e) {
+                    alert("Unexpected response from the server.");
+                }
+            }
+        };
+    
+        xmlhttp.open("POST", "./php/addMobo.php", true);
+        xmlhttp.send(formData);
     });
     
     
+    
+
 
 });
