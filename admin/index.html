@@ -443,63 +443,16 @@
                         <div class="tab-pane fade" id="updStorage">
                             <select class="form-control" id="stoUpdateList"></select>
                             <button class="btn w-100 btn-primary mt-3" id="searchSto">Search Component</button>
-                            <form id="updStoForm" >
-                                
-                                <div class="mb-3">
-                                    <label class="form-label" for="updBrand">Vendor</label> 
-                                    <select class="form-control" id="updBrand" required> </select>
-                                </div>
-    
-                                <div class="mb-3">
-                                    <label class="form-label">Capacity</label>
-                                    <input type="number" class="form-control" id="updstoSize" required>
-                                </div>
-    
-                                <div class="mb-3">
-                                    <label class="form-label" for="updstoType">Storage Type</label> 
-                                    <select class="form-control" id="updstoType" required> 
-                                        <option value="HDD">HDD</option>
-                                        <option value="HDD">SSD</option>
-                                    </select>
-                                </div>
-    
-                                <div class="mb-3">
-                                    <label class="form-label" for="updstoConn">Connector Type</label> 
-                                    <select class="form-control" id="updstoConn" required> 
-                                        <option value="M.2">M.2</option>
-                                        <option value="SATA">SATA</option>
-                                    </select>
-                                </div>
-    
-                                <div class="mb-3">
-                                    <label class="form-label">Price</label>
-                                    <input type="number" class="form-control" id="updstoPrice" required>
-                                </div>
-                        
-                                <button type="submit" class="btn btn-success w-100">Update Component</button>
+                            <form id="updStoForm" action="./php/updateComponent/storage/updSto.php" method="get">
+
                             </form>
                         </div>
 
                         <div class="tab-pane fade" id="updCase">
                             <select class="form-control" id="caseUpdateList"></select>
                             <button class="btn w-100 btn-primary mt-3" id="searchCase">Search Component</button>
-                            <form id="updCaseForm">
-                                <div class="mb-3">
-                                    <label class="form-label">Case Name</label>
-                                    <input type="text" class="form-control" id="updCaseName" required>
-                                </div>
-                        
-                                <div class="mb-3">
-                                    <label class="form-label" for="updCaseBrand">Vendor</label>
-                                    <select class="form-control" id="updCaseBrand" required></select>
-                                </div>
-                        
-                                <div class="mb-3">
-                                    <label class="form-label">Price</label>
-                                    <input type="number" class="form-control" id="updCasePrice" required>
-                                </div>
-                        
-                                <button type="submit" class="btn btn-success w-100">Update Component</button>
+                            <form id="updCaseForm" action="./php/updateComponent/case/updCase.php" method="get">
+
                             </form>
                         </div>
                         

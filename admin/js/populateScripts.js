@@ -208,6 +208,29 @@ function populateMemory(){
     xmlhttp.send();
 }
 
+function populateStorage(){
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function(){
+        if (this.readyState == 4 && this.status == 200) {
+            document.getElementById("stoUpdateList").innerHTML = this.responseText;
+        }
+    };
+    xmlhttp.open("GET", "./php/updateComponent/storage/popSto.php", true);
+    xmlhttp.send();
+}
+
+function populateCase(){
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function(){
+        if (this.readyState == 4 && this.status == 200) {
+            document.getElementById("caseUpdateList").innerHTML = this.responseText;
+        }
+    };
+    xmlhttp.open("GET", "./php/updateComponent/case/popCase.php", true);
+    xmlhttp.send();
+}
+
+
 
 $(document).ready(function(){
 
@@ -219,6 +242,32 @@ $(document).ready(function(){
     populateCPUUpdateList();
     populateMotherboard();
     populateMemory();
+    populateStorage();
+    populateCase();
+
+    $('#searchCase').click(function(){
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function(){
+            if (this.readyState == 4 && this.status == 200) {
+                document.getElementById("updCaseForm").innerHTML = this.responseText;
+            }
+        };
+        xmlhttp.open("GET","./php/updateComponent/case/helpCase.php?cse_id=" + document.getElementById("caseUpdateList").value, true);
+        xmlhttp.send();
+
+    });
+
+    $('#searchSto').click(function(){
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function(){
+            if (this.readyState == 4 && this.status == 200) {
+                document.getElementById("updStoForm").innerHTML = this.responseText;
+            }
+        };
+        xmlhttp.open("GET","./php/updateComponent/storage/helpSto.php?sto_id=" + document.getElementById("stoUpdateList").value, true);
+        xmlhttp.send();
+
+    });
 
     $('#searchMem').click(function(){
         var xmlhttp = new XMLHttpRequest();

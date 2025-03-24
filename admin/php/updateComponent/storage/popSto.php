@@ -7,13 +7,13 @@
         die("Connection failed: " . $conn->connect_error);
     }
 
-    $sql = "SELECT * FROM memorysticks WHERE isDeleted=0";
+    $sql = "SELECT * FROM drives WHERE isDeleted=0";
     $result = $conn->query($sql);
 
     if ($result->num_rows > 0) {
         echo "<option value='' disabled selected>Select memory</option>";
         while ($row = $result->fetch_assoc()) {
-            echo "<option value='" . $row['MEM_ID'] . "'>" . $row['vendorCode'] . " ". $row['size'] . "</option>";
+            echo "<option value='" . $row['DRV_ID'] . "'>" . $row['vendorName'] . " ". $row['capacity'] . " ". $row['storageType'] . " ". $row['connector'] ."</option>";
         }
     } else {
         echo "<option disabled>No memory</option>";
