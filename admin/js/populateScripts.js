@@ -149,12 +149,6 @@ $(document).ready(function(){
         var moboM2Slots = document.getElementById("moboM2Slots").value
         var moboChipset = document.getElementById("moboChipset").value
         var moboPrice = document.getElementById("moboPrice").value
-
-        if (moboName === "" || moboSocketId === "" || moboBrandText === "" || moboDdr === "" || moboMemSlots === "" || 
-            moboM2Slots === "" || moboChipset === "" || moboPrice === "") {
-            alert("All fields are required.");
-            return;
-        }
     
         var formData = new FormData(form);
     
@@ -185,11 +179,6 @@ $(document).ready(function(){
         var memDdr = document.getElementById("memDDR").value;
         var memSize = document.getElementById("memSize").value;
         var memPrice = document.getElementById("memPrice").value;
-
-        if (memBrandText === "" || memDdr === "" || memSize === "" || memPrice === "") {
-            alert("All fields are required.");
-            return;
-        }
     
         var formData = new FormData(form);
     
@@ -217,12 +206,7 @@ $(document).ready(function(){
         var stoType = document.getElementById("stoType").value;
         var stoConn = document.getElementById("stoConn").value;
         var stoPrice = document.getElementById("stoPrice").value;
-    
-        if (stoBrandText === "" || stoSize === "" || stoType === "" || stoConn === "" || stoPrice === "") {
-            alert("All fields are required.");
-            return;
-        }
-    
+
         var formData = new FormData(form);
     
         formData.append("brand", stoBrandText);
@@ -232,6 +216,30 @@ $(document).ready(function(){
         formData.append("price", stoPrice);
     
         fetch("./php/addSto.php", {
+            method: "POST",
+            body: formData,
+        })
+        .catch(error => {
+            console.error("Error:", error);
+            alert("Something went wrong. Please try again.");
+        });
+    });
+    
+    document.getElementById("caseAdd").addEventListener("click", function() {
+        var form = document.getElementById("addCaseForm");
+    
+        var caseBrand = document.getElementById("caseBrand");
+        var caseBrandText = caseBrand.options[caseBrand.selectedIndex].value;
+        var caseName = document.getElementById("caseName").value;
+        var casePrice = document.getElementById("casePrice").value;
+        
+        var formData = new FormData(form);
+    
+        formData.append("brand", caseBrandText);
+        formData.append("name", caseName);
+        formData.append("price", casePrice);
+    
+        fetch("./php/addCase.php", {
             method: "POST",
             body: formData,
         })
