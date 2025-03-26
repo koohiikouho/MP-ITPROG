@@ -401,6 +401,25 @@ $(document).ready(function(){
         xmlhttp.send();
     });
 
+    document.getElementById("generateReportBtn").addEventListener("click", function () {
+        fetch("./php/popularityReport.php", {
+            method: "POST",
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === "success") {
+                document.getElementById("reportContainer").innerHTML = data.html;
+            } else {
+                alert("Error: " + data.message);
+            }
+        })
+        .catch(error => {
+            console.error("Error:", error);
+            alert("Something went wrong. Please try again.");
+        });
+    });
+    
+
     document.getElementById("cpuAdd").addEventListener("click", function() {
         var form = document.getElementById("addCPUForm");
     
@@ -661,24 +680,6 @@ $(document).ready(function(){
             alert("Something went wrong. Please try again.");
         });
     });
+    
 
-    document.getElementById("generateReportBtn").addEventListener("click", function() {
-        fetch("./php/popularityReport.php", {
-            method: "POST",
-        })
-        .then(response => response.json()) // Expect JSON response
-        .then(data => {
-            if (data.status === "success") {
-                alert(data.message); // Display report in an alert
-            } else {
-                alert("Error: " + data.message);
-            }
-        })
-        .catch(error => {
-            console.error("Error:", error);
-            alert("Something went wrong. Please try again.");
-        });
-    });
-    
-    
 });
