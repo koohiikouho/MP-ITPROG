@@ -177,7 +177,89 @@ function delCases(buildNumber){
     location.reload();
 }
 
+function delPSUs(buildNumber){
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function(){
+    
+        if (this.readyState == 4 && this.status == 200) {
 
+        }
+    };
+
+    xmlhttp.open("GET", "./php/deletePSUs.php?id=" + buildNumber, true);
+    xmlhttp.send();
+    location.reload();
+}
+
+function delStorage(buildNumber){
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function(){
+    
+        if (this.readyState == 4 && this.status == 200) {
+
+        }
+    };
+
+    xmlhttp.open("GET", "./php/deleteStorage.php?id=" + buildNumber, true);
+    xmlhttp.send();
+    location.reload();
+}
+
+function delMemory(buildNumber){
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function(){
+    
+        if (this.readyState == 4 && this.status == 200) {
+
+        }
+    };
+
+    xmlhttp.open("GET", "./php/deleteMemory.php?id=" + buildNumber, true);
+    xmlhttp.send();
+    location.reload();
+}
+
+function delMobo(buildNumber){
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function(){
+    
+        if (this.readyState == 4 && this.status == 200) {
+
+        }
+    };
+
+    xmlhttp.open("GET", "./php/deleteMotherboard.php?id=" + buildNumber, true);
+    xmlhttp.send();
+    location.reload();
+}
+
+function delCPUs(buildNumber){
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function(){
+    
+        if (this.readyState == 4 && this.status == 200) {
+
+        }
+    };
+
+    xmlhttp.open("GET", "./php/deleteCPUs.php?id=" + buildNumber, true);
+    xmlhttp.send();
+    location.reload();
+}
+
+function delGPUs(buildNumber){
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function(){
+    
+        if (this.readyState == 4 && this.status == 200) {
+
+        }
+    };
+
+    xmlhttp.open("GET", "./php/deleteGPUs.php?id=" + buildNumber, true);
+    xmlhttp.send();
+    location.reload();
+}
 
 
 function getCases(){
@@ -327,8 +409,23 @@ function populateCase(){
     xmlhttp.send();
 }
 
+function showUpdatePopup() {
+    let popup = document.getElementById("updatePopup");
 
+    if (popup) {
+        popup.style.display = "flex"; // Make it appear
+    } else {
+        console.error("❌ Popup element not found! Check your HTML.");
+    }
+}
 
+function closePopup() {
+    let popup = document.getElementById("updatePopup");
+
+    if (popup) {
+        popup.style.display = "none"; // Hide it
+    }
+}
 
 
 
@@ -351,6 +448,8 @@ $(document).ready(function(){
     getGPUs();
     getMobo();
     getMem();
+    showUpdatePopup();
+    closePopup();
 
 
 
