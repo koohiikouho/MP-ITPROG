@@ -428,49 +428,121 @@
                             -->
                           
                         </div>
+
+                        <div class="modal fade" id="updateCPUModal" tabindex="-1" aria-labelledby="updateModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="updateModalLabel">Update CPU</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                            <!-- PUT updCPU.php here-->
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            </div>
+                                </div>
+                            </div>
+                            </div>
     
                         <div class="tab-pane fade" id="updMotherboard" >
-                            <!--
-                            <select class="form-control" id="mobUpdateList"></select>
-                            <button class="btn w-100 btn-primary mt-3" id="searchMob">Search Component</button>
-
-                            <form id="updMoboForm" action="./php/updateComponent/mobo/updMobo.php" method="get"> </form>
-                            -->
                         </div>
+
+                        <div class="modal fade" id="updateMoboModal" tabindex="-1" aria-labelledby="updateModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="updateModalLabel">Update Motherboard</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <select class="form-control" id="mobUpdateList"></select>
+                                <button class="btn w-100 btn-primary mt-3" id="searchMob">Search Component</button>
+    
+                                <form id="updMoboForm" action="./php/updateComponent/mobo/updMobo.php" method="get"> </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            </div>
+                                </div>
+                            </div>
+                            </div>
     
                         <div class="tab-pane fade" id="updMemory">
-                          <!--          
-                           <select class="form-control" id="memUpdateList"></select>
-                            <button class="btn w-100 btn-primary mt-3" id="searchMem">Search Component</button>
+                        </div>
 
-                            <form id="updMemForm" action="./php/updateComponent/memory/updMem.php" method="get">
-                                
-
-                            </form>
-                          --> 
+                        <div class="modal fade" id="updateMemModal" tabindex="-1" aria-labelledby="updateModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="updateModalLabel">Update Memory</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <select class="form-control" id="memUpdateList"></select>
+                                <button class="btn w-100 btn-primary mt-3" id="searchMem">Search Component</button>
+    
+                                <form id="updMemForm" action="./php/updateComponent/memory/updMem.php" method="get">
+                                    
+    
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            </div>
+                                </div>
+                            </div>
                         </div>
     
                         <div class="tab-pane fade" id="updStorage">
-                            <!--
-                            <select class="form-control" id="stoUpdateList"></select>
-                            <button class="btn w-100 btn-primary mt-3" id="searchSto">Search Component</button>
-                            <form id="updStoForm" action="./php/updateComponent/storage/updSto.php" method="get">
-
-                            </form>
-                           
-                           
-                           --> 
                         </div>
 
+                        <div class="modal fade" id="updateStoModal" tabindex="-1" aria-labelledby="updateModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="updateModalLabel">Update Storage</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <select class="form-control" id="stoUpdateList"></select>
+                                <button class="btn w-100 btn-primary mt-3" id="searchSto">Search Component</button>
+                                <form id="updStoForm" action="./php/updateComponent/storage/updSto.php" method="get">
+    
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            </div>
+                                </div>
+                            </div>
+                        </div>
+    
                         <div class="tab-pane fade" id="updCase">
-                        <!--
-                         <select class="form-control" id="caseUpdateList"></select>
-                            <button class="btn w-100 btn-primary mt-3" id="searchCase">Search Component</button>
-                            <form id="updCaseForm" action="./php/updateComponent/case/updCase.php" method="get">
-                                
-                            </form>    
-                        -->
+                        </div>  
+    
+                        <div class="modal fade" id="updateCaseModal" tabindex="-1" aria-labelledby="updateModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="updateModalLabel">Update Case</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
+                        <div class="modal-body">
+                            <select class="form-control" id="caseUpdateList"></select>
+                            <button class="btn w-100 btn-primary mt-3" id="searchCase">Search Component</button>
+
+                            <form id="updCaseForm" action="./php/updateComponent/case/updCase.php" method="get">
+                            </form>  
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        </div>
+                            </div>
+                        </div>
+                        </div>
+                        
                         
                         <div class="tab-pane fade" id="updPSU">
                            <!--
@@ -506,6 +578,23 @@
                             </form>
                            --> 
                         </div>
+
+                        <div class="modal fade" id="updatePSUModal" tabindex="-1" aria-labelledby="updateModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="updateModalLabel">Update PSU</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <!--Put updPSU.php here-->
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            </div>
+                                </div>
+                            </div>
+                        </div>
                         
                         <div class="tab-pane fade" id="updGPU">
                            <!--
@@ -538,6 +627,23 @@
                            
                            
                            --> 
+                        </div>
+
+                        <div class="modal fade" id="updateGPUModal" tabindex="-1" aria-labelledby="updateModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="updateModalLabel">Update GPU</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <!--Put updGPU.php here-->
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            </div>
+                                </div>
+                            </div>
                         </div>
         
                         
