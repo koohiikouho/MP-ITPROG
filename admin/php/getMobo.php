@@ -11,11 +11,12 @@ if ($conn->connect_error) {
 
 $sql = "SELECT m.MOB_ID, rv.vendorName, m.socketID, m.ddrVersion, m.memslots, m.m2slots, m.chipset,m.name,m.price
         FROM motherboards m
-        JOIN ref_vendors rv ON m.vendorCode = rv.mbid"; // No sorting
+        JOIN ref_vendors rv ON m.vendorCode = rv.mbid
+        WHERE m.isDeleted != '1'";
 
 $result = $conn->query($sql);
 
-// Display data in an HTML table
+
 if ($result->num_rows > 0) {
     echo "<table border='1' class='table'>
             <tr>
@@ -28,6 +29,8 @@ if ($result->num_rows > 0) {
                 <th>Chipset</th>
                 <th>Name</th>
                 <th>Price</th>
+                <th>Actions</th>
+                <button class='btn btn-primary' data-bs-toggle='modal' data-bs-target='#updateMoboModal'>Update</button>
             </tr>";
     
     while ($row = $result->fetch_assoc()) {
@@ -41,6 +44,8 @@ if ($result->num_rows > 0) {
         echo "<td>{$row['chipset']}</td>";
         echo "<td>{$row['name']}</td>";
         echo "<td>{$row['price']}</td>";
+        echo "<td><button class=\"btn btn-danger\" onclick=\"delMobo(" . $row['MOB_ID'] . ")\">Delete</button></td>";
+        echo "</tr>";
         echo "</tr>";
     }
 

@@ -25,6 +25,7 @@ if ($result->num_rows > 0) {
                 <th>Name</th>
                 <th>Price</th>
                 <th>Actions</th>
+                <button class='btn btn-primary' data-bs-toggle='modal' data-bs-target='#updateCaseModal'>Update</button>
             </tr>";
     
     while ($row = $result->fetch_assoc()) {
@@ -34,6 +35,7 @@ if ($result->num_rows > 0) {
         echo "<td>{$row['name']}</td>";
         echo "<td>{$row['price']}</td>";
         echo "<td><button class=\"btn btn-danger\" onclick=\"delCases(" . $row['CSE_ID'] . ")\">Delete</button></td>";
+        
         echo "</tr>";
     }
 

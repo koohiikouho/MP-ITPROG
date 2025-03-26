@@ -9,10 +9,10 @@ if ($conn->connect_error) {
 
 $sql = "SELECT d.DRV_ID, rv.vendorName,d.capacity, d.storageType, d.connector, d.price
         FROM drives d
-        JOIN ref_vendors rv ON d.vendorName = rv.mbid";
+        JOIN ref_vendors rv ON d.vendorName = rv.mbid
+        WHERE d.isDeleted != '1'";
 
 $result = $conn->query($sql);
-
 
 if ($result->num_rows > 0) {
     echo "<table border='1' class='table'>
@@ -23,6 +23,9 @@ if ($result->num_rows > 0) {
                 <th>Storage Type</th>
                 <th>Connector</th>
                 <th>Price</th>
+                <th>Actions</th>
+                <button class='btn btn-primary' data-bs-toggle='modal' data-bs-target='#updateStoModal'>Update</button>
+                
             </tr>";
     
     while ($row = $result->fetch_assoc()) {
@@ -33,6 +36,8 @@ if ($result->num_rows > 0) {
         echo "<td>{$row['storageType']}</td>";
         echo "<td>{$row['connector']}</td>";
         echo "<td>{$row['price']}</td>";
+        echo "<td><button class=\"btn btn-danger\" onclick=\"delStorage(" . $row['DRV_ID'] . ")\">Delete</button>
+              </td>";
         echo "</tr>";
     }
 

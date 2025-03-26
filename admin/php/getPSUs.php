@@ -10,7 +10,8 @@ if ($conn->connect_error) {
 
 $sql = "SELECT p.PSU_ID, rv.vendorName,p.wattage, p.efficiency, p.price
         FROM powersupplies p
-        JOIN ref_vendors rv ON p.vendorCode = rv.mbid";
+        JOIN ref_vendors rv ON p.vendorCode = rv.mbid
+        WHERE p.isDeleted != '1'";
 
 $result = $conn->query($sql);
 
@@ -23,6 +24,8 @@ if ($result->num_rows > 0) {
                 <th>Wattage</th>
                 <th>Efficiency</th>
                 <th>Price</th>
+                <th>Actions</th>
+                <button class='btn btn-primary' data-bs-toggle='modal' data-bs-target='#updatePSUModal'>Update</button>
             </tr>";
     
     while ($row = $result->fetch_assoc()) {
@@ -32,6 +35,8 @@ if ($result->num_rows > 0) {
         echo "<td>{$row['wattage']}</td>";
         echo "<td>{$row['efficiency']}</td>";
         echo "<td>{$row['price']}</td>";
+        echo "<td><button class=\"btn btn-danger\" onclick=\"delPSUs(" . $row['PSU_ID'] . ")\">Delete</button>
+              </td>";
         echo "</tr>";
     }
 
