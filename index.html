@@ -698,9 +698,9 @@
                                 <h4 id="totalPriceList">Total: ₱0.00</h4>
                             </div>
                             <div class ="w-100 h-100">
-                                <button type="button" class="btn btn-outline-primary bouncer bounce w-100 h-100 button two" id="submitBuild" style="background-color: #8166ad; border-color: #8166ad; color: #FFFFFF;">Submit Build</button>
-                                <button type="button" class="btn btn-outline-primary bouncer bounce button two w-100 h-100 button two mt-2" id="searchBuild" style="background-color: #8166ad; border-color: #8166ad; color: #FFFFFF;">Find Build</button>
-                                <button type="button" class="btn btn-outline-primary bouncer bounce button two w-100 h-100 button two mt-2" id="testButton" style="background-color: #8166ad; border-color: #8166ad; color: #FFFFFF;">Build Number</button>
+                                <button type="button" class="btn btn-outline-primary bouncer bounce w-100 h-100 button two" id="submitBuild" style="background-color: #8166ad; border-color: #8166ad; color: #FFFFFF;" data-bs-toggle="modal" data-bs-target="#buildSubmitModal">Submit Build</button>
+                                <button type="button" class="btn btn-outline-primary bouncer bounce button two w-100 h-100 button two mt-2" id="searchBuild" style="background-color: #8166ad; border-color: #8166ad; color: #FFFFFF;" data-bs-toggle="modal" data-bs-target="#buildIdModal">Find Build</button>
+                                <button type="button" class="btn btn-outline-primary bouncer bounce button two w-100 h-100 button two mt-2" id="testButton" style="background-color: #8166ad; border-color: #8166ad; color: #FFFFFF;" data-bs-toggle="modal" data-bs-target="#cookieReadModal">Saved Builds</button>
                             </div>
                             
                             
@@ -712,7 +712,86 @@
 
     </div>
 
+    <!-- Modals -->
+    <div class="modal fade" id="buildIdModal" tabindex="-1" aria-labelledby="buildIdModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="buildIdModalLabel">Find Build</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <form>
+                <div class="mb-3">
+                  <label for="buildIdInput" class="form-label">Enter Build ID:</label>
+                  <input type="number" class="form-control" id="buildIdInput" placeholder="e.g. 1,2,3,4,5">
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#confirmationModal" data-bs-dismiss="modal" id="submitBuildButton">Submit</button>
+            </div>
+          </div>
+        </div>
+      </div>
 
+
+      <div class="modal fade" id="confirmationModal" tabindex="-1" aria-labelledby="confirmationModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="confirmationModalLabel">Find Build Result</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <p id="buildSearchResult"> </p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-primary" data-bs-dismiss="modal">OK</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    
+      <div class="modal fade" id="buildSubmitModal" tabindex="-1" aria-labelledby="buildSubmitModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Submit Build</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <p id="buildSubmitResult"></p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-primary" data-bs-dismiss="modal">OK</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal fade" id="cookieReadModal" tabindex="-1" aria-labelledby="cookieReadModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Saved Builds</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p class="bold">Note: Build components can be viewed using the "Find Build" button</p>
+              <p id="savedBuildsResult"></p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-primary" data-bs-dismiss="modal">OK</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+      
+    <!-- End of Modals -->
 
     <footer class="text-center text-white fadenav fh-color mt-5" id="myFooter">
         <div class="scrolling-text-container">

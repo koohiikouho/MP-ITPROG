@@ -896,6 +896,21 @@ function turnNanToFloat(nanvar){
         nanvar = 0;
 }
 
+function getCookie(cname) {
+    let name = cname + "=";
+    let decodedCookie = decodeURIComponent(document.cookie);
+    let ca = decodedCookie.split(';');
+    for(let i = 0; i <ca.length; i++) {
+      let c = ca[i];
+      while (c.charAt(0) == ' ') {
+        c = c.substring(1);
+      }
+      if (c.indexOf(name) == 0) {
+        return c.substring(name.length, c.length);
+      }
+    }
+    return "";
+  };
 
 $(document).ready(function(){
     
@@ -1200,8 +1215,7 @@ $(document).ready(function(){
             , true);
         xmlhttp.send();
         
-        alert("Sucessfully Submitted!");
-
+        
 
             // var xmlhttp2 = newXMLHttpRequest();
             // xmlhttp2.onreadystatechange = function(){
@@ -1213,12 +1227,16 @@ $(document).ready(function(){
             // };
             // xmlhttp2.open("GET", "./php/indexBuild.php", true);
             // xmlhttp2.send();
+
         var xmlhttp2 = new XMLHttpRequest();
         xmlhttp2.onreadystatechange = function(){
             if (this.readyState == 4 && this.status == 200) {
                 string = this.responseText;
                 string = string.replace(/<\/?[^>]+(>|$)/g, "");
-                alert("This build's number is " + string);              
+
+                localStorage.setItem(string, buildName);
+                localStorage.setItem("savedBuilds", localStorage.getItem("savedBuilds") + "," + string );
+                document.getElementById("buildSubmitResult").innerHTML = "Successfuly Submitted!" + "<br> This build's number is " + string;   
             }
         };
         xmlhttp2.open("GET", "./php/indexBuild.php", true);
@@ -1226,22 +1244,23 @@ $(document).ready(function(){
 
         }
         else
-            alert("Incomplete Details!");
+            document.getElementById("buildSubmitResult").innerHTML = "Incomplete Details!"; 
 
     });
     $('#testButton').click(function(){
-        var xmlhttp2 = new XMLHttpRequest();
-        xmlhttp2.onreadystatechange = function(){
-            if (this.readyState == 4 && this.status == 200) {
-                string = this.responseText;
-                string = string.replace(/<\/?[^>]+(>|$)/g, "");
-                alert("This build's number is " + string);              
+        savedBuildsParsed = localStorage.getItem("savedBuilds").split(",");
+        var buildString = "";
+        if(savedBuildsParsed.length > 1){
+            for(i = 1; i < savedBuildsParsed.length ; i++){
+                buildString += "<br>Saved Build " + (i) + ": \"" + localStorage.getItem(savedBuildsParsed[i]) + "\" viewable as Build Number: " + savedBuildsParsed[i];
             }
-        };
-        xmlhttp2.open("GET", "./php/indexBuild.php", true);
-        xmlhttp2.send();
+        } else
+            buildString = "No saved builds found!";
 
+
+        document.getElementById("savedBuildsResult").innerHTML = buildString;
     });
+
 
     $('#addGpuButton').click(function() {
         gpuPriceGet();

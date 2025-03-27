@@ -18,7 +18,7 @@
     if ($result->num_rows > 0) {
 
         while ($row = $result->fetch_assoc()) {
-            echo("Build Number: " . $row['MAX(build_id)']);
+            echo($row['MAX(build_id)']);
         }
 
     } else {
