@@ -1,4 +1,5 @@
 <?php
+require './dbcred.php';
 if (!isset($_POST['cpuName'], $_POST['cpuBrand'], $_POST['cpuCores'], $_POST['cpuThreads'], $_POST['cpuClock'], $_POST['cpuSocket'], $_POST['cpuPrice'])) {
     echo json_encode(["success" => false, "message" => "Missing required fields"]);
     exit;
@@ -12,12 +13,7 @@ $cpuClock = floatval($_POST['cpuClock']);
 $cpuSocket = trim($_POST['cpuSocket']);
 $cpuPrice = floatval($_POST['cpuPrice']);
 
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "dbpcpartspicker";
-
-$conn = new mysqli($servername, $username, $password, $dbname);
+$conn = new mysqli($servername, $dbusername, $dbpassword, $dbname);
 
 if ($conn->connect_error) {
     die(json_encode(["success" => false, "message" => "Connection failed: " . $conn->connect_error]));

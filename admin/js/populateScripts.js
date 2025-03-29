@@ -536,10 +536,8 @@ $(document).ready(function(){
             method: "POST",
             body: formData,
         })
-        .catch(error => {
-            console.error("Error:", error);
-            alert("Something went wrong. Please try again.");
-        });
+        .then(() => alert("CPU has been added successfully!"))
+        .catch(() => alert("Something went wrong. Please try again."));
     });
 
 
@@ -633,10 +631,8 @@ $(document).ready(function(){
             method: "POST",
             body: formData,
         })
-        .catch(error => {
-            console.error("Error:", error);
-            alert("Something went wrong. Please try again.");
-        });
+        .then(() => alert("Mobo has been added successfully!"))
+        .catch(() => alert("Something went wrong. Please try again."));
     });
     
     document.getElementById("memAdd").addEventListener("click", function() {
@@ -659,10 +655,8 @@ $(document).ready(function(){
             method: "POST",
             body: formData,
         })
-        .catch(error => {
-            console.error("Error:", error);
-            alert("Something went wrong. Please try again.");
-        });
+        .then(() => alert("Memory has been added successfully!"))
+        .catch(() => alert("Something went wrong. Please try again."));
     });
     
     document.getElementById("stoAdd").addEventListener("click", function() {
@@ -687,10 +681,8 @@ $(document).ready(function(){
             method: "POST",
             body: formData,
         })
-        .catch(error => {
-            console.error("Error:", error);
-            alert("Something went wrong. Please try again.");
-        });
+        .then(() => alert("Storage has been added successfully!"))
+        .catch(() => alert("Something went wrong. Please try again."));
     });
     
     document.getElementById("caseAdd").addEventListener("click", function() {
@@ -711,10 +703,8 @@ $(document).ready(function(){
             method: "POST",
             body: formData,
         })
-        .catch(error => {
-            console.error("Error:", error);
-            alert("Something went wrong. Please try again.");
-        });
+        .then(() => alert("Case has been added successfully!"))
+        .catch(() => alert("Something went wrong. Please try again."));
     });
     
     document.getElementById("psuAdd").addEventListener("click", function() {
@@ -737,10 +727,8 @@ $(document).ready(function(){
             method: "POST",
             body: formData,
         })
-        .catch(error => {
-            console.error("Error:", error);
-            alert("Something went wrong. Please try again.");
-        });
+        .then(() => alert("PSU has been added successfully!"))
+        .catch(() => alert("Something went wrong. Please try again."));
     });
 
     document.getElementById("gpuAdd").addEventListener("click", function() {
@@ -764,10 +752,8 @@ $(document).ready(function(){
             method: "POST",
             body: formData,
         })
-        .catch(error => {
-            console.error("Error:", error);
-            alert("Something went wrong. Please try again.");
-        });
+        .then(() => alert("GPU has been added successfully!"))
+        .catch(() => alert("Something went wrong. Please try again."));
     });
     
 

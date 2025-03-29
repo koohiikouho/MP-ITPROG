@@ -1,4 +1,6 @@
 <?php
+require './dbcred.php';
+$conn = new mysqli($servername, $dbusername, $dbpassword, $dbname);
 if (!isset($_POST['brand'], $_POST['vendor'], $_POST['name'], $_POST['price'])) {
     echo json_encode(["success" => false, "message" => "Missing required fields"]);
     exit;
@@ -9,12 +11,7 @@ $vendor = trim($_POST['vendor']);
 $name = trim($_POST['name']);
 $price = floatval($_POST['price']);
 
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "dbpcpartspicker";
-
-$conn = new mysqli($servername, $username, $password, $dbname);
+$conn = new mysqli($servername, $dbusername, $dbpassword, $dbname);
 
 if ($conn->connect_error) {
     die(json_encode(["success" => false, "message" => "Connection failed: " . $conn->connect_error]));
