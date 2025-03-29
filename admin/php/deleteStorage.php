@@ -18,7 +18,6 @@
     $stmt->bind_param("i", $_GET['id']);
     $stmt->execute(); 
 
-    $conn->query($sql);
 
     $conn->close();
 

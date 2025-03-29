@@ -17,9 +17,12 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="./js/populateScripts.js"></script>
+    <div class=" d-flex mt-5 justify-content-center">
+    <div class="card">
+        
     <div class="admin-container">
-        <h2 class="text-center">Admin Panel - PC Parts Management</h2>
-
+        <h2 class="card-header justify-content-center d-flex">Admin Panel - PC Parts Management</h2>
+        <div class="card-body">
         <ul class="nav nav-tabs mt-3" id="adminTabs">
             <li class="nav-item"><a class="nav-link active" data-bs-toggle="tab" href="#addComponent">➕ Add Component</a></li>
             <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#deleteComponent">❌ Delete Component</a></li>
@@ -446,7 +449,7 @@
                             </div>
                             </div>
     
-                        <div class="tab-pane fade" id="updMotherboard" >
+                        <div class="tab-pane fade" id="updMotherboard">
                         </div>
 
                         <div class="modal fade" id="updateMoboModal" tabindex="-1" aria-labelledby="updateModalLabel" aria-hidden="true">
@@ -455,16 +458,16 @@
                                     <div class="modal-header">
                                         <h5 class="modal-title" id="updateModalLabel">Update Motherboard</h5>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <select class="form-control" id="mobUpdateList"></select>
-                                <button class="btn w-100 btn-primary mt-3" id="searchMob">Search Component</button>
-    
-                                <form id="updMoboForm" action="./php/updateComponent/mobo/updMobo.php" method="get"> </form>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            </div>
+                                    </div>
+                                    <div class="modal-body">
+                                        <select class="form-control" id="mobUpdateList"></select>
+                                        <button class="btn w-100 btn-primary mt-3" id="searchMob">Search Component</button>
+            
+                                        <form id="updMoboForm" action="./php/updateComponent/mobo/updMobo.php" method="get"> </form>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    </div>
                                 </div>
                             </div>
                             </div>
@@ -650,8 +653,9 @@
         </div>
         
     </div>
-    
+    </div>
+</div>
 
-    
+</div>
 </body>
 </html>

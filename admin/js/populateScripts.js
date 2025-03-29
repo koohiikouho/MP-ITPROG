@@ -242,6 +242,7 @@ function delCPUs(buildNumber){
         }
     };
 
+    alert(buildNumber)
     xmlhttp.open("GET", "./php/deleteCPUs.php?id=" + buildNumber, true);
     xmlhttp.send();
     location.reload();

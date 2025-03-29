@@ -30,7 +30,7 @@ if ($result->num_rows > 0) {
                 <th>Name</th>
                 <th>Price</th>
                 <th>Actions</th>
-                <button class='btn btn-primary' data-bs-toggle='modal' data-bs-target='#updateMoboModal'>Update</button>
+                
             </tr>";
     
     while ($row = $result->fetch_assoc()) {
@@ -44,7 +44,9 @@ if ($result->num_rows > 0) {
         echo "<td>{$row['chipset']}</td>";
         echo "<td>{$row['name']}</td>";
         echo "<td>{$row['price']}</td>";
-        echo "<td><button class=\"btn btn-danger\" onclick=\"delMobo(" . $row['MOB_ID'] . ")\">Delete</button></td>";
+        echo "<td><button class=\"btn btn-danger\" onclick=\"delMobo(" . $row['MOB_ID'] . ")\">Delete</button>";
+        echo "   ";
+        echo "<button class='btn btn-primary ml-2' data-bs-toggle='modal' data-bs-target='#updateMoboModal'>Update</button></td>";
         echo "</tr>";
         echo "</tr>";
     }
