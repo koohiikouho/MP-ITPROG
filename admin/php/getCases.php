@@ -29,7 +29,7 @@ if ($result->num_rows > 0) {
             </tr>";
     
     while ($row = $result->fetch_assoc()) {
-        echo "<tr>";
+        echo "<tr id=\"trcse" . $row['CSE_ID'] . "\">";
         echo "<td>{$row['CSE_ID']}</td>";
         echo "<td>{$row['vendorName']}</td>";
         echo "<td>{$row['name']}</td>";

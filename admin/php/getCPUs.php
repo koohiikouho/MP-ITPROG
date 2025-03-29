@@ -30,9 +30,8 @@
         </tr>";
 
     while ($row = $result->fetch_assoc()) {
-        echo "<tr>";
+        echo "<tr id=\"trcpu" . $row['CPU_ID'] . "\">";
         echo "<td>{$row['CPU_ID']}</td>";
-        
         echo "<td>{$row['vendorName']}</td>";
         echo "<td>{$row['name']}</td>";
         echo "<td>{$row['cores']}</td>";

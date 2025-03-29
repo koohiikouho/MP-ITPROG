@@ -159,7 +159,8 @@ function delBuild(buildNumber){
 
     xmlhttp.open("GET", "./php/deleteBuild.php?id=" + buildNumber, true);
     xmlhttp.send();
-    location.reload();
+    var element = document.getElementById("trbld" + buildNumber);
+    element.parentNode.removeChild(element);
 }
 
 
@@ -174,7 +175,8 @@ function delCases(buildNumber){
 
     xmlhttp.open("GET", "./php/deleteCases.php?id=" + buildNumber, true);
     xmlhttp.send();
-    location.reload();
+    var element = document.getElementById("trcse" + buildNumber);
+    element.parentNode.removeChild(element);
 }
 
 function delPSUs(buildNumber){
@@ -188,7 +190,8 @@ function delPSUs(buildNumber){
 
     xmlhttp.open("GET", "./php/deletePSUs.php?id=" + buildNumber, true);
     xmlhttp.send();
-    location.reload();
+    var element = document.getElementById("trpsu" + buildNumber);
+    element.parentNode.removeChild(element);
 }
 
 function delStorage(buildNumber){
@@ -202,7 +205,8 @@ function delStorage(buildNumber){
 
     xmlhttp.open("GET", "./php/deleteStorage.php?id=" + buildNumber, true);
     xmlhttp.send();
-    location.reload();
+    var element = document.getElementById("trsto" + buildNumber);
+    element.parentNode.removeChild(element);
 }
 
 function delMemory(buildNumber){
@@ -216,7 +220,8 @@ function delMemory(buildNumber){
 
     xmlhttp.open("GET", "./php/deleteMemory.php?id=" + buildNumber, true);
     xmlhttp.send();
-    location.reload();
+    var element = document.getElementById("trmem" + buildNumber);
+    element.parentNode.removeChild(element);
 }
 
 function delMobo(buildNumber){
@@ -230,7 +235,8 @@ function delMobo(buildNumber){
 
     xmlhttp.open("GET", "./php/deleteMotherboard.php?id=" + buildNumber, true);
     xmlhttp.send();
-    location.reload();
+    var element = document.getElementById("trmob" + buildNumber);
+    element.parentNode.removeChild(element);
 }
 
 function delCPUs(buildNumber){
@@ -242,10 +248,10 @@ function delCPUs(buildNumber){
         }
     };
 
-    alert(buildNumber)
     xmlhttp.open("GET", "./php/deleteCPUs.php?id=" + buildNumber, true);
     xmlhttp.send();
-    location.reload();
+    var element = document.getElementById("trcpu" + buildNumber);
+    element.parentNode.removeChild(element);
 }
 
 function delGPUs(buildNumber){
@@ -259,7 +265,8 @@ function delGPUs(buildNumber){
 
     xmlhttp.open("GET", "./php/deleteGPUs.php?id=" + buildNumber, true);
     xmlhttp.send();
-    location.reload();
+    var element = document.getElementById("trgpu" + buildNumber);
+    element.parentNode.removeChild(element);
 }
 
 
@@ -273,7 +280,6 @@ function getCases(){
 
     xmlhttp.open("GET", "./php/getCases.php", true);
     xmlhttp.send();
-
 }
 
 function getPSUs(){
@@ -286,7 +292,6 @@ function getPSUs(){
 
     xmlhttp.open("GET", "./php/getPSUs.php", true);
     xmlhttp.send();
-
 }
 
 
@@ -410,23 +415,6 @@ function populateCase(){
     xmlhttp.send();
 }
 
-function showUpdatePopup() {
-    let popup = document.getElementById("updatePopup");
-
-    if (popup) {
-        popup.style.display = "flex"; // Make it appear
-    } else {
-        console.error("❌ Popup element not found! Check your HTML.");
-    }
-}
-
-function closePopup() {
-    let popup = document.getElementById("updatePopup");
-
-    if (popup) {
-        popup.style.display = "none"; // Hide it
-    }
-}
 
 
 
@@ -449,9 +437,6 @@ $(document).ready(function(){
     getGPUs();
     getMobo();
     getMem();
-    showUpdatePopup();
-    closePopup();
-
 
 
     $('#searchCase').click(function(){

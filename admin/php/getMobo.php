@@ -34,7 +34,7 @@ if ($result->num_rows > 0) {
             </tr>";
     
     while ($row = $result->fetch_assoc()) {
-        echo "<tr>";
+        echo "<tr id=\"trmob" . $row['MOB_ID'] . "\">";
         echo "<td>{$row['MOB_ID']}</td>";
         echo "<td>{$row['vendorName']}</td>";
         echo "<td>{$row['socketID']}</td>";

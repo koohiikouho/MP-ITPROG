@@ -29,7 +29,7 @@ if ($result->num_rows > 0) {
             </tr>";
     
     while ($row = $result->fetch_assoc()) {
-        echo "<tr>";
+        echo "<tr id=\"trgpu" . $row['GPU_ID'] . "\">";
         echo "<td>{$row['GPU_ID']}</td>";
         echo "<td>{$row['brandCode']}</td>";
         echo "<td>{$row['vendorName']}</td>";

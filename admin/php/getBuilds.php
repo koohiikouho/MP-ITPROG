@@ -28,7 +28,7 @@
 
                 ";
         while ($rowMain = $resultMain->fetch_assoc()) {
-            echo ("<tr>");
+            echo ("<tr id=\"trbld" . $rowMain['build_id'] . "\">");
             
             $cpuID = $rowMain['cpu_id'];
             $moboID = $rowMain['mobo_id'];
