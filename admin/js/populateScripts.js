@@ -460,16 +460,39 @@ function helpSto(value){
 
 }
 
-// function helpCPU(value){
-//     var xmlhttp = new XMLHttpRequest();
-//     xmlhttp.onreadystatechange = function(){
-//         if (this.readyState == 4 && this.status == 200) {
-//             document.getElementById("updCPUForm").innerHTML = this.responseText;
-//         }
-//     };
-//     xmlhttp.open("GET","./php/updateComponent/storage/helpCPU.php?cpu_id=" + value, true);
-//     xmlhttp.send();
-// }
+function helpCPU(value){
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function(){
+        if (this.readyState == 4 && this.status == 200) {
+            document.getElementById("updCPUForm").innerHTML = this.responseText;
+        }
+    };
+    xmlhttp.open("GET","./php/updateComponent/cpu/helpCPU.php?cpu_id=" + value, true);
+    xmlhttp.send();
+}
+
+function helpPSU(value){
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function(){
+        if (this.readyState == 4 && this.status == 200) {
+            document.getElementById("updPSUForm").innerHTML = this.responseText;
+        }
+    };
+    xmlhttp.open("GET","./php/updateComponent/psu/helpPSU.php?psu_id=" + value, true);
+    xmlhttp.send();
+}
+
+function helpGPU(value){
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function(){
+        if (this.readyState == 4 && this.status == 200) {
+            document.getElementById("updGPUForm").innerHTML = this.responseText;
+        }
+    };
+    xmlhttp.open("GET","./php/updateComponent/gpu/helpGPU.php?gpu_id=" + value, true);
+    xmlhttp.send();
+}
+
 
 $(document).ready(function(){
 

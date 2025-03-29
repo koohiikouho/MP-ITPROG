@@ -40,7 +40,7 @@
         echo "<td>{$row['price']}</td>";
         echo "<td><button class=\"btn btn-danger\" onclick=\"delCPUs(" . $row['CPU_ID'] . ")\">Delete</button>";
         echo "   ";
-        echo "<button class='btn btn-primary ml-2' data-bs-toggle='modal' data-bs-target='#updateModal' onclick=\"helpCPU({$row['CPU_ID']});\" \>Update</button></td>";
+        echo "<button class='btn btn-primary ml-2' data-bs-toggle='modal' data-bs-target='#updateCPUModal' onclick=\"helpCPU({$row['CPU_ID']});\" \>Update</button></td>";
         echo "</tr>";
     }
 

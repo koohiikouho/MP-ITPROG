@@ -25,7 +25,7 @@ if ($result->num_rows > 0) {
                 <th>Efficiency</th>
                 <th>Price</th>
                 <th>Actions</th>
-                <button class='btn btn-primary' data-bs-toggle='modal' data-bs-target='#updatePSUModal'>Update</button>
+
             </tr>";
     
     while ($row = $result->fetch_assoc()) {
@@ -35,8 +35,9 @@ if ($result->num_rows > 0) {
         echo "<td>{$row['wattage']}</td>";
         echo "<td>{$row['efficiency']}</td>";
         echo "<td>{$row['price']}</td>";
-        echo "<td><button class=\"btn btn-danger\" onclick=\"delPSUs(" . $row['PSU_ID'] . ")\">Delete</button>
-              </td>";
+        echo "<td><button class=\"btn btn-danger\" onclick=\"delPSUs(" . $row['PSU_ID'] . ")\">Delete</button>";
+        echo "   ";
+        echo "<button class='btn btn-primary ml-2' data-bs-toggle='modal' data-bs-target='#updatePSUModal' onclick=\"helpPSU({$row['PSU_ID']});\" \">Update</button></td>";
         echo "</tr>";
     }
 

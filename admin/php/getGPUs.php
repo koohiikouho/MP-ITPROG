@@ -24,8 +24,7 @@ if ($result->num_rows > 0) {
                 <th>Vendor</th>
                 <th>Model</th>
                 <th>Price</th>
-                <th>Actions></th>
-                <button class='btn btn-primary' data-bs-toggle='modal' data-bs-target='#updateGPUModal'>Update</button>
+                <th>Actions</th>
             </tr>";
     
     while ($row = $result->fetch_assoc()) {
@@ -35,7 +34,9 @@ if ($result->num_rows > 0) {
         echo "<td>{$row['vendorName']}</td>";
         echo "<td>{$row['model']}</td>";
         echo "<td>{$row['price']}</td>";
-        echo "<td><button class=\"btn btn-danger\" onclick=\"delGPUs(" . $row['GPU_ID'] . ")\">Delete</button></td>";
+        echo "<td><button class=\"btn btn-danger\" onclick=\"delGPUs(" . $row['GPU_ID'] . ")\">Delete</button>";
+        echo "   ";
+        echo "<button class='btn btn-primary ml-2' data-bs-toggle='modal' data-bs-target='#updateGPUModal' onclick=\"helpGPU({$row['GPU_ID']});\" \>Update</button></td>";
         echo "</tr>";
     }
 

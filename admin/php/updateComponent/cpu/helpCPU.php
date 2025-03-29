@@ -37,7 +37,7 @@
 
 <div class="mb-3">
     <label class="form-label">Name</label>
-    <input type="number" class="form-control" id="updcpuName" name="Name" value="<?php echo $name;?>" required>
+    <input type="text" class="form-control" id="updcpuName" name="name" value="<?php echo $name;?>" required>
 </div>
 
 <div class="mb-3">
@@ -52,18 +52,32 @@
 </div>
 
 <div class="mb-3">
-    <label class="form-label">DDR Version</label>
-    <input type="number" class="form-control" id="updmemDDR" name="ddrVersion" value="<?php echo $ddr;?>" required>
+    <label class="form-label">Cores</label>
+    <input type="number" class="form-control" id="updmemDDR" name="cores" value="<?php echo $cores;?>" required>
 </div>
 
 <div class="mb-3">
-    <label class="form-label">Size</label>
-    <input type="number" class="form-control" id="updmemSize" name="size" value="<?php echo $size;?>" required>
+    <label class="form-label">Threads</label>
+    <input type="number" class="form-control" id="updmemSize" name="threads" value="<?php echo $threads;?>" required>
 </div>
+
+<div class="mb-3">
+    <label class="form-label">Base Clock</label>
+    <input type="number" class="form-control" id="updmemPrice" name="baseClock" value="<?php echo $baseClock;?>" required>
+</div>
+
+<div class="mb-3">
+        <label class="form-label" for="updmoboSock" >Socket</label> 
+        <select class="form-control" id="updmoboSock" name="Socket" required> 
+            <?php
+                include '../../getSockets.php';
+            ?>
+        </select>
+    </div>
 
 <div class="mb-3">
     <label class="form-label">Price</label>
-    <input type="number" class="form-control" id="updmemPrice" name="Price" value="<?php echo $price;?>" required>
+    <input type="number" class="form-control" id="updmemPrice" name="price" value="<?php echo $price;?>" required>
 </div>
 
 <button type="submit" class="btn btn-success w-100">Update Component</button>
