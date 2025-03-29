@@ -415,9 +415,55 @@ function populateCase(){
     xmlhttp.send();
 }
 
+function helpCase(value){
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function(){
+        if (this.readyState == 4 && this.status == 200) {
+            document.getElementById("updCaseForm").innerHTML = this.responseText;
+        }
+    };
+    xmlhttp.open("GET","./php/updateComponent/case/helpCase.php?cse_id=" + value, true);
+    xmlhttp.send();
+}
+
+function helpMobo(value){
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function(){
+        if (this.readyState == 4 && this.status == 200) {
+            document.getElementById("updMoboForm").innerHTML = this.responseText;
+        }
+    };
+    xmlhttp.open("GET","./php/updateComponent/mobo/helpMobo.php?mobo_id=" + value, true);
+    xmlhttp.send();
+}
+
+function helpMem(value){
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function(){
+        if (this.readyState == 4 && this.status == 200) {
+            document.getElementById("updMemForm").innerHTML = this.responseText;
+        }
+    };
+    xmlhttp.open("GET","./php/updateComponent/memory/helpMem.php?mem_id=" + value, true);
+    xmlhttp.send();
+}
+
+function helpSto(value){
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function(){
+        if (this.readyState == 4 && this.status == 200) {
+            document.getElementById("updStoForm").innerHTML = this.responseText;
+        }
+    };
+    xmlhttp.open("GET","./php/updateComponent/storage/helpSto.php?sto_id=" + value, true);
+    xmlhttp.send();
+
+}
+
+function helpCPU(value){
 
 
-
+}
 
 $(document).ready(function(){
 
@@ -440,52 +486,10 @@ $(document).ready(function(){
 
 
     $('#searchCase').click(function(){
-        var xmlhttp = new XMLHttpRequest();
-        xmlhttp.onreadystatechange = function(){
-            if (this.readyState == 4 && this.status == 200) {
-                document.getElementById("updCaseForm").innerHTML = this.responseText;
-            }
-        };
-        xmlhttp.open("GET","./php/updateComponent/case/helpCase.php?cse_id=" + document.getElementById("caseUpdateList").value, true);
-        xmlhttp.send();
 
-    });
-
-    $('#searchSto').click(function(){
-        var xmlhttp = new XMLHttpRequest();
-        xmlhttp.onreadystatechange = function(){
-            if (this.readyState == 4 && this.status == 200) {
-                document.getElementById("updStoForm").innerHTML = this.responseText;
-            }
-        };
-        xmlhttp.open("GET","./php/updateComponent/storage/helpSto.php?sto_id=" + document.getElementById("stoUpdateList").value, true);
-        xmlhttp.send();
-
-    });
-
-    $('#searchMem').click(function(){
-        var xmlhttp = new XMLHttpRequest();
-        xmlhttp.onreadystatechange = function(){
-            if (this.readyState == 4 && this.status == 200) {
-                document.getElementById("updMemForm").innerHTML = this.responseText;
-            }
-        };
-        xmlhttp.open("GET","./php/updateComponent/memory/helpMem.php?mem_id=" + document.getElementById("memUpdateList").value, true);
-        xmlhttp.send();
 
     });
     
-    $('#searchMob').click(function(){
-        var xmlhttp = new XMLHttpRequest();
-        xmlhttp.onreadystatechange = function(){
-            if (this.readyState == 4 && this.status == 200) {
-                document.getElementById("updMoboForm").innerHTML = this.responseText;
-            }
-        };
-        xmlhttp.open("GET","./php/updateComponent/mobo/helpMobo.php?mobo_id=" + document.getElementById("mobUpdateList").value, true);
-        xmlhttp.send();
-    });
-
     document.getElementById("generateReportBtn").addEventListener("click", function () {
         fetch("./php/popularityReport.php", {
             method: "POST",

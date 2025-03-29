@@ -24,8 +24,6 @@ if ($result->num_rows > 0) {
                 <th>Connector</th>
                 <th>Price</th>
                 <th>Actions</th>
-                <button class='btn btn-primary' data-bs-toggle='modal' data-bs-target='#updateStoModal'>Update</button>
-                
             </tr>";
     
     while ($row = $result->fetch_assoc()) {
@@ -36,8 +34,9 @@ if ($result->num_rows > 0) {
         echo "<td>{$row['storageType']}</td>";
         echo "<td>{$row['connector']}</td>";
         echo "<td>{$row['price']}</td>";
-        echo "<td><button class=\"btn btn-danger\" onclick=\"delStorage(" . $row['DRV_ID'] . ")\">Delete</button>
-              </td>";
+        echo "<td><button class=\"btn btn-danger\" onclick=\"delStorage(" . $row['DRV_ID'] . ")\">Delete</button>";
+        echo "   ";
+        echo "<button class='btn btn-primary ml-2' data-bs-toggle='modal' data-bs-target='#updateStoModal' onclick=\"helpSto({$row['DRV_ID']});\" \>Update</button></td>";
         echo "</tr>";
     }
 

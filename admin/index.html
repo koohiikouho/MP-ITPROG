@@ -14,9 +14,11 @@
 </head>
 
 <body>
+    
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="./js/populateScripts.js"></script>
+    <script src="./js/stayOnTab.js"></script>
     <div class=" d-flex mt-5 justify-content-center">
     <div class="card">
         
@@ -24,30 +26,26 @@
         <h2 class="card-header justify-content-center d-flex">Admin Panel - PC Parts Management</h2>
         <div class="card-body">
         <ul class="nav nav-tabs mt-3" id="adminTabs">
-            <li class="nav-item"><a class="nav-link active" data-bs-toggle="tab" href="#addComponent">➕ Add Component</a></li>
-            <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#updateComponent">✏️ Update or Delete Component</a></li>
-            <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#generateReport">📊 Generate Report</a></li>
-            <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#manRef"> Manage References</a></li>
-            <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#manBuild"> Manage Builds</a></li>
+            <li class="nav-item"><a class="nav-link" id="AC" data-bs-toggle="tab" href="#addComponent">➕ Add Component</a></li>
+            <li class="nav-item"><a class="nav-link" id="UC" data-bs-toggle="tab" href="#updateComponent">✏️ Update or Delete Component</a></li>
+            <li class="nav-item"><a class="nav-link" id="GR" data-bs-toggle="tab" href="#generateReport">📊 Generate Report</a></li>
+            <li class="nav-item"><a class="nav-link" id="MR" data-bs-toggle="tab" href="#manRef"> Manage References</a></li>
+            <li class="nav-item"><a class="nav-link" id="MB" data-bs-toggle="tab" href="#manBuild"> Manage Builds</a></li>
         </ul>
 
         <div class="tab-content mt-4">
 
             <div class="tab-pane fade" id="manBuild">
-
             </div>
-
-
-
             <div class="tab-pane fade" id="manRef">
                 <ul class="nav nav-tabs mt-3" id="addTabs">
-                    <li class="nav-item"><a class="nav-link active" data-bs-toggle="tab" href="#addVendors">Add Vendors</a></li>
-                    <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#editVendors">Edit Vendors</a></li>
-                    <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#addSocket">Add Sockets</a></li>
+                    <li class="nav-item"><a class="nav-link" id="adven" data-bs-toggle="tab" href="#addVendors">Add Vendors</a></li>
+                    <li class="nav-item"><a class="nav-link" id="edven" data-bs-toggle="tab" href="#editVendors">Edit Vendors</a></li>
+                    <li class="nav-item"><a class="nav-link" id="adsoc" data-bs-toggle="tab" href="#addSocket">Add Sockets</a></li>
                 </ul>
                 <div class="tab-content mt-4">
 
-                    <div class="tab-pane fade show active" id="addVendors">
+                    <div class="tab-pane fade" id="addVendors">
                         <form id="addVendorForm" action="./php/manageReferences/addVendor.php" method="get">
                                 <label class="form-label">Vendor ID</label>
                                 <input type="text" class="form-control" name="venID" id="venID" maxlength="3" required>
@@ -87,20 +85,20 @@
                 <div id="reportContainer" class="mt-3"></div> <!-- Container for the report -->
             </div>
 
-            <div class="tab-pane fade show active" id="addComponent">
+            <div class="tab-pane fade" id="addComponent">
                 <h4>Add New Component</h4>
                 <ul class="nav nav-tabs mt-3" id="addTabs">
-                    <li class="nav-item"><a class="nav-link active" data-bs-toggle="tab" href="#addCPU">CPU</a></li>
-                    <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#addMotherboard">Motherboard</a></li>
-                    <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#addMemory">Memory</a></li>
-                    <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#addStorage">Storage</a></li>
-                    <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#addCase">Case</a></li>
-                    <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#addPSU">PSU</a></li>
-                    <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#addGPU">GPU</a></li>
+                    <li class="nav-item"><a class="nav-link" id="addcpubut" data-bs-toggle="tab" href="#addCPU">CPU</a></li>
+                    <li class="nav-item"><a class="nav-link" id="addmobobut" data-bs-toggle="tab" href="#addMotherboard">Motherboard</a></li>
+                    <li class="nav-item"><a class="nav-link" id="addmembut" data-bs-toggle="tab" href="#addMemory">Memory</a></li>
+                    <li class="nav-item"><a class="nav-link" id="addstobut" data-bs-toggle="tab" href="#addStorage">Storage</a></li>
+                    <li class="nav-item"><a class="nav-link" id="addcasebut" data-bs-toggle="tab" href="#addCase">Case</a></li>
+                    <li class="nav-item"><a class="nav-link" id="addpsubut" data-bs-toggle="tab" href="#addPSU">PSU</a></li>
+                    <li class="nav-item"><a class="nav-link" id="addgpubut" data-bs-toggle="tab" href="#addGPU">GPU</a></li>
                 </ul>
         
                 <div class="tab-content mt-4">
-                    <div class="tab-pane fade show active" id="addCPU">
+                    <div class="tab-pane fade" id="addCPU">
                         <form id="addCPUForm" >
                             
                             <div class="mb-3">
@@ -368,17 +366,17 @@
          
                <div class="tab-pane fade show active" id="updComponent">
                     <ul class="nav nav-tabs mt-3" id="updTabs">
-                        <li class="nav-item"><a class="nav-link active" data-bs-toggle="tab" href="#updCPU">CPU</a></li>
-                        <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#updMotherboard">Motherboard</a></li>
-                        <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#updMemory">Memory</a></li>
-                        <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#updStorage">Storage</a></li>
-                        <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#updCase">Case</a></li>
-                        <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#updPSU">PSU</a></li>
-                        <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#updGPU">GPU</a></li>
+                        <li class="nav-item"><a class="nav-link" id="updcpubut" data-bs-toggle="tab" href="#updCPU">CPU</a></li>
+                        <li class="nav-item"><a class="nav-link" id="updmobbut" data-bs-toggle="tab" href="#updMotherboard">Motherboard</a></li>
+                        <li class="nav-item"><a class="nav-link" id="updmembut" data-bs-toggle="tab" href="#updMemory">Memory</a></li>
+                        <li class="nav-item"><a class="nav-link" id="updstobut" data-bs-toggle="tab" href="#updStorage">Storage</a></li>
+                        <li class="nav-item"><a class="nav-link" id="updcsebut" data-bs-toggle="tab" href="#updCase">Case</a></li>
+                        <li class="nav-item"><a class="nav-link" id="updpsubut" data-bs-toggle="tab" href="#updPSU">PSU</a></li>
+                        <li class="nav-item"><a class="nav-link" id="updgpubut" data-bs-toggle="tab" href="#updGPU">GPU</a></li>
                     </ul>
             
                     <div class="tab-content mt-4">
-                        <div class="tab-pane fade show active" id="updCPU">
+                        <div class="tab-pane fa" id="updCPU">
 
                             <!--
                               <select class="form-control" id="cpuUpdateList">
@@ -440,6 +438,9 @@
                             </div>
                             <div class="modal-body">
                             <!-- PUT updCPU.php here-->
+                            <form id="updCPUForm" action="./php/updateComponent/updCPU.php" method="get">
+
+                            </form>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -459,10 +460,9 @@
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
-                                        <select class="form-control" id="mobUpdateList"></select>
-                                        <button class="btn w-100 btn-primary mt-3" id="searchMob">Search Component</button>
-            
-                                        <form id="updMoboForm" action="./php/updateComponent/mobo/updMobo.php" method="get"> </form>
+                                        <form id="updMoboForm" action="./php/updateComponent/mobo/updMobo.php" method="get">
+
+                                        </form>
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -482,12 +482,8 @@
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
-                                <select class="form-control" id="memUpdateList"></select>
-                                <button class="btn w-100 btn-primary mt-3" id="searchMem">Search Component</button>
-    
                                 <form id="updMemForm" action="./php/updateComponent/memory/updMem.php" method="get">
-                                    
-    
+
                                 </form>
                             </div>
                             <div class="modal-footer">
@@ -508,8 +504,6 @@
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
-                                <select class="form-control" id="stoUpdateList"></select>
-                                <button class="btn w-100 btn-primary mt-3" id="searchSto">Search Component</button>
                                 <form id="updStoForm" action="./php/updateComponent/storage/updSto.php" method="get">
     
                                 </form>
@@ -532,10 +526,8 @@
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <select class="form-control" id="caseUpdateList"></select>
-                            <button class="btn w-100 btn-primary mt-3" id="searchCase">Search Component</button>
-
                             <form id="updCaseForm" action="./php/updateComponent/case/updCase.php" method="get">
+
                             </form>  
                         </div>
                         <div class="modal-footer">

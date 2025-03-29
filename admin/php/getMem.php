@@ -36,7 +36,8 @@ if ($result->num_rows > 0) {
         echo "<td>{$row['ddrVersion']}</td>";
         echo "<td>{$row['price']}</td>";
         echo "<td><button class=\"btn btn-danger\" onclick=\"delMemory(" . $row['MEM_ID'] . ")\">Delete</button>";
-        echo "<button class='btn btn-primary' data-bs-toggle='modal' data-bs-target='#updateMemModal'>Update</button></td>";
+        echo "   ";
+        echo "<button class='btn btn-primary' data-bs-toggle='modal' data-bs-target='#updateMemModal' onclick=\"helpMem({$row['MEM_ID']});\" \>Update</button></td>";
         echo "</tr>";
     }
 

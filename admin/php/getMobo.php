@@ -46,8 +46,7 @@ if ($result->num_rows > 0) {
         echo "<td>{$row['price']}</td>";
         echo "<td><button class=\"btn btn-danger\" onclick=\"delMobo(" . $row['MOB_ID'] . ")\">Delete</button>";
         echo "   ";
-        echo "<button class='btn btn-primary ml-2' data-bs-toggle='modal' data-bs-target='#updateMoboModal'>Update</button></td>";
-        echo "</tr>";
+        echo "<button class='btn btn-primary ml-2' data-bs-toggle='modal' data-bs-target='#updateMoboModal' onclick=\"helpMobo({$row['MOB_ID']});\" \">Update</button></td>";
         echo "</tr>";
     }
 

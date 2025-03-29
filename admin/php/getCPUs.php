@@ -26,7 +26,6 @@
             <th>Socket ID</th>
             <th>Price</th>
             <th>Actions</th>
-            <button class='btn btn-primary' data-bs-toggle='modal' data-bs-target='#updateCPUModal'>Update</button>
         </tr>";
 
     while ($row = $result->fetch_assoc()) {
@@ -39,7 +38,9 @@
         echo "<td>{$row['baseClock']}</td>";
         echo "<td>{$row['socketID']}</td>";
         echo "<td>{$row['price']}</td>";
-        echo "<td><button class=\"btn btn-danger\" onclick=\"delCPUs(" . $row['CPU_ID'] . ")\">Delete</button></td>";
+        echo "<td><button class=\"btn btn-danger\" onclick=\"delCPUs(" . $row['CPU_ID'] . ")\">Delete</button>";
+        echo "   ";
+        echo "<button class='btn btn-primary ml-2' data-bs-toggle='modal' data-bs-target='#updateCPUModal' onclick=\"helpSto({$row['CPU_ID']});\" \>Update</button></td>";
         echo "</tr>";
     }
 
