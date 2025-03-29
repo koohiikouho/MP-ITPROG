@@ -1,9 +1,5 @@
 <?php
-      $servername = "localhost";
-      $dbusername = "root";
-      $dbpassword = "";
-      $dbname = "dbpcpartspicker";
-   
+    require './dbcred.php';
 
     $conn = new mysqli($servername, $dbusername, $dbpassword, $dbname);
 

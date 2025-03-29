@@ -1,7 +1,7 @@
-    <?php
+<?php
     
     include '../../dbcred.php';
-    $moboID = $_GET['mem_id'];
+    $moboID = $_GET['cpu_id'];
 
     $conn = new mysqli($servername, $dbusername, $dbpassword, $dbname);
 
@@ -9,15 +9,17 @@
         die("Connection failed: " . $conn->connect_error);
     }
 
-    $sql = "SELECT * FROM memorysticks WHERE MEM_ID='$moboID';";
+    $sql = "SELECT * FROM processors WHERE CPU_ID='$moboID';";
     $result = $conn->query($sql);
 
     
     if ($result->num_rows > 0) {
         while ($row = $result->fetch_assoc()) {
-            $vencode = $row['vendorCode'];
-            $size = $row['size'];
-            $ddr = $row['ddrVersion'];
+            $name = $row['name'];
+            $cores = $row['cores'];
+            $threads = $row['threads'];
+            $baseClock = $row['baseClock'];
+            $socketID = $row['socketID'];
             $price = $row['price'];
         }
     } else {
@@ -29,22 +31,26 @@
 ?>
 <div class="mb-3">
 
-<label class="form-label" id="memID">Mem ID</label>
-<input type="number" class="form-control" name="MEM_ID" value="<?php echo $moboID;?>" readonly>
+<label class="form-label" id="cpuID">CPU ID</label>
+<input type="number" class="form-control" name="CPU_ID" value="<?php echo $moboID;?>" readonly>
+</div>
+
+<div class="mb-3">
+    <label class="form-label">Name</label>
+    <input type="number" class="form-control" id="updcpuName" name="Name" value="<?php echo $name;?>" required>
 </div>
 
 <div class="mb-3">
 <label class="form-label" for="updmemBrand">Vendor</label>
 
-    <select class="form-control" id="updmemBrand" name="vendorCode" required> 
-       
+    <select class="form-control" id="updcpuBrand" name="vendorCode" required> 
     <?php 
-
             include '../../getVendor.php';
         ?>
 
     </select>
 </div>
+
 <div class="mb-3">
     <label class="form-label">DDR Version</label>
     <input type="number" class="form-control" id="updmemDDR" name="ddrVersion" value="<?php echo $ddr;?>" required>

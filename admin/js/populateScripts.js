@@ -460,10 +460,16 @@ function helpSto(value){
 
 }
 
-function helpCPU(value){
-
-
-}
+// function helpCPU(value){
+//     var xmlhttp = new XMLHttpRequest();
+//     xmlhttp.onreadystatechange = function(){
+//         if (this.readyState == 4 && this.status == 200) {
+//             document.getElementById("updCPUForm").innerHTML = this.responseText;
+//         }
+//     };
+//     xmlhttp.open("GET","./php/updateComponent/storage/helpCPU.php?cpu_id=" + value, true);
+//     xmlhttp.send();
+// }
 
 $(document).ready(function(){
 
@@ -568,7 +574,6 @@ $(document).ready(function(){
         var cpuBrandText = cpuBrand.options[cpuBrand.selectedIndex].value;
         var cpuPrice = document.getElementById("updcpuPrice").value;
     
-
         if (
             cpuId === "" || cpuName === "" || cpuCores === "" || cpuThreads === "" || cpuClock === "" ||
             cpuSocketText === "" || cpuBrandText === "" || cpuPrice === ""
