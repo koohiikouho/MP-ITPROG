@@ -26,7 +26,7 @@
             $cores = $row['cores'];
             $threads = $row['threads'];
             $baseClock = $row['baseClock'];
-            $socketId = $row['socketID'];
+            $socketID = $row['socketID'];
             $socketName = $row['socketName'];
             $price = $row['price'];
         }

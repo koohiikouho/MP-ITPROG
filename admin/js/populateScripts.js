@@ -16,20 +16,7 @@ function populateCPU(){
 
 };
 
-function populateCPUUpdateList() {
 
-    var xmlhttp = new XMLHttpRequest();
-    xmlhttp.onreadystatechange = function() {
-
-        if (this.readyState == 4 && this.status == 200) {
-            document.getElementById("updCPU").innerHTML = this.responseText;
-        }
-    };
-
-    xmlhttp.open("GET", "./php/getCPUs.php", true);
-    xmlhttp.send();
-
-}
 
 function getSockets(){
 
@@ -258,6 +245,21 @@ function getStorage(){
 
 }
 
+function getCPUs() {
+
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function() {
+
+        if (this.readyState == 4 && this.status == 200) {
+            document.getElementById("updCPU").innerHTML = this.responseText;
+        }
+    };
+
+    xmlhttp.open("GET", "./php/getCPUs.php", true);
+    xmlhttp.send();
+
+}
+
 function getMobo(){
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function(){
@@ -433,14 +435,15 @@ function helpGPU(value){
 $(document).ready(function(){
 
     validSessionIDCheck();
-    populateCPU();
     getSockets();
     popMem();
     popBuilds();
+    populateCPU();
     populateMotherboard();
     populateMemory();
     populateStorage();
     populateCase();
+    getCPUs();
     getCases();
     getPSUs();
     getStorage();
