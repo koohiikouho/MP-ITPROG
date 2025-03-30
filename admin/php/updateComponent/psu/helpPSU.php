@@ -1,7 +1,7 @@
 <?php
     
     include '../../dbcred.php';
-    $stoID = $_GET['psu_id'];
+    $psuID = $_GET['psu_id'];
 
     $conn = new mysqli($servername, $dbusername, $dbpassword, $dbname);
 
@@ -9,12 +9,17 @@
         die("Connection failed: " . $conn->connect_error);
     }
 
-    $sql = "SELECT * FROM powersupplies WHERE PSU_ID='$stoID';";
+    $sql = "SELECT *
+            FROM powersupplies p
+            JOIN ref_vendors rf ON rf.mbid = p.vendorCode
+            WHERE PSU_ID='$psuID';";
     $result = $conn->query($sql);
 
     
     if ($result->num_rows > 0) {
         while ($row = $result->fetch_assoc()) {
+            $mbid = $row['vendorCode'];
+            $vendor = $row['vendorName'];
             $wattage = $row['wattage'];
             $price = $row['price'];
             $efficiency = $row['efficiency'];
@@ -27,8 +32,8 @@
 
 ?>
 
-    <label class="form-label" id="stoID">PSU ID</label>
-    <input type="number" class="form-control" name="PSU_ID" value="<?php echo $stoID;?>" readonly>
+    <label class="form-label" id="psuID">PSU ID</label>
+    <input type="number" class="form-control" name="PSU_ID" value="<?php echo $psuID;?>" readonly>
     </div>
                                 
     <div class="mb-3">
@@ -36,6 +41,7 @@
         <select class="form-control" id="updBrand" name="vendor" required> 
             <?php
                 include '../../getVendor.php';
+                echo "<option value='" . $mbid . "' selected hidden>" . $vendor . "</option>";
             ?>
         </select>
     </div>

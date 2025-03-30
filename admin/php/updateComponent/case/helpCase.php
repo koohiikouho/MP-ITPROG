@@ -9,12 +9,17 @@
         die("Connection failed: " . $conn->connect_error);
     }
 
-    $sql = "SELECT * FROM cases WHERE CSE_ID='$cseID';";
+    $sql = "SELECT *
+            FROM cases c
+            JOIN ref_vendors rf ON rf.mbid = c.vendorCode
+            WHERE CSE_ID='$cseID';";
     $result = $conn->query($sql);
 
     
     if ($result->num_rows > 0) {
         while ($row = $result->fetch_assoc()) {
+            $mbid = $row['vendorCode'];
+            $vendor = $row['vendorName'];
             $capacity = $row['name'];
             $price = $row['price'];
         }
@@ -41,6 +46,7 @@
         <select class="form-control" id="updCaseBrand" name="vendorCode" required>
             <?php 
                 include '../../getVendor.php';
+                echo "<option value='" . $mbid . "' selected hidden>" . $vendor . "</option>";
             ?>
         </select>
     </div>

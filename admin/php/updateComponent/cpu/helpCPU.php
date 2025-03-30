@@ -1,7 +1,7 @@
 <?php
     
     include '../../dbcred.php';
-    $moboID = $_GET['cpu_id'];
+    $cpuID = $_GET['cpu_id'];
 
     $conn = new mysqli($servername, $dbusername, $dbpassword, $dbname);
 
@@ -9,17 +9,25 @@
         die("Connection failed: " . $conn->connect_error);
     }
 
-    $sql = "SELECT * FROM processors WHERE CPU_ID='$moboID';";
+    $sql = "SELECT *
+            FROM processors p
+            JOIN ref_vendors rf ON rf.mbid = p.vendorCode
+            JOIN ref_sockets rs ON rs.socketID=p.socketID
+            WHERE CPU_ID='$cpuID';";
+
     $result = $conn->query($sql);
 
     
     if ($result->num_rows > 0) {
         while ($row = $result->fetch_assoc()) {
             $name = $row['name'];
+            $mbid = $row['vendorCode'];
+            $vendor = $row['vendorName'];
             $cores = $row['cores'];
             $threads = $row['threads'];
             $baseClock = $row['baseClock'];
-            $socketID = $row['socketID'];
+            $socketId = $row['socketID'];
+            $socketName = $row['socketName'];
             $price = $row['price'];
         }
     } else {
@@ -32,7 +40,7 @@
 <div class="mb-3">
 
 <label class="form-label" id="cpuID">CPU ID</label>
-<input type="number" class="form-control" name="CPU_ID" value="<?php echo $moboID;?>" readonly>
+<input type="number" class="form-control" name="CPU_ID" value="<?php echo $cpuID;?>" readonly>
 </div>
 
 <div class="mb-3">
@@ -46,6 +54,7 @@
     <select class="form-control" id="updcpuBrand" name="vendorCode" required> 
     <?php 
             include '../../getVendor.php';
+            echo "<option value='" . $mbid . "' selected hidden>" . $vendor . "</option>";
         ?>
 
     </select>
@@ -71,6 +80,7 @@
         <select class="form-control" id="updmoboSock" name="Socket" required> 
             <?php
                 include '../../getSockets.php';
+                echo "<option value='" . $socketID . "' selected hidden>" . $socketName . "</option>";
             ?>
         </select>
     </div>

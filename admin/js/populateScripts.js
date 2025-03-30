@@ -31,70 +31,6 @@ function populateCPUUpdateList() {
 
 }
 
-function fetchCPUDetails(cpuId) {
-    var xmlhttp = new XMLHttpRequest();
-    xmlhttp.onreadystatechange = function () {
-        if (this.readyState == 4 && this.status == 200) {
-            var cpuDetails = JSON.parse(this.responseText);
-
-            document.getElementById("updcpuName").value = cpuDetails.name;
-            document.getElementById("updcpuCores").value = cpuDetails.cores;
-            document.getElementById("updcpuThreads").value = cpuDetails.threads;
-            document.getElementById("updcpuClock").value = cpuDetails.baseClock;
-            document.getElementById("updcpuPrice").value = cpuDetails.price;
-
-            // Fetch and populate socket dropdown
-            updgetSocket(cpuDetails.socketName);
-
-            // Fetch and populate vendor dropdown
-            updgetVendors(cpuDetails.vendorName);
-        }
-    };
-    xmlhttp.open("GET", "./php/getCPUDetails.php?id=" + cpuId, true);
-    xmlhttp.send();
-}
-
-function updgetSocket(selectedSocket) {
-    var xmlhttp = new XMLHttpRequest();
-    xmlhttp.onreadystatechange = function () {
-        if (this.readyState == 4 && this.status == 200) {
-            document.getElementById("updcpuSocket").innerHTML = this.responseText;
-
-            // Set selected option for socket
-            let socketDropdown = document.getElementById("updcpuSocket");
-            for (let i = 0; i < socketDropdown.options.length; i++) {
-                if (socketDropdown.options[i].text === selectedSocket) {
-                    socketDropdown.selectedIndex = i;
-                    break;
-                }
-            }
-        }
-    };
-    xmlhttp.open("GET", "./php/getSockets.php", true);
-    xmlhttp.send();
-}
-
-function updgetVendors(selectedVendor) {
-    var xmlhttp = new XMLHttpRequest();
-    xmlhttp.onreadystatechange = function () {
-        if (this.readyState == 4 && this.status == 200) {
-            document.getElementById("updcpuBrand").innerHTML = this.responseText;
-
-            // Set selected option for vendor
-            let vendorDropdown = document.getElementById("updcpuBrand");
-            for (let i = 0; i < vendorDropdown.options.length; i++) {
-                if (vendorDropdown.options[i].text === selectedVendor) {
-                    vendorDropdown.selectedIndex = i;
-                    break;
-                }
-            }
-        }
-    };
-    xmlhttp.open("GET", "./php/getVendor.php", true);
-    xmlhttp.send();
-}
-
-
 function getSockets(){
 
     var xmlhttp = new XMLHttpRequest();
@@ -501,7 +437,6 @@ $(document).ready(function(){
     getSockets();
     popMem();
     popBuilds();
-    populateCPUUpdateList();
     populateMotherboard();
     populateMemory();
     populateStorage();

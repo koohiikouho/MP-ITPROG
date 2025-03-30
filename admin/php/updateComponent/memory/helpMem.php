@@ -1,7 +1,7 @@
     <?php
     
     include '../../dbcred.php';
-    $moboID = $_GET['mem_id'];
+    $memID = $_GET['mem_id'];
 
     $conn = new mysqli($servername, $dbusername, $dbpassword, $dbname);
 
@@ -9,13 +9,17 @@
         die("Connection failed: " . $conn->connect_error);
     }
 
-    $sql = "SELECT * FROM memorysticks WHERE MEM_ID='$moboID';";
+    $sql = "SELECT *
+            FROM memorysticks m
+            JOIN ref_vendors rf ON rf.mbid = m.vendorCode
+            WHERE MEM_ID='$memID';";
     $result = $conn->query($sql);
 
     
     if ($result->num_rows > 0) {
         while ($row = $result->fetch_assoc()) {
-            $vencode = $row['vendorCode'];
+            $mbid = $row['vendorCode'];
+            $vendor = $row['vendorName'];
             $size = $row['size'];
             $ddr = $row['ddrVersion'];
             $price = $row['price'];
@@ -30,7 +34,7 @@
 <div class="mb-3">
 
 <label class="form-label" id="memID">Mem ID</label>
-<input type="number" class="form-control" name="MEM_ID" value="<?php echo $moboID;?>" readonly>
+<input type="number" class="form-control" name="MEM_ID" value="<?php echo $memID;?>" readonly>
 </div>
 
 <div class="mb-3">
@@ -41,6 +45,7 @@
     <?php 
 
             include '../../getVendor.php';
+            echo "<option value='" . $mbid . "' selected hidden>" . $vendor . "</option>";
         ?>
 
     </select>
