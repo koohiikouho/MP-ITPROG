@@ -538,7 +538,8 @@ $(document).ready(function(){
     });
     
 
-    document.getElementById("cpuAdd").addEventListener("click", function() {
+    document.getElementById("cpuAdd").addEventListener("click", function(e) {
+        e.preventDefault();
         var form = document.getElementById("addCPUForm");
     
         var cpuName = document.getElementById("cpuName").value;
@@ -565,73 +566,15 @@ $(document).ready(function(){
             method: "POST",
             body: formData,
         })
-        .then(() => alert("CPU has been added successfully!"))
+        .then(() => {
+            alert("CPU has been added successfully!");
+            form.reset();
+        })
         .catch(() => alert("Something went wrong. Please try again."));
     });
 
-
-
-    document.getElementById("searchCPU").addEventListener("click", function(event) {
-        event.preventDefault();
-
-        var selectedCPUId = document.getElementById("cpuUpdateList").value;
-
-        if (selectedCPUId) {
-            fetchCPUDetails(selectedCPUId);
-        } else {
-            alert("Please select a CPU first.");
-        }
-    });
-
-    document.getElementById("updCPUForm").addEventListener("submit", function (event) {
-        event.preventDefault(); // Prevent form from submitting automatically
-    
-        var cpuId = document.getElementById("cpuUpdateList").value;
-        var cpuName = document.getElementById("updcpuName").value;
-        var cpuCores = document.getElementById("updcpuCores").value;
-        var cpuThreads = document.getElementById("updcpuThreads").value;
-        var cpuClock = document.getElementById("updcpuClock").value;
-        var cpuSocket = document.getElementById("updcpuSocket");
-        var cpuSocketText = cpuSocket.options[cpuSocket.selectedIndex].value;
-        var cpuBrand = document.getElementById("updcpuBrand");
-        var cpuBrandText = cpuBrand.options[cpuBrand.selectedIndex].value;
-        var cpuPrice = document.getElementById("updcpuPrice").value;
-    
-        if (
-            cpuId === "" || cpuName === "" || cpuCores === "" || cpuThreads === "" || cpuClock === "" ||
-            cpuSocketText === "" || cpuBrandText === "" || cpuPrice === ""
-        ) {
-            alert("All fields are required.");
-            return;
-        }
-    
-        var formData = new FormData(this);
-    
-        formData.append("id", cpuId);
-        formData.append("name", cpuName);
-        formData.append("cores", cpuCores);
-        formData.append("threads", cpuThreads);
-        formData.append("baseClock", cpuClock);
-        formData.append("socketID", cpuSocketText);
-        formData.append("vendorCode", cpuBrandText);
-        formData.append("price", cpuPrice);
-    
-        fetch("./php/updateCPU.php", {
-            method: "POST",
-            body: formData,
-        })
-        .then(response => response.text())
-        .then(data => {
-            alert("Response from server: " + data);
-        })
-        .catch(error => {
-            console.error("Error:", error);
-            alert("Something went wrong. Please try again.");
-        });
-    });
-    
-
-    document.getElementById("moboAdd").addEventListener("click", function() {
+    document.getElementById("moboAdd").addEventListener("click", function(e) {
+        e.preventDefault();
         var form = document.getElementById("addMoboForm");
     
         var moboName = document.getElementById("moboName").value
@@ -659,11 +602,15 @@ $(document).ready(function(){
             method: "POST",
             body: formData,
         })
-        .then(() => alert("Mobo has been added successfully!"))
+        .then(() => {
+            alert("Motherboard has been added successfully!");
+            form.reset();
+        })
         .catch(() => alert("Something went wrong. Please try again."));
     });
     
-    document.getElementById("memAdd").addEventListener("click", function() {
+    document.getElementById("memAdd").addEventListener("click", function(e) {
+        e.preventDefault();
         var form = document.getElementById("addMemForm");
     
         var memBrand = document.getElementById("memBrand");
@@ -683,11 +630,15 @@ $(document).ready(function(){
             method: "POST",
             body: formData,
         })
-        .then(() => alert("Memory has been added successfully!"))
+        .then(() => {
+            alert("Memory has been added successfully!");
+            form.reset();
+        })
         .catch(() => alert("Something went wrong. Please try again."));
     });
     
-    document.getElementById("stoAdd").addEventListener("click", function() {
+    document.getElementById("stoAdd").addEventListener("click", function(e) {
+        e.preventDefault();
         var form = document.getElementById("addStoForm");
     
         var stoBrand = document.getElementById("stoBrand");
@@ -709,11 +660,15 @@ $(document).ready(function(){
             method: "POST",
             body: formData,
         })
-        .then(() => alert("Storage has been added successfully!"))
+        .then(() => {
+            alert("Storage has been added successfully!");
+            form.reset();
+        })
         .catch(() => alert("Something went wrong. Please try again."));
     });
     
-    document.getElementById("caseAdd").addEventListener("click", function() {
+    document.getElementById("caseAdd").addEventListener("click", function(e) {
+        e.preventDefault();
         var form = document.getElementById("addCaseForm");
     
         var caseBrand = document.getElementById("caseBrand");
@@ -731,11 +686,15 @@ $(document).ready(function(){
             method: "POST",
             body: formData,
         })
-        .then(() => alert("Case has been added successfully!"))
+        .then(() => {
+            alert("Case has been added successfully!");
+            form.reset();
+        })
         .catch(() => alert("Something went wrong. Please try again."));
     });
     
-    document.getElementById("psuAdd").addEventListener("click", function() {
+    document.getElementById("psuAdd").addEventListener("click", function(e) {
+        e.preventDefault();
         var form = document.getElementById("addPSUForm");
     
         var psuBrand = document.getElementById("psuBrand");
@@ -755,11 +714,15 @@ $(document).ready(function(){
             method: "POST",
             body: formData,
         })
-        .then(() => alert("PSU has been added successfully!"))
+        .then(() => {
+            alert("PSU has been added successfully!");
+            form.reset();
+        })
         .catch(() => alert("Something went wrong. Please try again."));
     });
 
-    document.getElementById("gpuAdd").addEventListener("click", function() {
+    document.getElementById("gpuAdd").addEventListener("click", function(e) {
+        e.preventDefault();
         var form = document.getElementById("addGPUForm");
     
         var gpuBrand = document.getElementById("gpuBrand");
@@ -776,12 +739,16 @@ $(document).ready(function(){
         formData.append("name", gpuName);
         formData.append("price", gpuPrice);
     
-        fetch("./php/addGPU.php", {
+        fetch("./php/addGPU.php/", {
             method: "POST",
             body: formData,
         })
-        .then(() => alert("GPU has been added successfully!"))
+        .then(() => {
+            alert("GPU has been added successfully!");
+            form.reset();
+        })
         .catch(() => alert("Something went wrong. Please try again."));
+
     });
     
 
