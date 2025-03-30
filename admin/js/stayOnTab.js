@@ -76,7 +76,7 @@ function switchOnUpdate(tabName){
             $("#updStorage").addClass("show active");
             break;
         case 5:
-            $("#updcasebut").addClass("active");
+            $("#updcsebut").addClass("active");
             $("#updCase").addClass("show active");
             break;
         case 6:
@@ -185,10 +185,6 @@ $(document).ready(function(){
     });
 
 
-
-    $('#AC').click(function(){
-        localStorage.setItem("tier1Tab", "1");
-    });
 
     $('#AC').click(function(){
         localStorage.setItem("tier1Tab", "1");
