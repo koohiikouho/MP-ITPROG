@@ -8,13 +8,21 @@
         die("Connection failed: " . $conn->connect_error);
     }
 
-    $sql = "SELECT * FROM motherboards WHERE MOB_ID='$moboID';";
+    $sql = "SELECT *
+            FROM motherboards m
+            JOIN ref_vendors rf ON rf.mbid = m.vendorCode
+            JOIN ref_sockets rs ON rs.socketID=m.socketID
+            WHERE m.MOB_ID = '$moboID'";
     $result = $conn->query($sql);
 
     
     if ($result->num_rows > 0) {
         while ($row = $result->fetch_assoc()) {
             $name = $row['name'];
+            $mbid = $row['vendorCode'];
+            $vendor = $row['vendorName'];
+            $socketId = $row['socketID'];
+            $socketName = $row['socketName'];
             $price = $row['price'];
             $chipset = $row['chipset'];
             $m2slots = $row['m2Slots'];
@@ -43,6 +51,7 @@
         <select class="form-control" id="updmoboBrand" name="Brand" required> 
             <?php
                 include '../../getVendor.php';
+                echo "<option value='" . $mbid . "' selected hidden>" . $vendor . "</option>";
             ?>
         </select>
     </div>
@@ -52,6 +61,7 @@
         <select class="form-control" id="updmoboSock" name="Socket" required> 
             <?php
                 include '../../getSockets.php';
+                echo "<option value='" . $socketId . "' selected hidden>" . $socketName . "</option>";
             ?>
         </select>
     </div>
